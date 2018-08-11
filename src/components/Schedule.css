@@ -1,59 +1,57 @@
 .day-name-col {
-    display: inline-block;
-    /*border-bottom: 1px solid black;*/
-    width: 16%;
-    /*padding-right: 5px;*/
-    /*margin-right: 5px;*/
+    margin-right: 5px;
+    width: 18%;
+    border-bottom: 1px solid;
 }
 
 .days-div {
+    margin-bottom: 10px;
+    display: flex;
 }
 
-
 .schedule-container {
-    position: relative;
+    display: flex;
 }
 
 .time-col {
-    text-align: right;
-    margin-right: 10px;
     height: 45px;
+    padding-right: 5px;
 }
 
 .day-inside {
-    height: 50%;
-    width: 100%;
-    display: inline-block;
-    opacity: 0.4;
-    border-bottom: 1px dashed gray;
+    border-top: 1px dashed grey;
+    opacity: 0.6;
 }
 
 .day-col {
+    position: relative;
+    display: flex;
+    top: 10px;
+    height: 45px;
     border-top: 1px solid gray;
-    height: 44px;
-    opacity: 0.4;
+    opacity: 0.2;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .times-col {
-    position: relative;
-    display: inline-block;
-    width: 15%;
+    width: 8%;
 }
 
 .days-col {
     position: relative;
-    top: 10px;
-    display: inline-block;
-    width: 15%;
-    margin-right: 1%;
+    width: 18%;
+    margin-right: 5px;
 }
 
 .time-name-col {
-    align-content: right;
-    min-width: 15%;
-    display: inline-block;
+    width: 8%;
 }
-.hour-slot{
+
+.hour-slot {
     font-size: 14px;
-    /*word-break: break-all;*/
+}
+
+.times-col {
+    width: 8%;
 }

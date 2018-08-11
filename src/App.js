@@ -1,36 +1,56 @@
 import React, {Component} from 'react';
-import './App.css';
 import Schedule from './components/Schedule'
+import CourseSearch from './components/CourseSearch'
+import CourseList from './components/CourseList'
+import './App.css'
 
 class App extends Component {
     state = {
-        index: 0
+        index: 0,
     };
 
     render() {
         return (
-            <section className="section">
-                <div className="container">
-                    <div className="columns">
-                        <div className="column is-three-quarters main-column">
-                            <button onClick={this.clickButton}>click</button>
-                            <div className="App">
-                                <Schedule schedule={sched[this.state.index]}/>
-                            </div>
-                        </div>
-                        <div className="column">
-                            second column
+            <div>
+                <div className="flex-container">
+                    <div className="column-search">
+                        <div>
+                            <CourseSearch/>
+                            <CourseList/>
                         </div>
                     </div>
+                    <div className="column-calendar">
+                        <div className="schedule-button-controls">
+                            <button onClick={() => this.clickButton(-1)} className="button is-primary">Previous
+                            </button>
+                            <button onClick={() => this.clickButton(1)} className="button is-primary">Next</button>
+                        </div>
+                        <Schedule scheduleInfo={sched[this.state.index].info}
+                                  sections={this.scheduleObjectsToArray(sched[this.state.index])}/>
+                    </div>
                 </div>
-            </section>
+            </div>
         );
     }
 
-    clickButton = () => {
-        this.setState({
-            index: (this.state.index + 1) === sched.length ? 0 : (this.state.index + 1)
-        });
+    scheduleObjectsToArray = (schedule) => {
+        const scheduleArr = [];
+        for (let course of Object.keys(schedule.schedule)) {
+            for (let section of Object.keys(schedule.schedule[course])) {
+                scheduleArr.push(schedule.schedule[course][section]);
+            }
+        }
+        return scheduleArr;
+    };
+
+    clickButton = (way) => {
+        way === -1 ? this.setState({
+                index: (this.state.index - 1) < 0 ? sched.length - 1 : (this.state.index - 1)
+            }) :
+            this.setState({
+                index: (this.state.index + 1) === sched.length ? 0 : (this.state.index + 1)
+            })
+        ;
     }
 
 }
