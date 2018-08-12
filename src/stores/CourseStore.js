@@ -1,12 +1,15 @@
-import {observable, action, computed, flow, decorate, configure, runInAction} from 'mobx'
+import {observable, action, computed, decorate, configure, runInAction} from 'mobx'
 
 configure({enforceActions: true});
 
 class CourseStore {
     courses = [];
     schedules = [];
+    savedSchedules = [];
+    currentSavedIndex = 0;
     currentIndex = 0;
     searching = false;
+    searchingSaved = false;
     addCourse = (course) => {
         this.courses.push(course);
     };
@@ -15,8 +18,22 @@ class CourseStore {
     };
 
     get getSchedule() {
-        return this.schedules ? this.schedules[this.currentIndex] : [];
+        if (!this.schedules)
+            return {};
+        return this.schedules.length > 0 ? this.schedules[this.currentIndex] : {};
     }
+
+    get getSavedSchedule() {
+        if (!this.savedSchedules)
+            return {};
+        return this.savedSchedules.length > 0 ? this.savedSchedules[this.currentSavedIndex] : {};
+    }
+
+    scrollSavedSchedules = (way) => {
+        way === -1 ? this.currentSavedIndex = (this.currentSavedIndex - 1 < 0) ? (this.savedSchedules.length - 1) : (this.currentSavedIndex - 1)
+            :
+            this.currentSavedIndex = (this.currentSavedIndex + 1 === this.savedSchedules.length) ? 0 : (this.currentSavedIndex + 1);
+    };
 
     scrollSchedules = (way) => {
         way === -1 ? this.currentIndex = (this.currentIndex - 1 < 0) ? (this.schedules.length - 1) : (this.currentIndex - 1)
@@ -43,18 +60,43 @@ class CourseStore {
         } else {
             runInAction(() => this.schedules = []);
         }
-    }
+    };
+    getSavedSchedules = async (token) => {
+        runInAction(() => {
+            this.searchingSaved = true;
+            this.savedSchedules = [];
+            this.currentSavedIndex = 0;
+        });
+        let response = await fetch('https://cse120-course-planner.herokuapp.com/api/users/schedule-dump/', {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+        });
+        response = await response.json();
+        runInAction(() => {
+            this.savedSchedules = response;
+            this.searchingSaved = false;
+        });
+    };
 }
 
 decorate(CourseStore, {
     courses: observable,
     searching: observable,
+    searchingSaved: observable,
     schedules: observable,
+    savedSchedules: observable,
     currentIndex: observable,
+    currentSavedIndex: observable,
     addCourse: action,
     removeCourse: action,
     scheduleSearch: action,
     scrollSchedules: action,
+    getSavedSchedules: action,
+    scrollSavedSchedules: action,
     getSchedule: computed,
+    getSavedSchedule: computed,
 });
 export default new CourseStore()

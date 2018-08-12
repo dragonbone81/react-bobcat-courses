@@ -40,8 +40,12 @@ class Schedule extends Component {
         return sections.filter((section) => section.days.includes(day)).map((section) => {
             const hours = section.hours.split('-');
             const hoursInt = hours.map((hour) => parseInt(hour.split(":").join(""), 10));
-            hours[1].includes("pm") ? hoursInt[1] += 1200 : null;
-            hours[1].includes("pm") && hoursInt[0] + 1200 < hoursInt[1] ? hoursInt[0] += 1200 : null;
+            if (hours[1].includes("pm")) {
+                hoursInt[1] += 1200;
+                if (hoursInt[0] + 1200 < hoursInt[1]) {
+                    hoursInt[0] += 1200;
+                }
+            }
             let offset = hoursInt[0] % 100 === 0 ? (45 / 2) : (10 + 45 / 2);
             this.props.scheduleInfo.earliest % 100 === 0 ? offset -= 45 / 4 : offset += 0;
             const top = ((hoursInt[0] - this.props.scheduleInfo.earliest) / 100) * 45 + offset;

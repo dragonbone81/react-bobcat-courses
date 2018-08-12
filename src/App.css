@@ -8,7 +8,6 @@
     padding: 10px;
     background-color: whitesmoke;
     border-radius: 5px;
-    /*padding-top: 20px;*/
 }
 
 .column-search {
@@ -16,8 +15,6 @@
     display: flex;
     flex-direction: column;
     align-content: center;
-    /*align-items: center;*/
-    /*justify-content: center;*/
 }
 
 @media screen and (max-width: 590px) {
@@ -39,22 +36,25 @@
 .column-calendar {
     flex-grow: 4;
 }
-
-.schedule-button-controls {
-    /*margin: auto;*/
-    /*align-content: center;*/
+.saved-schedules-label{
     display: flex;
     flex-direction: row;
     justify-content: center;
     padding-bottom: 20px;
-    /*text-align: center;*/
+    padding-top: 5px;
+    font-size: 25px;
+    color: #505050;
+}
+.schedule-button-controls {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-bottom: 20px;
 
 }
 
 .main-container {
-    padding: 10px 10px 10px 10px;
-    /*background-color: grey;*/
-    /*height: 100%;*/
+    padding: 0 10px 10px 10px;
 }
 
 .top-div {
@@ -80,20 +80,23 @@
     display: flex;
     flex-direction: column;
 }
-.course-item{
+
+.course-item {
     padding-top: 10px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    padding-right: 10px;
-    padding-left: 10px;
+    /*padding-right: 10px;*/
+    padding-left: 5px;
 }
-.course-list-options{
+
+.course-list-options {
     margin-left: auto;
     margin-top: auto;
 }
-.schedule-column{
+
+.schedule-column {
     display: flex;
     margin-left: 10px;
     justify-content: center;
@@ -101,25 +104,26 @@
     text-align: center;
 }
 
-.generate-button{
+.generate-button {
     max-width: 100%;
     text-align: center;
 }
-/*.left-button{*/
-    /*display: inline-block;*/
-/*}*/
-/*.right-button{*/
-    /*display: inline-block;*/
-/*}*/
-.current-schedule-num{
-    /*display: inline-block;*/
-    /*margin-right: 10px;*/
-    /*margin-left: 10px;*/
-    /*display: table-cell;*/
-    /*text-align: center;*/
-    /*vertical-align: middle*/
-}
-.ui.button.brown{
+
+.ui.button.brown {
     font-size: 30px;
     padding: 0 10px 0 10px;
+}
+
+.login-form {
+    max-width: 320px;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    margin: 50px auto;
+    background-color: rgba(255, 255, 255, 0.90);
+    padding: 40px;
+    border-radius: 4px;
+    color: #505e6c;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
 }

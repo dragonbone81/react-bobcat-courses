@@ -3,9 +3,13 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import {Provider} from 'mobx-react'
 import CourseStore from './stores/CourseStore'
+import AuthStore from './stores/AuthStore'
+import {BrowserRouter} from 'react-router-dom';
 
 ReactDOM.render(
-    <Provider course_store={CourseStore}>
-        <App/>
-    </Provider>
+    <BrowserRouter>
+        <Provider course_store={CourseStore} auth_store={AuthStore}>
+            <App/>
+        </Provider>
+    </BrowserRouter>
     , document.getElementById('root'));
