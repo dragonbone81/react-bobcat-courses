@@ -9,6 +9,10 @@ class SavedSchedules extends Component {
         this.props.course_store.getSavedSchedules(this.props.auth_store.auth.token).then()
     }
 
+    componentWillUnmount() {
+        this.props.course_store.unmountSavedSchedules();
+    }
+
     render() {
         return (
             <div className="flex-container">

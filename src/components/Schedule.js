@@ -2,9 +2,25 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Section from './Section'
 import './Schedule.css'
-import {timesMap, timesArr, daysMap, daysArr} from "../data";
+import {timesMap, timesArr, daysMap, daysArr, colors} from "../data";
 
 class Schedule extends Component {
+    state = {
+        colorMap: {},
+    };
+
+    componentDidMount() {
+        this.setState({
+            colorMap: this.mapColors(this.props.sections),
+        })
+    }
+
+    componentWillReceiveProps(newProps) {
+        this.setState({
+            colorMap: this.mapColors(newProps.sections),
+        })
+    }
+
     render() {
         const timeSpan = timesArr.slice(timesMap[Math.floor(this.props.scheduleInfo.earliest / 100.0) * 100].index, timesMap[Math.ceil(this.props.scheduleInfo.latest / 100.0) * 100 + 100].index);
         return (
@@ -36,6 +52,16 @@ class Schedule extends Component {
         )
     }
 
+    splitSectionID = (sectionID) => {
+        const sectionList = sectionID.split('-');
+        return sectionList[0] + '-' + sectionList[1];
+    };
+    mapColors = (sections) => Array.from(new Set(sections.map(
+        (section) => this.splitSectionID(section.course_id)))).reduce((obj, section, index) => {
+        obj[section] = colors[index];
+        return obj;
+    }, {});
+
     getSectionsForDay = (sections, day) => {
         return sections.filter((section) => section.days.includes(day)).map((section) => {
             const hours = section.hours.split('-');
@@ -50,9 +76,9 @@ class Schedule extends Component {
             this.props.scheduleInfo.earliest % 100 === 0 ? offset -= 45 / 4 : offset += 0;
             const top = ((hoursInt[0] - this.props.scheduleInfo.earliest) / 100) * 45 + offset;
             const height = ((hoursInt[1] - this.props.scheduleInfo.earliest) / 100) * 45 - top + offset;
-
+            const color = this.state.colorMap[this.splitSectionID(section.course_id)];
             return (
-                <Section key={section.crn} top={top} height={height} section={section}/>
+                <Section color={color} key={section.crn} top={top} height={height} section={section}/>
             )
         });
     }

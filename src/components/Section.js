@@ -4,12 +4,12 @@ const Section = (props) => {
     return (
         <div key={props.section.crn} className="hour-slot" style={{
             width: '100%',
-            opacity: .7,
+            opacity: .8,
             position: 'absolute',
             zIndex: 1,
             top: props.top,
             borderLeft: '3px solid black',
-            backgroundColor: 'rgb(200, 150, 0)',
+            backgroundColor: props.color,
             height: props.height,
             display: 'block',
         }}>

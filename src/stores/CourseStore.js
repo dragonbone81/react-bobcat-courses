@@ -80,6 +80,11 @@ class CourseStore {
             this.searchingSaved = false;
         });
     };
+    unmountSavedSchedules = () => {
+        this.searchingSaved = false;
+        this.savedSchedules = [];
+        this.currentSavedIndex = 0;
+    }
 }
 
 decorate(CourseStore, {
@@ -96,6 +101,7 @@ decorate(CourseStore, {
     scrollSchedules: action,
     getSavedSchedules: action,
     scrollSavedSchedules: action,
+    unmountSavedSchedules: action,
     getSchedule: computed,
     getSavedSchedule: computed,
 });
