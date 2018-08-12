@@ -6,10 +6,18 @@
     margin: auto;
     max-width: 1200px;
     padding: 10px;
+    background-color: whitesmoke;
+    border-radius: 5px;
+    /*padding-top: 20px;*/
 }
 
 .column-search {
     flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    /*align-items: center;*/
+    /*justify-content: center;*/
 }
 
 @media screen and (max-width: 590px) {
@@ -32,12 +40,86 @@
     flex-grow: 4;
 }
 
-.schedule-button-controls{
+.schedule-button-controls {
+    /*margin: auto;*/
+    /*align-content: center;*/
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap;
     justify-content: center;
-    margin: auto;
-    max-width: 1200px;
-    padding: 10px;
+    padding-bottom: 20px;
+    /*text-align: center;*/
+
+}
+
+.main-container {
+    padding: 10px 10px 10px 10px;
+    /*background-color: grey;*/
+    /*height: 100%;*/
+}
+
+.top-div {
+    background: no-repeat center center url('https://s3-us-west-1.amazonaws.com/bobcat-courses-static/images/uc_merced_72.jpg');
+    filter: blur(5px) brightness(80%);
+    -webkit-filter: blur(5px) brightness(80%);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    background-size: cover; /* <------ */
+    -webkit-background-size: cover; /* <------ */
+    z-index: -1;
+    transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+}
+
+.spinner {
+    font-size: 100px;
+}
+
+.course-list {
+    display: flex;
+    flex-direction: column;
+}
+.course-item{
+    padding-top: 10px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+.course-list-options{
+    margin-left: auto;
+    margin-top: auto;
+}
+.schedule-column{
+    display: flex;
+    margin-left: 10px;
+    justify-content: center;
+    align-content: center;
+    text-align: center;
+}
+
+.generate-button{
+    max-width: 100%;
+    text-align: center;
+}
+/*.left-button{*/
+    /*display: inline-block;*/
+/*}*/
+/*.right-button{*/
+    /*display: inline-block;*/
+/*}*/
+.current-schedule-num{
+    /*display: inline-block;*/
+    /*margin-right: 10px;*/
+    /*margin-left: 10px;*/
+    /*display: table-cell;*/
+    /*text-align: center;*/
+    /*vertical-align: middle*/
+}
+.ui.button.brown{
+    font-size: 30px;
+    padding: 0 10px 0 10px;
 }

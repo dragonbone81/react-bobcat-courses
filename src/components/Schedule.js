@@ -2,36 +2,32 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Section from './Section'
 import './Schedule.css'
+import {timesMap, timesArr, daysMap, daysArr} from "../data";
 
 class Schedule extends Component {
-    days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
-    daysMap = {'Mon': 'M', 'Tue': 'T', 'Wed': 'W', 'Thu': 'R', 'Fri': 'F'};
-    times = ['7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm', '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm', '10pm', '11pm'];
-    state = {
-        sections: this.props.sections,
-        scheduleInfo: this.props.scheduleInfo,
-    };
-
     render() {
+        const timeSpan = timesArr.slice(timesMap[Math.floor(this.props.scheduleInfo.earliest / 100.0) * 100].index, timesMap[Math.ceil(this.props.scheduleInfo.latest / 100.0) * 100 + 100].index);
         return (
-            <div>
+            <div className="schedule-inside-container">
                 <div className="days-div">
                     <div className="time-name-col"/>
-                    {this.days.map((day) => {
+                    {daysArr.map((day) => {
                         return <div key={day} className="day-name-col">{day}</div>
                     })}
                 </div>
                 <div className="schedule-container">
                     <div className="times-col">
-                        {this.times.map((time) => <div key={time} className="time-col">{time}</div>)}
+                        {timeSpan.map((time) =>
+                            <div key={time} className="time-col">{time}</div>)}
                     </div>
-                    {this.days.map((day) => {
+                    {daysArr.map((day) => {
                         return (
                             <div key={day} className="days-col">
-                                {this.times.map((time) => <div key={time} className="day-col">
-                                    <div className="day-inside"/>
+                                {timeSpan.map((time, index) => <div key={time} className="day-col">
+                                    {index === timeSpan.length - 1 ? <div className="end"/> :
+                                        <div className="day-inside"/>}
                                 </div>)}
-                                {this.getSectionsForDay(this.props.sections, this.daysMap[day])}
+                                {this.getSectionsForDay(this.props.sections, daysMap[day])}
                             </div>
                         )
                     })}
@@ -46,9 +42,10 @@ class Schedule extends Component {
             const hoursInt = hours.map((hour) => parseInt(hour.split(":").join(""), 10));
             hours[1].includes("pm") ? hoursInt[1] += 1200 : null;
             hours[1].includes("pm") && hoursInt[0] + 1200 < hoursInt[1] ? hoursInt[0] += 1200 : null;
-            const offset = hoursInt[0] % 100 === 0 ? (45 / 2) : (10 + 45 / 2);
-            const top = ((hoursInt[0] - this.state.scheduleInfo.earliest) / 100) * 45 + offset;
-            const height = ((hoursInt[1] - this.state.scheduleInfo.earliest) / 100) * 45 - top + offset;
+            let offset = hoursInt[0] % 100 === 0 ? (45 / 2) : (10 + 45 / 2);
+            this.props.scheduleInfo.earliest % 100 === 0 ? offset -= 45 / 4 : offset += 0;
+            const top = ((hoursInt[0] - this.props.scheduleInfo.earliest) / 100) * 45 + offset;
+            const height = ((hoursInt[1] - this.props.scheduleInfo.earliest) / 100) * 45 - top + offset;
 
             return (
                 <Section key={section.crn} top={top} height={height} section={section}/>

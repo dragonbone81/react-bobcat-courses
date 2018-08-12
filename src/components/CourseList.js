@@ -1,20 +1,29 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
 import {inject, observer} from "mobx-react/index";
-import {Grid} from 'semantic-ui-react';
+import '../App.css'
 
 class CourseSearch extends Component {
     render() {
         return (
-            <Grid>
+            <div className='course-list'>
                 {this.props.course_store.courses.map((course) => {
                     return (
-                        <Grid.Column key={course} computer={12} mobile={4} tablet={12}>
-                            {course} : <button>section</button> <button>x</button>
-                        </Grid.Column>
+                        <div key={course} className="course-item">
+                                {course} :
+                            <div className="course-list-options">
+                                <button className="ui button tiny teal"
+                                        >Sections
+                                </button>
+                                <button onClick={() => this.props.course_store.removeCourse(course)}
+                                        className="ui icon button tiny pink">
+                                    <i className="fas fa-times"/>
+                                </button>
+                            </div>
+                        </div>
                     )
                 })}
-            </Grid>
+            </div>
         )
     }
 }
