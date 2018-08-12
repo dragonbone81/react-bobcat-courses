@@ -1,4 +1,4 @@
-import {observable, action, computed, decorate, configure, runInAction} from 'mobx'
+import {observable, action, decorate, configure, runInAction} from 'mobx'
 
 configure({enforceActions: true});
 
