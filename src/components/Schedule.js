@@ -60,7 +60,11 @@ class Schedule extends Component {
                                         href={`https://mystudentrecord.ucmerced.edu/pls/PROD/xhwschedule.P_ViewCrnDetail?subjcode=${section.course_id.split('-')[0]}&validterm=${201830}&crn=${section.crn}&crsenumb=${section.course_id.split('-')[1]}`}
                                         as='a'>{section.course_id}</List.Header>
                                     <List.Description>
-                                        {section.course_name + (section.course_id.endsWith('L') ? ' Lab' : section.course_id.endsWith('D') ? ' Discussion' : '')}
+                                        {section.available <= 0 ?
+                                            <del>{section.course_name + (section.course_id.endsWith('L') ? ' Lab' : section.course_id.endsWith('D') ? ' Discussion' : '')}</del>
+                                            :
+                                            section.course_name + (section.course_id.endsWith('L') ? ' Lab' : section.course_id.endsWith('D') ? ' Discussion' : '')}
+                                        {(section.available <= 0 ? ' (Full)' : '')}
                                         {(section.days === ' ' || section.hours === 'TBD-TBD') ?
                                             <div><i>(No time for section, probably online)</i></div> : null}
                                     </List.Description>
