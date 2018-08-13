@@ -6,7 +6,7 @@ import OptionsModal from './OptionsModal'
 import CourseSearch from './CourseSearch'
 import CourseList from './CourseList'
 import ScheduleControls from './ScheduleControls'
-import {Icon} from 'semantic-ui-react'
+import {Icon, Header} from 'semantic-ui-react'
 import {inject, observer} from "mobx-react";
 
 class GenerateSchedulesPage extends Component {
@@ -14,6 +14,9 @@ class GenerateSchedulesPage extends Component {
         modalOpen: false,
     };
     changeModalState = () => {
+        if (this.state.modalOpen) {
+            this.props.course_store.filterOptionsChangedRegenerate();
+        }
         this.setState({modalOpen: !this.state.modalOpen})
     };
 
@@ -29,7 +32,9 @@ class GenerateSchedulesPage extends Component {
                 <div className="cog-setting-icon">
                     <Icon style={{cursor: 'pointer'}} onClick={this.changeModalState} name="cog"/>
                 </div>
-                <div className="column-search">
+                <div style={{textAlign: 'center', marginTop: 5}} className="column-search">
+                    <Header
+                        size='medium'>{this.props.course_store.terms.find((term) => term.value === this.props.course_store.selectedTermGenerateSchedule).text}</Header>
                     <CourseSearch/>
                     <CourseList/>
                     <GenerateSchedules scheduleSearch={this.props.course_store.scheduleSearch}/>
@@ -43,7 +48,8 @@ class GenerateSchedulesPage extends Component {
                                             schedulesLength={this.props.course_store.schedules.length}
                                             scheduleInfo={this.props.course_store.getSchedule.info}
                                             schedule={this.props.course_store.getSchedule}
-                                            scheduleObjectsToArray={this.scheduleObjectsToArray}/>
+                                            scheduleObjectsToArray={this.scheduleObjectsToArray}
+                                            noSchedulesFound={this.props.course_store.noSchedulesFound}/>
                 </div>
             </div>
         )

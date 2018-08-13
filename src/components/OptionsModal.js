@@ -7,21 +7,29 @@ class OptionsModal extends Component {
         this.props.course_store.changeSelectedTermGenerateSchedule(value);
     };
     onChangeDays = (e, {value}) => {
+        this.props.course_store.changeFilterOptionsChanged();
         this.props.course_store.changeSelectedDaysFilter(value);
     };
     onChangeGaps = (e, {value}) => {
+        this.props.course_store.changeFilterOptionsChanged();
         this.props.course_store.changeSelectedGapsFilter(value);
     };
     onChangeEarliestTime = (e, {value}) => {
+        this.props.course_store.changeFilterOptionsChanged();
         this.props.course_store.changeSelectedEarliestTime(value);
     };
+    onChangeLatestTime = (e, {value}) => {
+        this.props.course_store.changeFilterOptionsChanged();
+        this.props.course_store.changeSelectedLatestTime(value);
+    };
     onChangeFull = () => {
+        this.props.course_store.changeFilterOptionsChanged();
         this.props.course_store.changeSelectedFullFilter();
     };
 
     render() {
         return (
-            <Modal open={this.props.open} onClose={this.props.changeModalState}>
+            <Modal open={this.props.open} onClose={this.props.changeModalState} closeIcon>
                 <Modal.Header>Options</Modal.Header>
                 <Modal.Content>
                     <Form>
@@ -62,9 +70,19 @@ class OptionsModal extends Component {
                                           label={this.props.course_store.full ? 'Yes' : 'No'}/>
                             </Form.Field>
                         </Form.Group>
-                        <Form.Select fluid onChange={this.onChangeEarliestTime}
-                                     value={this.props.course_store.changeSelectedEarliestTime}
-                                     options={this.props.course_store.selectedEarliestTime}/>
+                        <Form.Group inline>
+                            <label>Time Filters:</label>
+                            <div style={{paddingBottom: 5, paddingTop: 5}}>
+                                <Form.Select onChange={this.onChangeEarliestTime}
+                                             value={this.props.course_store.selectedEarliestTime}
+                                             options={this.props.course_store.earliestTimes}/>
+                            </div>
+                            <div>
+                                <Form.Select onChange={this.onChangeLatestTime}
+                                             value={this.props.course_store.selectedLatestTime}
+                                             options={this.props.course_store.latestTimes}/>
+                            </div>
+                        </Form.Group>
                     </Form>
                 </Modal.Content>
             </Modal>

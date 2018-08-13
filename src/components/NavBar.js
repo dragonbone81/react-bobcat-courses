@@ -28,7 +28,7 @@ class NavBar extends Component {
 
     handleItemClick = (e, {name}) => {
         this.props.history.push(name);
-        this.setState({activeItem: name});
+        this.setState({activeItem: name, sideBarOpen: false});
     };
     sideBarButton = () => this.setState({sideBarOpen: !this.state.sideBarOpen});
 

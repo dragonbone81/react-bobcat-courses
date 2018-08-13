@@ -8,6 +8,7 @@
     padding: 10px;
     background-color: whitesmoke;
     border-radius: 5px;
+    position: relative;
 }
 
 .column-search {
@@ -138,15 +139,15 @@
 
 .cog-setting-icon {
     position: absolute;
-    right: 10px;
-    top: 80px;
+    right: 0;
+    top: 10px;
     font-size: 30px;
 }
 @media screen and (max-width: 420px) {
     .cog-setting-icon {
         position: absolute;
-        right: 10px;
-        top: 75px;
-        font-size: 20px;
+        right: 0;
+        top: 7px;
+        font-size: 25px;
     }
 }

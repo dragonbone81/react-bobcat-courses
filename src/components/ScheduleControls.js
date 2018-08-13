@@ -10,9 +10,9 @@ class ScheduleControls extends Component {
     }
 
     handleKeyPress = ({key}) => {
-        if (key === "ArrowLeft" || key === "A" || key === "a")
+        if (key === "ArrowLeft")
             this.props.clickButton(-1);
-        else if (key === "ArrowRight" || key === "D" || key === "d")
+        else if (key === "ArrowRight")
             this.props.clickButton(1);
     };
 
@@ -24,11 +24,14 @@ class ScheduleControls extends Component {
         return (
             <div className="schedule-button-controls" style={display}>
                 <div className="ui buttons">
-                    <button className="ui button brown" onClick={() => this.props.clickButton(-1)}><i
+                    <button className="ui button grey" onClick={() => this.props.clickButton(-1)}><i
                         className="fas fa-arrow-left"/></button>
                     <button
-                        className="ui button pink disabled">{this.props.currentIndex + 1 + ' / ' + this.props.schedulesLength}</button>
-                    <button className="ui button brown" onClick={() => this.props.clickButton(1)}><i
+                        className="ui button disabled black">
+                        <div
+                            style={{color: 'white'}}>{this.props.currentIndex + 1 + ' / ' + this.props.schedulesLength}</div>
+                    </button>
+                    <button className="ui button grey" onClick={() => this.props.clickButton(1)}><i
                         className="fas fa-arrow-right"/></button>
                 </div>
             </div>

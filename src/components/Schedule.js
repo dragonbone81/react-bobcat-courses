@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Section from './Section'
+import SectionPopup from './SectionPopup'
 import './Schedule.css'
 import {List, Header} from 'semantic-ui-react'
 import {timesMap, timesArr, daysMap, daysArr, colors} from "../data";
@@ -8,6 +9,31 @@ import {timesMap, timesArr, daysMap, daysArr, colors} from "../data";
 class Schedule extends Component {
     state = {
         colorMap: {},
+        clickedSection: null,
+        clickedSectionInfo: {},
+        popUpOpen: false,
+    };
+    handlePopupClose = () => {
+        this.setState({
+            popUpOpen: false,
+            clickedSection: null,
+            clickedSectionInfo: {},
+        });
+    };
+    handlePopupOpen = () => {
+        this.setState({
+            popUpOpen: true,
+        });
+    };
+    handleSectionClick = (target, crn) => {
+        this.setState({
+            clickedSection: target,
+            clickedSectionInfo: this.findSectionByCRN(crn),
+        });
+        this.handlePopupOpen();
+    };
+    findSectionByCRN = (crn) => {
+        return this.props.sections.find((section) => section.crn === crn);
     };
 
     componentDidMount() {
@@ -26,6 +52,15 @@ class Schedule extends Component {
         const timeSpan = timesArr.slice(timesMap[Math.floor(this.props.scheduleInfo.earliest / 100.0) * 100].index, timesMap[Math.ceil(this.props.scheduleInfo.latest / 100.0) * 100 + 100].index);
         return (
             <div className="schedule-inside-container">
+                {this.state.popUpOpen ?
+                    <SectionPopup
+                        clickedSection={this.state.clickedSection}
+                        popUpOpen={this.state.popUpOpen}
+                        handlePopupClose={this.handlePopupClose}
+                        handlePopupOpen={this.handlePopupOpen}
+                        clickedSectionInfo={this.state.clickedSectionInfo}
+                    />
+                    : null}
                 <div className="days-div">
                     <div className="time-name-col"/>
                     {daysArr.map((day) => {
@@ -103,7 +138,11 @@ class Schedule extends Component {
             const height = ((hoursInt[1] - this.props.scheduleInfo.earliest) / 100) * 45 - top + offset;
             const color = this.state.colorMap[this.splitSectionID(section.course_id)];
             return (
-                <Section color={color} key={section.crn} top={top} height={height} section={section}/>
+                <div key={section.crn} onClick={({target}) => this.handleSectionClick(target, section.crn)}>
+                    <Section color={color} top={top}
+                             height={height}
+                             section={section}/>
+                </div>
             )
         });
     }

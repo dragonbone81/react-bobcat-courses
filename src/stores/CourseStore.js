@@ -10,9 +10,11 @@ class CourseStore {
     currentIndex = 0;
     searching = false;
     searchingSaved = false;
+    noSchedulesFound = false;
     gaps = null;
     days = null;
     full = false;
+    filterOptionsChanged = false;
     // selectedTermGenerateSchedule = 201910;
     selectedTermGenerateSchedule = 201830;
     terms = [
@@ -20,11 +22,17 @@ class CourseStore {
         {text: 'Fall 2018', value: 201830},
         {text: 'Spring 2018', value: 201810},
     ];
-    selectedEarliestTime = '800';
+    selectedEarliestTime = 'null';
     earliestTimes = [
-        // {text: 'Earliest?', value: null},
+        {text: 'Earliest?', value: 'null'},
         {text: '8:00am', value: '800'},
         {text: '8:30am', value: '830'},
+    ];
+    selectedLatestTime = 'null';
+    latestTimes = [
+        {text: 'Latest?', value: 'null'},
+        {text: '5:00pm', value: '1700'},
+        {text: '5:30pm', value: '1730'},
     ];
     addCourse = (course) => {
         this.courses.push(course);
@@ -44,6 +52,16 @@ class CourseStore {
             return {};
         return this.savedSchedules.length > 0 ? this.savedSchedules[this.currentSavedIndex] : {};
     }
+
+    filterOptionsChangedRegenerate = () => {
+        if (this.filterOptionsChanged) {
+            this.scheduleSearch().then();
+            this.filterOptionsChanged = false;
+        }
+    };
+    changeFilterOptionsChanged = () => {
+        this.filterOptionsChanged = true;
+    };
 
     scrollSavedSchedules = (way) => {
         if (this.savedSchedules.length > 0) {
@@ -66,17 +84,30 @@ class CourseStore {
             runInAction(() => this.searching = true);
             let response = await fetch('https://cse120-course-planner.herokuapp.com/api/courses/schedule-search/', {
                 method: 'POST',
-                body: JSON.stringify({course_list: this.courses, term: 201830, search_full: true}),
+                body: JSON.stringify({
+                    course_list: this.courses,
+                    term: this.selectedTermGenerateSchedule,
+                    search_full: this.full
+                }),
                 headers: {
                     "Content-Type": "application/json",
                 },
             });
             response = await response.json();
-            runInAction(() => {
-                this.schedules = response;
-                this.searching = false;
-                this.currentIndex = 0;
-            });
+            if (response.length === 0) {
+                runInAction(() => {
+                    this.noSchedulesFound = true;
+                    this.schedules = [];
+                    this.searching = false;
+                    this.currentIndex = 0;
+                })
+            } else {
+                runInAction(() => {
+                    this.schedules = response;
+                    this.searching = false;
+                    this.currentIndex = 0;
+                });
+            }
         } else {
             runInAction(() => this.schedules = []);
         }
@@ -100,16 +131,32 @@ class CourseStore {
             this.searchingSaved = false;
         });
     };
+
+    getOptions = async searchQuery => {
+        let response = await fetch(`https://cse120-course-planner.herokuapp.com/api/courses/course-search/?course=${searchQuery}&term=${this.selectedTermGenerateSchedule}`);
+        response = await response.json();
+        return response.map((course) => {
+            return {key: course.name, text: course.name + ': ' + course.description, value: course.name}
+        })
+    };
+
+
     unmountSavedSchedules = () => {
         this.searchingSaved = false;
         this.savedSchedules = [];
         this.currentSavedIndex = 0;
     };
     changeSelectedTermGenerateSchedule = (term) => {
+        this.courses = [];
+        this.schedules = [];
+        this.currentIndex = 0;
         this.selectedTermGenerateSchedule = term;
     };
     changeSelectedEarliestTime = (time) => {
         this.selectedEarliestTime = time;
+    };
+    changeSelectedLatestTime = (time) => {
+        this.selectedLatestTime = time;
     };
     changeSelectedDaysFilter = (filter) => {
         this.days === filter ? this.days = null : this.days = filter;
@@ -134,14 +181,17 @@ decorate(CourseStore, {
     days: observable,
     terms: observable,
     earliestTimes: observable,
+    latestTimes: observable,
     full: observable,
     selectedTermGenerateSchedule: observable,
     selectedEarliestTime: observable,
+    selectedLatestTime: observable,
     changeSelectedTermGenerateSchedule: action,
     changeSelectedDaysFilter: action,
     changeSelectedGapsFilter: action,
     changeSelectedFullFilter: action,
     addCourse: action,
+    filterOptionsChangedRegenerate: action,
     removeCourse: action,
     scheduleSearch: action,
     scrollSchedules: action,
@@ -149,6 +199,8 @@ decorate(CourseStore, {
     scrollSavedSchedules: action,
     unmountSavedSchedules: action,
     changeSelectedEarliestTime: action,
+    changeSelectedLatestTime: action,
+    changeFilterOptionsChanged: action,
     getSchedule: computed,
     getSavedSchedule: computed,
 });

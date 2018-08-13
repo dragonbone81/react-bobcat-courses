@@ -13,19 +13,13 @@ class CourseSearch extends Component {
         placeholder: 'Add Courses',
         error: false,
     };
-    getOptions = async searchQuery => {
-        let response = await fetch(`https://cse120-course-planner.herokuapp.com/api/courses/course-search/?course=${searchQuery}&term=201830`);
-        response = await response.json();
-        return response.map((course) => {
-            return {key: course.name, text: course.name + ': ' + course.description, value: course.name}
-        })
-    };
+
     handleSearchChange = (e, {searchQuery}) => {
         if (searchQuery.length >= 3) {
             this.setState({loading: true});
-            this.getOptions(searchQuery).then((response) => {
+            this.props.course_store.getOptions(searchQuery).then((response) => {
                     this.setState({
-                        options: response.slice(0, 10),
+                        options: response.slice(0, 30),
                         loading: false,
                     })
                 }

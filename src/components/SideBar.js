@@ -6,6 +6,7 @@ export default class SideNavBar extends Component {
     render() {
         return (
             <Sidebar
+                direction='right'
                 as={Menu}
                 animation='overlay'
                 icon='labeled'

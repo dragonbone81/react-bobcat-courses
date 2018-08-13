@@ -10,11 +10,19 @@ const ScheduleDisplaySection = (props) => {
                     <Schedule scheduleInfo={props.scheduleInfo}
                               sections={props.scheduleObjectsToArray(props.schedule)}/>
                     :
-                    <div style={{maxWidth: '500px', marginBottom: 10}} className="ui warning message">
-                        <div style={{textAlign: 'center'}} className="header">
-                            Search for courses then generate schedules
+                    props.noSchedulesFound ?
+                        <div style={{maxWidth: '300px', marginBottom: 10}} className="ui warning message">
+                            <div style={{textAlign: 'center'}} className="header">
+                                No Schedules found. Classes either conflict, filters are restricting schedules, or a
+                                class is full.
+                            </div>
                         </div>
-                    </div>}
+                        :
+                        <div style={{maxWidth: '500px', marginBottom: 10}} className="ui warning message">
+                            <div style={{textAlign: 'center'}} className="header">
+                                Search for courses then generate schedules
+                            </div>
+                        </div>}
         </div>
     )
 };
