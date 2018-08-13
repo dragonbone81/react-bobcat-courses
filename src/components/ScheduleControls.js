@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Button} from 'semantic-ui-react'
 
 class ScheduleControls extends Component {
     componentDidMount() {
@@ -23,6 +24,20 @@ class ScheduleControls extends Component {
         } : {};
         return (
             <div className="schedule-button-controls" style={display}>
+                {this.props.isLoggedIn ?
+                    this.props.scheduleType === 'generate' ?
+                        <div className="delete-option">
+                            <Button loading={this.props.buttonActionRunning} onClick={this.props.buttonAction}
+                                    color="grey">Save</Button>
+                        </div>
+                        : this.props.scheduleType === 'saved' ?
+                        <div className="delete-option">
+                            <Button loading={this.props.buttonActionRunning} onClick={this.props.buttonAction}
+                                    color="grey">Delete</Button>
+                        </div>
+                        : null
+                    :
+                    null}
                 <div className="ui buttons">
                     <button className="ui button grey" onClick={() => this.props.clickButton(-1)}><i
                         className="fas fa-arrow-left"/></button>

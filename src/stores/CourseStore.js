@@ -11,6 +11,8 @@ class CourseStore {
     searching = false;
     searchingSaved = false;
     noSchedulesFound = false;
+    savingSchedule = false;
+    deletingSchedule = false;
     gaps = null;
     days = null;
     full = false;
@@ -158,10 +160,66 @@ class CourseStore {
             },
         });
         response = await response.json();
-        runInAction(() => {
-            this.savedSchedules = response;
-            this.searchingSaved = false;
+        if (Array.isArray(response))
+            runInAction(() => {
+                this.savedSchedules = response;
+                this.searchingSaved = false;
+            });
+        else {
+            runInAction(() => {
+                this.savedSchedules = [];
+                this.searchingSaved = false;
+            });
+        }
+    };
+
+    saveSchedule = async token => {
+        runInAction(() => this.savingSchedule = true);
+        let response = await fetch('https://cse120-course-planner.herokuapp.com/api/users/save-schedule/', {
+            method: 'POST',
+            body: JSON.stringify({
+                term: this.selectedTermGenerateSchedule,
+                crns: this.scheduleObjectsToArray(this.getSchedule).map((section) => section.crn),
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
         });
+        runInAction(() => this.savingSchedule = false);
+        response = await response.json();
+        if (response.code) {
+            return {errorToken: "Please ReLogin"}
+        }
+        return response
+    };
+
+    deleteSchedule = async token => {
+        runInAction(() => this.deletingSchedule = true);
+        const sections = this.scheduleObjectsToArray(this.getSavedSchedule);
+        let response = await fetch('https://cse120-course-planner.herokuapp.com/api/users/delete-schedule/', {
+            method: 'POST',
+            body: JSON.stringify({
+                term: sections[0].term,
+                crns: sections.map((section) => section.crn),
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+        });
+        response = await response.json();
+        if (response.success) {
+            runInAction(() => {
+                this.savedSchedules = [...this.savedSchedules.slice(0, this.currentSavedIndex), ...this.savedSchedules.slice(this.currentSavedIndex + 1)];
+                this.currentSavedIndex = this.currentSavedIndex === 0 ? 0 : this.currentSavedIndex - 1;
+            });
+        }
+        if (response.code) {
+            return {errorToken: "Please ReLogin"}
+        }
+        runInAction(() => this.deletingSchedule = false);
+        return response;
     };
 
     getOptions = async searchQuery => {
@@ -172,6 +230,15 @@ class CourseStore {
         })
     };
 
+    scheduleObjectsToArray = (schedule) => {
+        const scheduleArr = [];
+        for (let course of Object.keys(schedule.schedule)) {
+            for (let section of Object.keys(schedule.schedule[course])) {
+                scheduleArr.push(schedule.schedule[course][section]);
+            }
+        }
+        return scheduleArr;
+    };
 
     unmountSavedSchedules = () => {
         this.searchingSaved = false;
@@ -203,6 +270,8 @@ class CourseStore {
 
 decorate(CourseStore, {
     courses: observable,
+    savingSchedule: observable,
+    deletingSchedule: observable,
     searching: observable,
     searchingSaved: observable,
     schedules: observable,
@@ -233,6 +302,8 @@ decorate(CourseStore, {
     changeSelectedEarliestTime: action,
     changeSelectedLatestTime: action,
     changeFilterOptionsChanged: action,
+    saveSchedule: action,
+    deleteSchedule: action,
     getSchedule: computed,
     getSavedSchedule: computed,
 });

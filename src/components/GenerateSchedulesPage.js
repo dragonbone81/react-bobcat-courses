@@ -8,6 +8,7 @@ import CourseList from './CourseList'
 import ScheduleControls from './ScheduleControls'
 import {Icon, Header} from 'semantic-ui-react'
 import {inject, observer} from "mobx-react";
+import {toast} from 'react-toastify';
 
 class GenerateSchedulesPage extends Component {
     state = {
@@ -23,6 +24,37 @@ class GenerateSchedulesPage extends Component {
     componentDidMount() {
         document.title = "BobcatCourses | Search";
     }
+
+    saveSchedule = async () => {
+        const response = await this.props.course_store.saveSchedule(this.props.auth_store.auth.token);
+        if (response.success)
+            toast.success('Schedule Saved', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true
+            });
+        else if (response.error)
+            toast.error('Could not save Schedule (Max Schedules reached)', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true
+            });
+        else if (response.errorToken)
+            toast.error('Could not perform action please login again.', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true
+            });
+    };
 
     render() {
         return (
@@ -43,30 +75,25 @@ class GenerateSchedulesPage extends Component {
                     <ScheduleControls searching={this.props.course_store.searching}
                                       schedulesLength={this.props.course_store.schedules.length}
                                       clickButton={this.props.course_store.scrollSchedules}
-                                      currentIndex={this.props.course_store.currentIndex}/>
+                                      currentIndex={this.props.course_store.currentIndex}
+                                      scheduleType={'generate'}
+                                      isLoggedIn={this.props.auth_store.isLoggedIn}
+                                      buttonAction={this.saveSchedule}
+                                      buttonActionRunning={this.props.course_store.savingSchedule}/>
                     <ScheduleDisplaySection searching={this.props.course_store.searching}
                                             schedulesLength={this.props.course_store.schedules.length}
                                             scheduleInfo={this.props.course_store.getSchedule.info}
                                             schedule={this.props.course_store.getSchedule}
-                                            scheduleObjectsToArray={this.scheduleObjectsToArray}
+                                            scheduleObjectsToArray={this.props.course_store.scheduleObjectsToArray}
                                             noSchedulesFound={this.props.course_store.noSchedulesFound}/>
                 </div>
             </div>
         )
     }
-
-    scheduleObjectsToArray = (schedule) => {
-        const scheduleArr = [];
-        for (let course of Object.keys(schedule.schedule)) {
-            for (let section of Object.keys(schedule.schedule[course])) {
-                scheduleArr.push(schedule.schedule[course][section]);
-            }
-        }
-        return scheduleArr;
-    };
 }
 
 GenerateSchedulesPage.propTypes = {
     course_store: PropTypes.object,
+    auth_store: PropTypes.object,
 };
-export default inject("course_store")(observer(GenerateSchedulesPage));
+export default inject("course_store", "auth_store")(observer(GenerateSchedulesPage));

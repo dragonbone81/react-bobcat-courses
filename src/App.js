@@ -3,6 +3,8 @@ import NavBar from './components/NavBar'
 import Login from './components/Login'
 import SavedSchedules from './components/SavedSchedules'
 import GenerateSchedulesPage from './components/GenerateSchedulesPage'
+import {ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 import './App.css'
 import {Switch, Route, withRouter, Redirect} from 'react-router-dom'
 
@@ -33,6 +35,17 @@ class App extends Component {
             <div className="main-container">
                 <div className="top-div"/>
                 <NavBar/>
+                <ToastContainer
+                    position="top-right"
+                    autoClose={3000}
+                    hideProgressBar={false}
+                    newestOnTop
+                    closeOnClick
+                    rtl={false}
+                    pauseOnVisibilityChange
+                    draggable
+                    pauseOnHover
+                />
                 <Switch>
                     <Route exact path='/schedules/search' component={GenerateSchedulesPage}/>
                     <Route exact path='/' component={RedirectHome}/>

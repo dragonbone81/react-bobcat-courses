@@ -143,6 +143,7 @@
     top: 10px;
     font-size: 30px;
 }
+
 @media screen and (max-width: 420px) {
     .cog-setting-icon {
         position: absolute;
@@ -150,4 +151,9 @@
         top: 7px;
         font-size: 25px;
     }
+}
+
+.save-option, .delete-option {
+    /*font-size: 100px;*/
+    padding-right: 10px;
 }

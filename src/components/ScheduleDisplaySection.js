@@ -18,11 +18,19 @@ const ScheduleDisplaySection = (props) => {
                             </div>
                         </div>
                         :
-                        <div style={{maxWidth: '500px', marginBottom: 10}} className="ui warning message">
-                            <div style={{textAlign: 'center'}} className="header">
-                                Search for courses then generate schedules
+                        props.savedSchedulesRendering ?
+                            <div style={{maxWidth: '500px', marginBottom: 10}} className="ui warning message">
+                                <div style={{textAlign: 'center'}} className="header">
+                                    You don't have any saved schedules.
+                                </div>
                             </div>
-                        </div>}
+                            :
+                            <div style={{maxWidth: '500px', marginBottom: 10}} className="ui warning message">
+                                <div style={{textAlign: 'center'}} className="header">
+                                    Search for courses then generate schedules.
+                                </div>
+                            </div>
+            }
         </div>
     )
 };

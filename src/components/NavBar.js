@@ -46,10 +46,15 @@ class NavBar extends Component {
                          activeItem={this.state.activeItem}/>
                 {!isMobile ?
                     <Menu>
-                        <Menu.Item name='/schedules/search' active={activeItem === '/schedules/search'}
+                        <Menu.Item name='/schedules/search'
                                    onClick={this.handleItemClick}>
                             <img style={{paddingRight: 10}} width="500" alt="logo" src={logo}/> BobcatCourses
                         </Menu.Item>
+                        <Menu.Item
+                            name='/schedules/search'
+                            active={activeItem === '/schedules/search'}
+                            onClick={this.handleItemClick}
+                        >Plan Schedules</Menu.Item>
                         <Menu.Item
                             name='/schedules/saved'
                             active={activeItem === '/schedules/saved'}
@@ -58,8 +63,9 @@ class NavBar extends Component {
                         <Menu.Menu position='right'>
                             {this.props.auth_store.isLoggedIn ?
                                 <Menu.Item
-                                    onClick={this.props.auth_store.logout}
-                                >Logout</Menu.Item>
+                                    name='hamburger'
+                                    onClick={this.sideBarButton}
+                                ><i className="fas fa-bars"/></Menu.Item>
                                 :
                                 <Menu.Item
                                     name='/login'
