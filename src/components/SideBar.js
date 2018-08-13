@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Icon, Menu, Sidebar} from 'semantic-ui-react'
+import {Image, Icon, Menu, Sidebar} from 'semantic-ui-react'
 
 export default class SideNavBar extends Component {
 
@@ -18,6 +18,13 @@ export default class SideNavBar extends Component {
             >
                 {this.props.isMobile ?
                     <div>
+                        {this.props.isLoggedIn ?
+                            <Menu.Item>
+                                {this.props.user.profile_image_url ? <Image src={this.props.user.profile_image_url}
+                                                                            avatar/> : null} {this.props.user.first_name || this.props.user.username}
+                            </Menu.Item>
+                            :
+                            null}
                         <Menu.Item name="/schedules/search" active={this.props.activeItem === '/schedules/search'}
                                    onClick={this.props.navigate}>
                             <Icon name='home'/>
@@ -48,16 +55,13 @@ export default class SideNavBar extends Component {
                     </div>
                     :
                     <div>
-                        {/*<Menu.Item name="/schedules/search" active={this.props.activeItem === '/schedules/search'}*/}
-                        {/*onClick={this.props.navigate}>*/}
-                        {/*<Icon name='home'/>*/}
-                        {/*Search Schedules*/}
-                        {/*</Menu.Item>*/}
-                        {/*<Menu.Item name="/schedules/saved" active={this.props.activeItem === '/schedules/saved'}*/}
-                        {/*onClick={this.props.navigate}>*/}
-                        {/*<Icon name='save'/>*/}
-                        {/*Saved Schedules*/}
-                        {/*</Menu.Item>*/}
+                        {this.props.isLoggedIn ?
+                            <Menu.Item>
+                                {this.props.user.profile_image_url ? <Image src={this.props.user.profile_image_url}
+                                                                            avatar/> : null} {this.props.user.first_name || this.props.user.username}
+                            </Menu.Item>
+                            :
+                            null}
                         {this.props.isLoggedIn ?
                             <Menu.Item as='a' onClick={this.props.logout}>
                                 <Icon name='sign out alternate'/>

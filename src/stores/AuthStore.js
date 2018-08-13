@@ -23,7 +23,8 @@ class AuthStore {
             },
         });
         response = await response.json();
-        return response
+        if (response.username)
+            runInAction(() => this.user = response)
     };
     getAuthWithRefresh = async (refresh) => {
         runInAction(() => {
@@ -100,6 +101,7 @@ class AuthStore {
 decorate(AuthStore, {
     isLoggedIn: observable,
     auth: observable,
+    user: observable,
     loggingIn: observable,
     login: action,
     logout: action,

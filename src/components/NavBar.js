@@ -44,7 +44,8 @@ class NavBar extends Component {
                          hideSideBar={this.hideSideBar}
                          visible={this.state.sideBarOpen} navigate={this.handleItemClick}
                          activeItem={this.state.activeItem}
-                         isMobile={isMobile}/>
+                         isMobile={isMobile}
+                         user={this.props.auth_store.user}/>
                 {!isMobile ?
                     <Menu>
                         <Menu.Item name='/schedules/search'
