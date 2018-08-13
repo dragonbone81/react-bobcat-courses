@@ -4,7 +4,7 @@ configure({enforceActions: true});
 
 class AuthStore {
     constructor() {
-        this.hydrateStoreWithLocalStorage()
+        this.hydrateStoreWithLocalStorage().then()
     }
 
     auth = {
@@ -13,15 +13,29 @@ class AuthStore {
     };
     isLoggedIn = false;
 
-    hydrateStoreWithLocalStorage = () => {
+    hydrateStoreWithLocalStorage = async () => {
         let auth = localStorage.getItem('auth');
         if (auth === null) {
             return;
         }
         auth = JSON.parse(auth);
         if ('token' in auth && 'refresh' in auth) {
-            this.auth = auth;
-            this.isLoggedIn = true;
+            runInAction(() => {
+                this.auth = auth;
+                this.isLoggedIn = true;
+            });
+            let response = await fetch('https://cse120-course-planner.herokuapp.com/api/auth/token/refresh', {
+                method: 'POST',
+                body: JSON.stringify({refresh: auth.refresh}),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            response = await response.json();
+            runInAction(() => {
+                this.auth.token = response.access;
+            });
+            localStorage.setItem("auth", JSON.stringify(this.auth));
         }
     };
     logout = () => {

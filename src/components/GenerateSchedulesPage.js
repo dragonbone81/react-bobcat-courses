@@ -8,6 +8,10 @@ import ScheduleControls from './ScheduleControls'
 import {inject, observer} from "mobx-react/index";
 
 class GenerateSchedulesPage extends Component {
+    componentDidMount() {
+        document.title = "BobcatCourses | Search";
+    }
+
     render() {
         return (
             <div className="flex-container">

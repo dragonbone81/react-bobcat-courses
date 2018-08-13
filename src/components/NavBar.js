@@ -39,7 +39,6 @@ class NavBar extends Component {
         const {activeItem} = this.state;
         const isMobile = this.state.windowWidth <= 500;
         return (
-
             <div style={{marginBottom: 10}}>
                 <SideBar hideSideBar={this.hideSideBar}
                          visible={this.state.sideBarOpen} navigate={this.handleItemClick}

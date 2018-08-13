@@ -12,6 +12,7 @@ const RedirectHome = () => {
     )
 };
 const NotFound = () => {
+    document.title = "BobcatCourses | Not Found";
     return (
         <div className="flex-container">
             <div className="column-calendar">

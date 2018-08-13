@@ -6,7 +6,8 @@ import ScheduleDisplaySection from './ScheduleDisplaySection'
 
 class SavedSchedules extends Component {
     componentDidMount() {
-        this.props.course_store.getSavedSchedules(this.props.auth_store.auth.token).then()
+        document.title = "BobcatCourses | Saved";
+        this.props.course_store.getSavedSchedules(this.props.auth_store.auth.token).then();
     }
 
     componentWillUnmount() {
