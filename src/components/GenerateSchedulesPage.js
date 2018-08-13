@@ -2,12 +2,21 @@ import React, {Component} from "react";
 import PropTypes from "prop-types";
 import ScheduleDisplaySection from './ScheduleDisplaySection'
 import GenerateSchedules from './GenerateSchedules'
+import OptionsModal from './OptionsModal'
 import CourseSearch from './CourseSearch'
 import CourseList from './CourseList'
 import ScheduleControls from './ScheduleControls'
-import {inject, observer} from "mobx-react/index";
+import {Icon} from 'semantic-ui-react'
+import {inject, observer} from "mobx-react";
 
 class GenerateSchedulesPage extends Component {
+    state = {
+        modalOpen: false,
+    };
+    changeModalState = () => {
+        this.setState({modalOpen: !this.state.modalOpen})
+    };
+
     componentDidMount() {
         document.title = "BobcatCourses | Search";
     }
@@ -15,6 +24,11 @@ class GenerateSchedulesPage extends Component {
     render() {
         return (
             <div className="flex-container">
+                <OptionsModal open={this.state.modalOpen}
+                              changeModalState={this.changeModalState}/>
+                <div className="cog-setting-icon">
+                    <Icon style={{cursor: 'pointer'}} onClick={this.changeModalState} name="cog"/>
+                </div>
                 <div className="column-search">
                     <CourseSearch/>
                     <CourseList/>

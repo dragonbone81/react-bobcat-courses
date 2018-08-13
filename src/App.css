@@ -33,10 +33,17 @@
     }
 }
 
+@media screen and (max-width: 390px) {
+    .column-search {
+        max-width: 240px;
+    }
+}
+
 .column-calendar {
     flex-grow: 4;
 }
-.saved-schedules-label{
+
+.saved-schedules-label {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -45,6 +52,7 @@
     font-size: 25px;
     color: #505050;
 }
+
 .schedule-button-controls {
     display: flex;
     flex-direction: row;
@@ -126,4 +134,19 @@
     border-radius: 4px;
     color: #505e6c;
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.cog-setting-icon {
+    position: absolute;
+    right: 10px;
+    top: 80px;
+    font-size: 30px;
+}
+@media screen and (max-width: 420px) {
+    .cog-setting-icon {
+        position: absolute;
+        right: 10px;
+        top: 75px;
+        font-size: 20px;
+    }
 }
