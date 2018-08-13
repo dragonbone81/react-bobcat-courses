@@ -37,13 +37,14 @@ class NavBar extends Component {
 
     render() {
         const {activeItem} = this.state;
-        const isMobile = this.state.windowWidth <= 500;
+        const isMobile = this.state.windowWidth <= 590;
         return (
             <div style={{marginBottom: 10}}>
                 <SideBar logout={this.props.auth_store.logout} isLoggedIn={this.props.auth_store.isLoggedIn}
                          hideSideBar={this.hideSideBar}
                          visible={this.state.sideBarOpen} navigate={this.handleItemClick}
-                         activeItem={this.state.activeItem}/>
+                         activeItem={this.state.activeItem}
+                         isMobile={isMobile}/>
                 {!isMobile ?
                     <Menu>
                         <Menu.Item name='/schedules/search'
@@ -60,6 +61,11 @@ class NavBar extends Component {
                             active={activeItem === '/schedules/saved'}
                             onClick={this.handleItemClick}
                         >Saved Schedules</Menu.Item>
+                        <Menu.Item
+                            name='/schedules/waitlists'
+                            active={activeItem === '/schedules/waitlists'}
+                            onClick={this.handleItemClick}
+                        >Waitlists</Menu.Item>
                         <Menu.Menu position='right'>
                             {this.props.auth_store.isLoggedIn ?
                                 <Menu.Item
