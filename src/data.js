@@ -23,5 +23,5 @@ const timesArr = ['7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm',
 
 const daysArr = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
 const daysMap = {'Mon': 'M', 'Tue': 'T', 'Wed': 'W', 'Thu': 'R', 'Fri': 'F'};
-const colors = ['#ff7575', '#ffe575', '#bdff91', '#b3fff2', '#91b5ff', '#ebaaff', '#f993b9'];
+const colors = ['#fe9001', '#ff7575', '#ffe575', '#bdff91', '#b3fff2', '#91b5ff', '#ebaaff', '#f993b9', '#edd5cd'];
 export {timesMap, timesArr, daysMap, daysArr, colors};

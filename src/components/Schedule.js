@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Section from './Section'
 import './Schedule.css'
+import {List, Header} from 'semantic-ui-react'
 import {timesMap, timesArr, daysMap, daysArr, colors} from "../data";
 
 class Schedule extends Component {
@@ -48,6 +49,26 @@ class Schedule extends Component {
                         )
                     })}
                 </div>
+                <div>
+                    <List celled relaxed>
+                        <Header size='large'>Sections</Header>
+                        {this.props.sections.map((section) => {
+                            return <List.Item key={section.crn}>
+                                <List.Content>
+                                    <List.Header
+                                        target="_blank"
+                                        href={`https://mystudentrecord.ucmerced.edu/pls/PROD/xhwschedule.P_ViewCrnDetail?subjcode=${section.course_id.split('-')[0]}&validterm=${201830}&crn=${section.crn}&crsenumb=${section.course_id.split('-')[1]}`}
+                                        as='a'>{section.course_id}</List.Header>
+                                    <List.Description>
+                                        {section.course_name + (section.course_id.endsWith('L') ? ' Lab' : section.course_id.endsWith('D') ? ' Discussion' : '')}
+                                        {(section.days === ' ' || section.hours === 'TBD-TBD') ?
+                                            <div><i>(No time for section, probably online)</i></div> : null}
+                                    </List.Description>
+                                </List.Content>
+                            </List.Item>
+                        })}
+                    </List>
+                </div>
             </div>
         )
     }
@@ -63,7 +84,7 @@ class Schedule extends Component {
     }, {});
 
     getSectionsForDay = (sections, day) => {
-        return sections.filter((section) => section.days.includes(day)).map((section) => {
+        return sections.filter((section) => section.days.includes(day) && section.hours !== 'TBD-TBD').map((section) => {
             const hours = section.hours.split('-');
             const hoursInt = hours.map((hour) => parseInt(hour.split(":").join(""), 10));
             if (hours[1].includes("pm")) {
