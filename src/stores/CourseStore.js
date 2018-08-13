@@ -39,6 +39,12 @@ class CourseStore {
     };
     removeCourse = (courseToRemove) => {
         this.courses = this.courses.filter((course) => course !== courseToRemove);
+        if (this.courses.length === 0){
+            this.schedules = [];
+            this.noSchedulesFound = false;
+        } else {
+            this.scheduleSearch().then();
+        }
     };
 
     get getSchedule() {
@@ -87,7 +93,12 @@ class CourseStore {
                 body: JSON.stringify({
                     course_list: this.courses,
                     term: this.selectedTermGenerateSchedule,
-                    search_full: this.full
+                    search_full: this.full,
+                    filters: true,
+                    gaps: this.gaps,
+                    days: this.days,
+                    earliest_time: this.selectedEarliestTime === 'null' ? null : parseInt(this.selectedEarliestTime, 10),
+                    latest_time: this.selectedLatestTime === 'null' ? null : parseInt(this.selectedLatestTime, 10),
                 }),
                 headers: {
                     "Content-Type": "application/json",

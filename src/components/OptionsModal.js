@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Button, Form, Input, Checkbox, Modal} from 'semantic-ui-react'
+import {Form, Checkbox, Modal} from 'semantic-ui-react'
 import {inject, observer} from "mobx-react/index";
 
 class OptionsModal extends Component {
