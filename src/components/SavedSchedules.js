@@ -32,10 +32,13 @@ class SavedSchedules extends Component {
                                                     scheduleObjectsToArray={this.scheduleObjectsToArray}/>
                         </div>
                         :
-                        <div style={{maxWidth: '500px', margin: 'auto', marginBottom: 10, marginTop: 10}}
-                             className="ui warning message">
-                            <div style={{textAlign: 'center'}} className="header">
-                                Please Login
+                        <div>
+                            <div className="saved-schedules-label">Your saved schedules</div>
+                            <div style={{maxWidth: '500px', margin: 'auto', marginBottom: 10, marginTop: 10}}
+                                 className="ui warning message">
+                                <div style={{textAlign: 'center'}} className="header">
+                                    Please Login
+                                </div>
                             </div>
                         </div>
                     }

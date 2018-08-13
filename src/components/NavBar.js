@@ -40,7 +40,8 @@ class NavBar extends Component {
         const isMobile = this.state.windowWidth <= 500;
         return (
             <div style={{marginBottom: 10}}>
-                <SideBar hideSideBar={this.hideSideBar}
+                <SideBar logout={this.props.auth_store.logout} isLoggedIn={this.props.auth_store.isLoggedIn}
+                         hideSideBar={this.hideSideBar}
                          visible={this.state.sideBarOpen} navigate={this.handleItemClick}
                          activeItem={this.state.activeItem}/>
                 {!isMobile ?
@@ -54,16 +55,9 @@ class NavBar extends Component {
                             active={activeItem === '/schedules/saved'}
                             onClick={this.handleItemClick}
                         >Saved Schedules</Menu.Item>
-                        <Menu.Item
-                            name='/friends'
-                            active={activeItem === '/friends'}
-                            onClick={this.handleItemClick}
-                        >Friends</Menu.Item>
                         <Menu.Menu position='right'>
                             {this.props.auth_store.isLoggedIn ?
                                 <Menu.Item
-                                    name='/logout'
-                                    active={activeItem === '/logout'}
                                     onClick={this.props.auth_store.logout}
                                 >Logout</Menu.Item>
                                 :
@@ -77,7 +71,7 @@ class NavBar extends Component {
                     </Menu>
                     :
                     <Menu>
-                        <Menu.Item name='/schedules/search'
+                        <Menu.Item active={activeItem === '/schedules/search'} name='/schedules/search'
                                    onClick={this.handleItemClick}>
                             <img style={{paddingRight: 10}} width="500" alt="logo" src={logo}/> BobcatCourses
                         </Menu.Item>
