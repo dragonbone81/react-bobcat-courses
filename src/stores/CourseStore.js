@@ -25,21 +25,42 @@ class CourseStore {
     selectedEarliestTime = 'null';
     earliestTimes = [
         {text: 'Earliest?', value: 'null'},
+        {text: '7:30am', value: '730'},
         {text: '8:00am', value: '800'},
         {text: '8:30am', value: '830'},
+        {text: '9:00am', value: '900'},
+        {text: '9:30am', value: '930'},
+        {text: '10:00am', value: '1000'},
+        {text: '10:30am', value: '1030'},
+        {text: '11:00am', value: '1100'},
+        {text: '11:30am', value: '1130'},
+        {text: '12:00pm', value: '1200'},
     ];
     selectedLatestTime = 'null';
     latestTimes = [
         {text: 'Latest?', value: 'null'},
+        {text: '3:00pm', value: '1500'},
+        {text: '3:30pm', value: '1530'},
+        {text: '4:00pm', value: '1600'},
+        {text: '4:30pm', value: '1630'},
         {text: '5:00pm', value: '1700'},
         {text: '5:30pm', value: '1730'},
+        {text: '6:00pm', value: '1800'},
+        {text: '6:30pm', value: '1830'},
+        {text: '7:00pm', value: '1900'},
+        {text: '7:30pm', value: '1930'},
+        {text: '8:00pm', value: '2000'},
+        {text: '8:30pm', value: '2030'},
+        {text: '9:00pm', value: '2100'},
+        {text: '9:30pm', value: '2130'},
+        {text: '10:00pm', value: '2200'},
     ];
     addCourse = (course) => {
         this.courses.push(course);
     };
     removeCourse = (courseToRemove) => {
         this.courses = this.courses.filter((course) => course !== courseToRemove);
-        if (this.courses.length === 0){
+        if (this.courses.length === 0) {
             this.schedules = [];
             this.noSchedulesFound = false;
         } else {
