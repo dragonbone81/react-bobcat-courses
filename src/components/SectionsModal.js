@@ -40,7 +40,7 @@ class SectionsModal extends Component {
                                         <Table.Cell><Checkbox
                                             checked={section.selected}/></Table.Cell>
                                         <Table.Cell>{section.course_id.split('-')[2] + ' ' + section.type}</Table.Cell>
-                                        <Table.Cell>{section.available + ' / ' + section.capacity}</Table.Cell>
+                                        <Table.Cell>{section.enrolled + ' / ' + section.capacity}</Table.Cell>
                                         <Table.Cell>{section.hours}</Table.Cell>
                                         <Table.Cell>{section.days}</Table.Cell>
                                         <Table.Cell>{section.instructor}</Table.Cell>

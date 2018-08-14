@@ -36,7 +36,7 @@ const SectionPopup = (props) => {
                     </List.Item>
                     <List.Item>
                         <List.Description>
-                            Enrolled: {props.clickedSectionInfo.available} / {props.clickedSectionInfo.capacity}
+                            Enrolled: {props.clickedSectionInfo.enrolled} / {props.clickedSectionInfo.capacity}
                         </List.Description>
                     </List.Item>
                 </List>
