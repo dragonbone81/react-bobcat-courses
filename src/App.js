@@ -33,7 +33,6 @@ class App extends Component {
     render() {
         return (
             <div className="main-container">
-                <div className="top-div"/>
                 <NavBar/>
                 <ToastContainer
                     position="top-right"
