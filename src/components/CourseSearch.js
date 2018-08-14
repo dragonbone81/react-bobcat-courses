@@ -8,14 +8,14 @@ class CourseSearch extends Component {
     state = {
         options: [],
         loading: false,
-        minCharacters: 3,
+        minCharacters: 1,
         value: '',
         placeholder: 'Add Courses',
         error: false,
     };
 
     handleSearchChange = (e, {searchQuery}) => {
-        if (searchQuery.length >= 3) {
+        if (searchQuery.length >= 1) {
             this.setState({loading: true});
             this.props.course_store.getOptions(searchQuery).then((response) => {
                     this.setState({
