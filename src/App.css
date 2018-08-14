@@ -101,9 +101,43 @@
     text-align: center;
 }
 
-.generate-button {
-    max-width: 100%;
-    text-align: center;
+.save-button-control.button {
+    color: #2a2a2a;
+    background-color: #5cc1b3;
+}
+
+.save-button-control.button:hover {
+    color: #2a2a2a;
+    background-color: #60c9ba;
+}
+
+.remove-button.button {
+    color: #2a2a2a;
+    background-color: #ff6b7a;
+}
+
+.remove-button.button:hover {
+    background-color: #ff747e;
+}
+
+.section-button.button {
+    color: #fafafa;
+    background-color: #757882;
+}
+
+.section-button.button:hover {
+    color: #fafafa;
+    background-color: #7a7d87;
+}
+
+.generate-button.button {
+    color: #2a2a2a;
+    background-color: #6ef7c8;
+}
+
+.generate-button.button:hover {
+    color: #2a2a2a;
+    background-color: #71ffce;
 }
 
 .ui.button.brown {

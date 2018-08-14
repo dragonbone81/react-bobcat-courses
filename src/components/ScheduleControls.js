@@ -27,12 +27,13 @@ class ScheduleControls extends Component {
                 {this.props.isLoggedIn ?
                     this.props.scheduleType === 'generate' ?
                         <div className="delete-option">
-                            <Button loading={this.props.buttonActionRunning} onClick={this.props.buttonAction}
+                            <Button className="save-button-control" loading={this.props.buttonActionRunning}
+                                    onClick={this.props.buttonAction}
                                     color="teal">Save</Button>
                         </div>
                         : this.props.scheduleType === 'saved' ?
                         <div className="delete-option">
-                            <Button loading={this.props.buttonActionRunning} onClick={this.props.buttonAction}
+                            <Button className="save-button-control" loading={this.props.buttonActionRunning} onClick={this.props.buttonAction}
                                     color="pink">Delete</Button>
                         </div>
                         : null
