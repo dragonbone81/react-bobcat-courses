@@ -19,7 +19,7 @@ class GenerateSchedulesPage extends Component {
     };
     changeSectionsModalState = () => {
         if (this.state.sectionsModalOpen) {
-            this.setState({sectionSelectedForModal: ''})
+            this.setState({sectionSelectedForModal: ''});
             this.props.course_store.filterOptionsChangedRegenerate();
         }
         this.setState({sectionsModalOpen: !this.state.sectionsModalOpen})
@@ -78,7 +78,7 @@ class GenerateSchedulesPage extends Component {
                 <SectionsModal section={this.state.sectionSelectedForModal} open={this.state.sectionsModalOpen}
                                changeModalState={this.changeSectionsModalState}/>
                 <div className="cog-setting-icon">
-                    <Icon style={{cursor: 'pointer'}} onClick={this.changeModalState} name="cog"/>
+                    <Icon style={{cursor: 'pointer'}} onClick={this.changeModalState} name="edit"/>
                 </div>
                 <div style={{textAlign: 'center', marginTop: 5}} className="column-search">
                     <Header

@@ -128,8 +128,12 @@
 .cog-setting-icon {
     position: absolute;
     right: 0;
-    top: 10px;
-    font-size: 30px;
+    top: 7px;
+    font-size: 25px;
+}
+
+.cog-setting-icon:hover {
+    transform: scale(1.1);
 }
 
 @media screen and (max-width: 420px) {
