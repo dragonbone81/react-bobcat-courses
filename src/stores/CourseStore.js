@@ -122,6 +122,21 @@ class CourseStore {
 
     scheduleSearch = async () => {
         if (this.courses.length > 0) {
+            /// this is for the backend returning the lecture even when the other courses are full but selected
+            const badCRNS = this.sectionsObjToArrBadCRNS();
+            if (!this.full) {
+                for (let course of Object.keys(this.sections)) {
+                    let totalSeatsNonLecture = 0;
+                    this.sections[course].forEach((section) => {
+                        if (section.selected && section.type !== 'LECT')
+                            totalSeatsNonLecture += section.available;
+                    });
+                    if (totalSeatsNonLecture === 0) {
+                        this.sections[course].forEach((section) => badCRNS.push(section.crn));
+                    }
+
+                }
+            }
             runInAction(() => this.searching = true);
             let response = await fetch('https://cse120-course-planner.herokuapp.com/api/courses/schedule-search/', {
                 method: 'POST',
@@ -132,7 +147,7 @@ class CourseStore {
                     filters: true,
                     gaps: this.gaps,
                     days: this.days,
-                    bad_crns: this.sectionsObjToArrBadCRNS(),
+                    bad_crns: badCRNS,
                     earliest_time: this.selectedEarliestTime === 'null' ? null : parseInt(this.selectedEarliestTime, 10),
                     latest_time: this.selectedLatestTime === 'null' ? null : parseInt(this.selectedLatestTime, 10),
                 }),
@@ -155,7 +170,8 @@ class CourseStore {
                     this.currentIndex = 0;
                 });
             }
-        } else {
+        }
+        else {
             runInAction(() => this.schedules = []);
         }
     };
