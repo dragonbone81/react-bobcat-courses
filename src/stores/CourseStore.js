@@ -260,7 +260,7 @@ class CourseStore {
             method: 'POST',
             body: JSON.stringify({
                 term: this.selectedTermGenerateSchedule,
-                crns: this.scheduleObjectsToArray(this.getSchedule).map((section) => section.crn),
+                crns: this.scheduleObjectsToArray(this.getSchedule).filter((section) => section).map((section) => section.crn),
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -277,7 +277,7 @@ class CourseStore {
 
     deleteSchedule = async token => {
         runInAction(() => this.deletingSchedule = true);
-        const sections = this.scheduleObjectsToArray(this.getSavedSchedule);
+        const sections = this.scheduleObjectsToArray(this.getSavedSchedule).filter((section) => section);
         let response = await fetch('https://cse120-course-planner.herokuapp.com/api/users/delete-schedule/', {
             method: 'POST',
             body: JSON.stringify({

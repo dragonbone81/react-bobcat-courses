@@ -88,7 +88,8 @@ class Schedule extends Component {
                     <List celled relaxed>
                         <Header size='large'>Sections</Header>
                         {this.props.sections.map((section) => {
-                            return <List.Item key={section.crn}>
+                            //added section check for courses like BIO1L that don't have lecture
+                            return section ? <List.Item key={section.crn}>
                                 <List.Content>
                                     <List.Header
                                         target="_blank"
@@ -104,7 +105,7 @@ class Schedule extends Component {
                                             <div><i>(No time for section, probably online)</i></div> : null}
                                     </List.Description>
                                 </List.Content>
-                            </List.Item>
+                            </List.Item> : null
                         })}
                     </List>
                 </div>
@@ -117,13 +118,15 @@ class Schedule extends Component {
         return sectionList[0] + '-' + sectionList[1];
     };
     mapColors = (sections) => Array.from(new Set(sections.map(
-        (section) => this.splitSectionID(section.course_id)))).reduce((obj, section, index) => {
+        //added section check for classes like BIO1L that don't have a lecture
+        (section) => section ? this.splitSectionID(section.course_id) : []))).reduce((obj, section, index) => {
         obj[section] = colors[index];
         return obj;
     }, {});
 
     getSectionsForDay = (sections, day) => {
-        return sections.filter((section) => section.days.includes(day) && section.hours !== 'TBD-TBD').map((section) => {
+        //added section check for classes like BIO1L that don't have a lecture
+        return sections.filter((section) => section && section.days.includes(day) && section.hours !== 'TBD-TBD').map((section) => {
             const hours = section.hours.split('-');
             const hoursInt = hours.map((hour) => parseInt(hour.split(":").join(""), 10));
             if (hours[1].includes("pm")) {

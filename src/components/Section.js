@@ -12,6 +12,7 @@ const Section = (props) => {
             backgroundColor: props.color,
             height: props.height,
             display: 'block',
+            borderRadius: 5,
         }}>
             <div className="title"
                  style={{opacity: 1, fontSize: 14}}>{props.section.course_id}</div>
