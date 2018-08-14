@@ -10,10 +10,11 @@ class CourseSearch extends Component {
                 {this.props.course_store.courses.map((course) => {
                     return (
                         <div key={course} className="course-item">
-                                {course} :
+                            {course} :
                             <div className="course-list-options">
-                                <button className="ui button tiny teal"
-                                        >Sections
+                                <button onClick={() => this.props.openSectionsModal(course)}
+                                        className="ui button tiny teal"
+                                >Sections
                                 </button>
                                 <button onClick={() => this.props.course_store.removeCourse(course)}
                                         className="ui icon button tiny pink">

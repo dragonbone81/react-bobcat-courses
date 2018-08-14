@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import ScheduleDisplaySection from './ScheduleDisplaySection'
 import GenerateSchedules from './GenerateSchedules'
 import OptionsModal from './OptionsModal'
+import SectionsModal from './SectionsModal'
 import CourseSearch from './CourseSearch'
 import CourseList from './CourseList'
 import ScheduleControls from './ScheduleControls'
@@ -13,12 +14,25 @@ import {toast} from 'react-toastify';
 class GenerateSchedulesPage extends Component {
     state = {
         modalOpen: false,
+        sectionsModalOpen: false,
+        sectionSelectedForModal: '',
     };
+    changeSectionsModalState = () => {
+        if (this.state.sectionsModalOpen) {
+            this.setState({sectionSelectedForModal: ''})
+            this.props.course_store.filterOptionsChangedRegenerate();
+        }
+        this.setState({sectionsModalOpen: !this.state.sectionsModalOpen})
+    };
+
     changeModalState = () => {
         if (this.state.modalOpen) {
             this.props.course_store.filterOptionsChangedRegenerate();
         }
         this.setState({modalOpen: !this.state.modalOpen})
+    };
+    openSectionsModal = (section) => {
+        this.setState({sectionsModalOpen: true, sectionSelectedForModal: section})
     };
 
     componentDidMount() {
@@ -61,6 +75,8 @@ class GenerateSchedulesPage extends Component {
             <div className="flex-container">
                 <OptionsModal open={this.state.modalOpen}
                               changeModalState={this.changeModalState}/>
+                <SectionsModal section={this.state.sectionSelectedForModal} open={this.state.sectionsModalOpen}
+                               changeModalState={this.changeSectionsModalState}/>
                 <div className="cog-setting-icon">
                     <Icon style={{cursor: 'pointer'}} onClick={this.changeModalState} name="cog"/>
                 </div>
@@ -68,7 +84,7 @@ class GenerateSchedulesPage extends Component {
                     <Header
                         size='medium'>{this.props.course_store.terms.find((term) => term.value === this.props.course_store.selectedTermGenerateSchedule).text}</Header>
                     <CourseSearch/>
-                    <CourseList/>
+                    <CourseList openSectionsModal={this.openSectionsModal}/>
                     <GenerateSchedules scheduleSearch={this.props.course_store.scheduleSearch}/>
                 </div>
                 <div className="column-calendar">

@@ -13,6 +13,8 @@ class CourseStore {
     noSchedulesFound = false;
     savingSchedule = false;
     deletingSchedule = false;
+    gettingSections = false;
+    sections = {};
     gaps = null;
     days = null;
     full = false;
@@ -58,10 +60,12 @@ class CourseStore {
         {text: '10:00pm', value: '2200'},
     ];
     addCourse = (course) => {
+        this.getSections(course).then();
         this.courses.push(course);
     };
     removeCourse = (courseToRemove) => {
         this.courses = this.courses.filter((course) => course !== courseToRemove);
+        delete this.sections[courseToRemove];
         if (this.courses.length === 0) {
             this.schedules = [];
             this.noSchedulesFound = false;
@@ -92,6 +96,14 @@ class CourseStore {
         this.filterOptionsChanged = true;
     };
 
+    sectionsObjToArrBadCRNS = () => {
+        const crns = [];
+        for (let course of Object.keys(this.sections)) {
+            this.sections[course].forEach((section) => section.selected ? null : crns.push(section.crn))
+        }
+        return crns;
+    };
+
     scrollSavedSchedules = (way) => {
         if (this.savedSchedules.length > 0) {
             way === -1 ? this.currentSavedIndex = (this.currentSavedIndex - 1 < 0) ? (this.savedSchedules.length - 1) : (this.currentSavedIndex - 1)
@@ -120,6 +132,7 @@ class CourseStore {
                     filters: true,
                     gaps: this.gaps,
                     days: this.days,
+                    bad_crns: this.sectionsObjToArrBadCRNS(),
                     earliest_time: this.selectedEarliestTime === 'null' ? null : parseInt(this.selectedEarliestTime, 10),
                     latest_time: this.selectedLatestTime === 'null' ? null : parseInt(this.selectedLatestTime, 10),
                 }),
@@ -170,6 +183,58 @@ class CourseStore {
                 this.savedSchedules = [];
                 this.searchingSaved = false;
             });
+        }
+    };
+
+    changeSectionSelection = (index, courseID, value) => {
+        this.filterOptionsChanged = true;
+        this.sections[courseID][index].selected = value;
+        if (this.sections[courseID][index].attached_crn) {
+            const foundIndex = this.sections[courseID].findIndex((section) => section.crn === this.sections[courseID][index].attached_crn);
+            this.sections[courseID][foundIndex].selected = value;
+        }
+        else if (this.sections[courseID][index].linked_courses) {
+            this.sections[courseID][index].linked_courses.forEach((crn) => {
+                const foundIndex = this.sections[courseID].findIndex((section) => section.crn === crn);
+                this.sections[courseID][foundIndex].selected = value;
+            })
+        }
+        if (this.sections[courseID][index].lecture_crn && !value) {
+            const lectureIndex = this.sections[courseID].findIndex((section) => section.crn === this.sections[courseID][index].lecture_crn);
+            const allDeselected = this.sections[courseID][lectureIndex].linked_courses.every((crn) => {
+                const linkedIndex = this.sections[courseID].findIndex((section) => section.crn === crn);
+                return !this.sections[courseID][linkedIndex].selected;
+            });
+            if (allDeselected)
+                this.sections[courseID][lectureIndex].selected = false;
+        }
+        if (this.sections[courseID][index].lecture_crn && value) {
+            const lectureIndex = this.sections[courseID].findIndex((section) => section.crn === this.sections[courseID][index].lecture_crn);
+            this.sections[courseID][lectureIndex].selected = true;
+        }
+    };
+
+    getSections = async sectionID => {
+        if (!(sectionID in this.sections)) {
+            runInAction(() => this.gettingSections = true);
+            let response = await fetch('https://cse120-course-planner.herokuapp.com/api/courses/course-match/', {
+                method: 'POST',
+                body: JSON.stringify({
+                    course_list: [sectionID],
+                    term: this.selectedTermGenerateSchedule,
+                }),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+            });
+            response = await response.json();
+            runInAction(() => this.gettingSections = false);
+            if (response[sectionID])
+                runInAction(() => this.sections[sectionID] = response[sectionID].map((section) => {
+                    return {...section, selected: true}
+                }).sort((a, b) => {
+                    return parseInt(a.course_id.split('-')[2], 10) - parseInt(b.course_id.split('-')[2], 10);
+                }));
         }
     };
 
@@ -270,6 +335,7 @@ class CourseStore {
 
 decorate(CourseStore, {
     courses: observable,
+    sections: observable,
     savingSchedule: observable,
     deletingSchedule: observable,
     searching: observable,
@@ -278,6 +344,7 @@ decorate(CourseStore, {
     savedSchedules: observable,
     currentIndex: observable,
     currentSavedIndex: observable,
+    gettingSections: observable,
     gaps: observable,
     days: observable,
     terms: observable,
@@ -297,11 +364,13 @@ decorate(CourseStore, {
     scheduleSearch: action,
     scrollSchedules: action,
     getSavedSchedules: action,
+    getSections: action,
     scrollSavedSchedules: action,
     unmountSavedSchedules: action,
     changeSelectedEarliestTime: action,
     changeSelectedLatestTime: action,
     changeFilterOptionsChanged: action,
+    changeSectionSelection: action,
     saveSchedule: action,
     deleteSchedule: action,
     getSchedule: computed,
