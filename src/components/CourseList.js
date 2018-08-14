@@ -13,7 +13,7 @@ class CourseSearch extends Component {
                             {course} :
                             <div className="course-list-options">
                                 <button onClick={() => this.props.openSectionsModal(course)}
-                                        className="ui button tiny teal"
+                                        className="ui button tiny grey"
                                 >Sections
                                 </button>
                                 <button onClick={() => this.props.course_store.removeCourse(course)}

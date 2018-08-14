@@ -40,7 +40,7 @@ class CourseSearch extends Component {
     };
 
     render() {
-        const {error, options, loading, minCharacters, value, placeholder} = this.state;
+        const {options, loading, minCharacters, value, placeholder} = this.state;
         return (
             <div>
                 <Dropdown
@@ -56,7 +56,6 @@ class CourseSearch extends Component {
                     value={value}
                     minCharacters={minCharacters}
                     selectOnNavigation={false}
-                    error={error}
                     {...this.props}
                 />
                 {this.state.error ? <p>Course already entered</p> : null}
