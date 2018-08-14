@@ -8,11 +8,12 @@ const Section = (props) => {
             position: 'absolute',
             zIndex: 1,
             top: props.top,
-            borderLeft: '3px solid black',
+            borderLeft: '1px solid gray',
             backgroundColor: props.color,
             height: props.height,
             display: 'block',
             borderRadius: 5,
+            cursor: 'pointer'
         }}>
             <div className="title"
                  style={{opacity: 1, fontSize: 14}}>{props.section.course_id}</div>
