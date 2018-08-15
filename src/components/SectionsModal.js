@@ -21,7 +21,7 @@ class SectionsModal extends Component {
                             <Table.Row>
                                 <Table.HeaderCell/>
                                 <Table.HeaderCell>Section</Table.HeaderCell>
-                                <Table.HeaderCell>Spots</Table.HeaderCell>
+                                <Table.HeaderCell>Enrolled</Table.HeaderCell>
                                 <Table.HeaderCell>Time</Table.HeaderCell>
                                 <Table.HeaderCell>Days</Table.HeaderCell>
                                 <Table.HeaderCell>Professor</Table.HeaderCell>

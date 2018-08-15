@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import NavBar from './components/NavBar'
 import Login from './components/Login'
+import Register from './components/Register'
 import SavedSchedules from './components/SavedSchedules'
 import GenerateSchedulesPage from './components/GenerateSchedulesPage'
 import {ToastContainer} from 'react-toastify';
@@ -51,6 +52,7 @@ class App extends Component {
                     <Route exact path='/schedules' component={RedirectHome}/>
                     <Route exact path='/schedules/saved' component={SavedSchedules}/>
                     <Route exact path='/login' component={Login}/>
+                    <Route exact path='/register' component={Register}/>
                     <Route component={NotFound}/>
                 </Switch>
 

@@ -32,6 +32,13 @@ class Schedule extends Component {
         });
         this.handlePopupOpen();
     };
+    mouseLeave = () => {
+        this.setState({
+            clickedSection: null,
+            clickedSectionInfo: {},
+            popUpOpen: false,
+        });
+    };
     findSectionByCRN = (crn) => {
         return this.props.sections.find((section) => section.crn === crn);
     };
@@ -102,11 +109,13 @@ class Schedule extends Component {
                                             section.course_name + (section.course_id.endsWith('L') ? ' Lab' : section.course_id.endsWith('D') ? ' Discussion' : '')}
                                         {(section.available <= 0 ? ' (Full)' : '')}
                                         {(section.days === ' ' || section.hours === 'TBD-TBD') ?
-                                            <div><i>(No time for section, probably online)</i></div> : null}
+                                            <div><i>(No time for section, probably online)</i>
+                                            </div> : null} ({section.crn})
                                     </List.Description>
                                 </List.Content>
                             </List.Item> : null
                         })}
+                        <List.Item>CRN's: {this.props.sections.map((section, index) => (section.crn + (index === this.props.sections.length - 1 ? '' : ', ')))}</List.Item>
                     </List>
                 </div>
             </div>

@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Message, Button, Form} from 'semantic-ui-react'
 import {inject, observer} from "mobx-react/index";
 import PropTypes from "prop-types";
-import {withRouter} from "react-router-dom";
+import {withRouter, Link} from "react-router-dom";
 
 
 class Login extends Component {
@@ -102,6 +102,8 @@ class Login extends Component {
                         </div>
                     }
                 </Form>
+                <br/>
+                <p>Not Register? <Link to="/register">Register here.</Link></p>
             </div>
         )
     }

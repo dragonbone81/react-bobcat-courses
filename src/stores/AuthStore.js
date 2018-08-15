@@ -74,6 +74,28 @@ class AuthStore {
         this.isLoggedIn = false;
         localStorage.removeItem('auth');
     };
+    register = async (user) => {
+        let response = await fetch('https://cse120-course-planner.herokuapp.com/api/register/', {
+            method: 'POST',
+            body: JSON.stringify(user),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        response = await response.json();
+        if (!(response.user && response.api_keys)) {
+            return {error: 'Error Registering.'}
+        } else {
+            runInAction(() => {
+                this.auth.token = response.api_keys.access;
+                this.auth.refresh = response.api_keys.refresh;
+                this.isLoggedIn = true;
+            });
+            localStorage.setItem("auth", JSON.stringify(this.auth));
+            this.getUserInfo().then();
+            return {success: true, ...response}
+        }
+    };
     login = async (auth) => {
         let response = await fetch('https://cse120-course-planner.herokuapp.com/api/auth/token/obtain', {
             method: 'POST',
@@ -104,6 +126,7 @@ decorate(AuthStore, {
     user: observable,
     loggingIn: observable,
     login: action,
+    register: action,
     logout: action,
     hydrateStoreWithLocalStorage: action,
     getAuthWithRefresh: action,
