@@ -89,11 +89,13 @@ class Login extends Component {
                         :
                         <div>
                             <Form.Field>
-                                <input onChange={this.handleUsernameChange} value={this.state.username}
+                                <input autoComplete="on" type="text" autoCorrect="off" autoCapitalize="none"
+                                       onChange={this.handleUsernameChange} value={this.state.username}
                                        placeholder='Username...'/>
                             </Form.Field>
                             <Form.Field>
-                                <input onChange={this.handlePasswordChange} value={this.state.password}
+                                <input autoComplete="on" onChange={this.handlePasswordChange}
+                                       value={this.state.password}
                                        placeholder='Password...' type="password"/>
                             </Form.Field>
                             <Form.Field>
@@ -103,7 +105,7 @@ class Login extends Component {
                     }
                 </Form>
                 <br/>
-                <p>Not Register? <Link to="/register">Register here.</Link></p>
+                <p>Not Registered? <Link to="/register">Register here.</Link></p>
             </div>
         )
     }

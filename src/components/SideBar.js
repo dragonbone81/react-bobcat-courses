@@ -35,7 +35,7 @@ export default class SideNavBar extends Component {
                             <Icon name='save'/>
                             Saved Schedules
                         </Menu.Item>
-                        <Menu.Item name="/schedules/waitlists" active={this.props.activeItem === '/schedules/waitlists'}
+                        <Menu.Item name="/waitlists" active={this.props.activeItem === '/waitlists'}
                                    onClick={this.props.navigate}>
                             <Icon name='phone'/>
                             Waitlists

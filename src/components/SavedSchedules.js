@@ -9,7 +9,8 @@ import {toast} from "react-toastify";
 class SavedSchedules extends Component {
     componentDidMount() {
         document.title = "BobcatCourses | Saved";
-        this.props.course_store.getSavedSchedules(this.props.auth_store.auth.token).then();
+        if (this.props.auth_store.isLoggedIn)
+            this.props.course_store.getSavedSchedules(this.props.auth_store.auth.token).then();
     }
 
     componentWillUnmount() {

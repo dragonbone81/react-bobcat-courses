@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Message, Button, Form} from 'semantic-ui-react'
 import {inject, observer} from "mobx-react/index";
 import PropTypes from "prop-types";
-import {withRouter} from "react-router-dom";
+import {withRouter, Link} from "react-router-dom";
 
 
 class Register extends Component {
@@ -90,7 +90,7 @@ class Register extends Component {
                         <div>
                             <Form.Group widths='equal'>
                                 <Form.Field>
-                                    <input onChange={({target}) => {
+                                    <input type="text" autoCorrect="off" autoCapitalize="none" onChange={({target}) => {
                                         this.setState({username: target.value})
                                     }} value={this.state.username}
                                            placeholder='Username...'/>
@@ -128,6 +128,8 @@ class Register extends Component {
                         </div>
                     }
                 </Form>
+                <br/>
+                <p>Already Registered? <Link to="/login">Login here.</Link></p>
             </div>
         )
     }
