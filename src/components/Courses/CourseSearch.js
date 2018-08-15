@@ -44,7 +44,7 @@ class CourseSearch extends Component {
         return (
             <div>
                 <Dropdown
-                    fluid
+                    // fluid
                     selection
                     multiple={false}
                     search={this.filterOutChosen}
@@ -56,7 +56,6 @@ class CourseSearch extends Component {
                     value={value}
                     minCharacters={minCharacters}
                     selectOnNavigation={false}
-                    {...this.props}
                 />
                 {this.state.error ? <p>Course already entered</p> : null}
             </div>

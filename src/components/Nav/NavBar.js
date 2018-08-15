@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Menu} from 'semantic-ui-react'
-import logo from '../logo/logo.png'
+import logo from '../../logo/logo.png'
 import SideBar from './SideBar'
 import {withRouter} from 'react-router-dom'
 import {inject, observer} from "mobx-react/index";

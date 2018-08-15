@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import NavBar from './components/NavBar'
-import Login from './components/Login'
-import Register from './components/Register'
-import Waitlists from "./components/Waitlists";
-import SavedSchedules from './components/SavedSchedules'
-import GenerateSchedulesPage from './components/GenerateSchedulesPage'
+import NavBar from './components/Nav/NavBar'
+import Login from './components/UserActions/Login'
+import Register from './components/UserActions/Register'
+import Waitlists from "./components/Waitlists/Waitlists";
+import SavedSchedules from './components/Main/SavedSchedules'
+import GenerateSchedulesPage from './components/Main/GenerateSchedulesPage'
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import './App.css'

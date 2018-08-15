@@ -20,6 +20,7 @@ class CourseStore {
     full = false;
     filterOptionsChanged = false;
     // selectedTermGenerateSchedule = 201910;
+    selectedTermWaitlists = 201830;
     selectedTermGenerateSchedule = 201830;
     terms = [
         // {text: 'Spring 2019', value: 201910},
@@ -72,6 +73,44 @@ class CourseStore {
         } else {
             this.scheduleSearch().then();
         }
+    };
+
+    getUsersWaitlists = async (token) => {
+        let response = await fetch('https://cse120-course-planner.herokuapp.com/api/users/waitlist/', {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+        });
+        response = await response.json();
+        return response
+    };
+
+    addToWaitlist = async (token, crn) => {
+        let response = await fetch('https://cse120-course-planner.herokuapp.com/api/users/notifications/', {
+            method: 'POST',
+            body: JSON.stringify({crn}),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+        });
+        response = await response.json();
+        return response;
+    };
+
+    removeFromWaitlist = async (token, crn) => {
+        let response = await fetch('https://cse120-course-planner.herokuapp.com/api/users/waitlist/', {
+            method: 'POST',
+            body: JSON.stringify({crn}),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${token}`,
+            },
+        });
+        response = await response.json();
+        return response;
     };
 
     get getSchedule() {
@@ -230,6 +269,26 @@ class CourseStore {
         }
     };
 
+    courseMatch = async sectionID => {
+        let response = await fetch('https://cse120-course-planner.herokuapp.com/api/courses/course-match/', {
+            method: 'POST',
+            body: JSON.stringify({
+                course_list: [sectionID],
+                term: this.selectedTermGenerateSchedule,
+            }),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        response = await response.json();
+        if (response[sectionID])
+            return this.sections[sectionID] = response[sectionID].map((section) => {
+                return {...section, selected: true}
+            }).sort((a, b) => {
+                return parseInt(a.course_id.split('-')[2], 10) - parseInt(b.course_id.split('-')[2], 10);
+            })
+    };
+
     getSections = async sectionID => {
         if (!(sectionID in this.sections)) {
             runInAction(() => this.gettingSections = true);
@@ -332,6 +391,9 @@ class CourseStore {
         this.currentIndex = 0;
         this.selectedTermGenerateSchedule = term;
     };
+    changeSelectedTermWaitlists = (term) => {
+        this.selectedTermWaitlists = term;
+    };
     changeSelectedEarliestTime = (time) => {
         this.selectedEarliestTime = time;
     };
@@ -368,9 +430,11 @@ decorate(CourseStore, {
     latestTimes: observable,
     full: observable,
     selectedTermGenerateSchedule: observable,
+    selectedTermWaitlists: observable,
     selectedEarliestTime: observable,
     selectedLatestTime: observable,
     changeSelectedTermGenerateSchedule: action,
+    changeSelectedTermWaitlists: action,
     changeSelectedDaysFilter: action,
     changeSelectedGapsFilter: action,
     changeSelectedFullFilter: action,

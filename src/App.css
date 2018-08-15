@@ -10,6 +10,36 @@
     border-radius: 5px;
     position: relative;
 }
+.list-content-red{
+    background-color: #e3726b;
+    border-radius: 5px;
+    padding:5px;
+    margin: 0;
+}
+.list-content-red-hover{
+    background-color: #ff827b;
+    border-radius: 5px;
+    padding:5px;
+    margin: 0;
+}
+.list-content-grey{
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    padding:5px;
+    margin: 0;
+}
+.list-content-green{
+    background-color: #a0e189;
+    border-radius: 5px;
+    padding:5px;
+    margin: 0;
+}
+.list-content-green-hover{
+    background-color: #b5ff9b;
+    border-radius: 5px;
+    padding:5px;
+    margin: 0;
+}
 
 .column-search {
     flex-grow: 1;

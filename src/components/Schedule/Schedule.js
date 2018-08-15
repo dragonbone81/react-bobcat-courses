@@ -4,7 +4,7 @@ import Section from './Section'
 import SectionPopup from './SectionPopup'
 import './Schedule.css'
 import {List, Header} from 'semantic-ui-react'
-import {timesMap, timesArr, daysMap, daysArr, colors} from "../data";
+import {timesMap, timesArr, daysMap, daysArr, colors} from "../../data";
 
 class Schedule extends Component {
     state = {

@@ -1,12 +1,12 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
-import ScheduleDisplaySection from './ScheduleDisplaySection'
+import ScheduleDisplaySection from '../Schedule/ScheduleDisplaySection'
 import GenerateSchedules from './GenerateSchedules'
-import OptionsModal from './OptionsModal'
-import SectionsModal from './SectionsModal'
-import CourseSearch from './CourseSearch'
-import CourseList from './CourseList'
-import ScheduleControls from './ScheduleControls'
+import OptionsModal from '../Modals/OptionsModal'
+import SectionsModal from '../Modals/SectionsModal'
+import CourseSearch from '../Courses/CourseSearch'
+import CourseList from '../Courses/CourseList'
+import ScheduleControls from '../Schedule/ScheduleControls'
 import {Icon, Header} from 'semantic-ui-react'
 import {inject, observer} from "mobx-react";
 import {toast} from 'react-toastify';

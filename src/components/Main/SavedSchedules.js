@@ -2,24 +2,30 @@ import React, {Component} from 'react'
 import PropTypes from "prop-types";
 import {inject, observer} from "mobx-react";
 import {observe} from 'mobx';
-import ScheduleControls from './ScheduleControls'
-import ScheduleDisplaySection from './ScheduleDisplaySection'
+import ScheduleControls from '../Schedule/ScheduleControls'
+import ScheduleDisplaySection from '../Schedule/ScheduleDisplaySection'
 import {toast} from "react-toastify";
 
 class SavedSchedules extends Component {
+    state = {
+        observeAuth: null
+    };
+
     componentDidMount() {
         document.title = "BobcatCourses | Saved";
         if (this.props.auth_store.isLoggedIn)
             this.props.course_store.getSavedSchedules(this.props.auth_store.auth.token).then();
+
+        const observeAuthChange = observe(this.props.auth_store.auth, "token", (change) => {
+            this.props.course_store.getSavedSchedules(this.props.auth_store.auth.token).then();
+        });
+        this.setState({observeAuth: observeAuthChange})
     }
 
     componentWillUnmount() {
         this.props.course_store.unmountSavedSchedules();
+        this.state.observeAuth();
     }
-
-    observeAuthChange = observe(this.props.auth_store.auth, "token", (change) => {
-        this.props.course_store.getSavedSchedules(this.props.auth_store.auth.token).then();
-    });
 
     deleteSchedule = async () => {
         const response = await this.props.course_store.deleteSchedule(this.props.auth_store.auth.token);

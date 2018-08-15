@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Form, Checkbox, Modal} from 'semantic-ui-react'
-import {inject, observer} from "mobx-react/index";
+import {inject, observer} from "mobx-react";
 
 class OptionsModal extends Component {
     onChangeTerm = (e, {value}) => {
