@@ -142,7 +142,7 @@ class Waitlists extends Component {
 
     render() {
         return (
-            <div className="flex-container">
+            <div className="flex-container" style={{paddingBottom:30}}>
                 {this.props.auth_store.isLoggedIn ?
                     <Container>
                         <Modal size='mini' open={this.state.modalOpen} onClose={this.changeModalState} closeIcon>
@@ -216,7 +216,8 @@ class Waitlists extends Component {
                                                                             <List.Description>
                                                                                 {this.state.addingToWaitlist && this.state.crnAddingToWaitlist === section.crn ?
                                                                                     <Icon size="large"
-                                                                                          name="spinner loading"/>
+                                                                                          name="spinner"
+                                                                                          loading/>
                                                                                     :
                                                                                     <Icon size="large"
                                                                                           name="arrow alternate circle right"/>
@@ -260,7 +261,8 @@ class Waitlists extends Component {
                                                                             <List.Description>
                                                                                 {this.state.removingFromWaitlist && this.state.crnRemovingFromWaitlist === section.course.crn ?
                                                                                     <Icon size="large"
-                                                                                          name="spinner loading"/>
+                                                                                          name="spinner"
+                                                                                          loading/>
                                                                                     :
                                                                                     <Icon size="large"
                                                                                           name="arrow alternate circle left"/>

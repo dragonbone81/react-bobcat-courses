@@ -10,34 +10,39 @@
     border-radius: 5px;
     position: relative;
 }
-.list-content-red{
+
+.list-content-red {
     background-color: #e3726b;
     border-radius: 5px;
-    padding:5px;
+    padding: 5px;
     margin: 0;
 }
-.list-content-red-hover{
+
+.list-content-red-hover {
     background-color: #ff827b;
     border-radius: 5px;
-    padding:5px;
+    padding: 5px;
     margin: 0;
 }
-.list-content-grey{
+
+.list-content-grey {
     background-color: #e0e0e0;
     border-radius: 5px;
-    padding:5px;
+    padding: 5px;
     margin: 0;
 }
-.list-content-green{
+
+.list-content-green {
     background-color: #a0e189;
     border-radius: 5px;
-    padding:5px;
+    padding: 5px;
     margin: 0;
 }
-.list-content-green-hover{
+
+.list-content-green-hover {
     background-color: #b5ff9b;
     border-radius: 5px;
-    padding:5px;
+    padding: 5px;
     margin: 0;
 }
 
@@ -174,7 +179,8 @@
     font-size: 30px;
     padding: 0 10px 0 10px;
 }
-.register-form{
+
+.register-form {
     max-width: 600px;
     display: flex;
     flex-direction: column;
@@ -189,6 +195,7 @@
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
+
 .login-form {
     max-width: 320px;
     display: flex;
