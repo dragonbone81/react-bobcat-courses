@@ -4,17 +4,20 @@ import ScheduleDisplaySection from '../Schedule/ScheduleDisplaySection'
 import GenerateSchedules from './GenerateSchedules'
 import OptionsModal from '../Modals/OptionsModal'
 import SectionsModal from '../Modals/SectionsModal'
+import CustomEventModal from '../Modals/CustomEventModal'
 import CourseSearch from '../Courses/CourseSearch'
 import CourseList from '../Courses/CourseList'
 import ScheduleControls from '../Schedule/ScheduleControls'
 import {Icon, Header} from 'semantic-ui-react'
 import {inject, observer} from "mobx-react";
 import {toast} from 'react-toastify';
+import {Button} from 'semantic-ui-react'
 
 class GenerateSchedulesPage extends Component {
     state = {
         modalOpen: false,
         sectionsModalOpen: false,
+        customEventModalOpen: false,
         sectionSelectedForModal: '',
     };
     changeSectionsModalState = () => {
@@ -79,6 +82,10 @@ class GenerateSchedulesPage extends Component {
                 draggable: true
             });
     };
+    addCustomEvent = () => {
+        console.log('event');
+        this.setState({customEventModalOpen: true})
+    };
 
     render() {
         return (
@@ -87,6 +94,8 @@ class GenerateSchedulesPage extends Component {
                               changeModalState={this.changeModalState}/>
                 <SectionsModal section={this.state.sectionSelectedForModal} open={this.state.sectionsModalOpen}
                                changeModalState={this.changeSectionsModalState}/>
+                {/*<CustomEventModal open={this.state.customEventModalOpen}*/}
+                                  {/*changeModalState={() => this.setState({customEventModalOpen: !this.state.customEventModalOpen})}/>*/}
                 <div className="cog-setting-icon">
                     <Icon style={{cursor: 'pointer'}} onClick={this.changeModalState} name="edit"/>
                 </div>
@@ -96,6 +105,9 @@ class GenerateSchedulesPage extends Component {
                     <CourseSearch/>
                     <CourseList openSectionsModal={this.openSectionsModal}/>
                     <GenerateSchedules scheduleSearch={this.props.course_store.scheduleSearch}/>
+                    {/*<div className="course-item">*/}
+                    {/*<Button onClick={this.addCustomEvent}>Add custom event</Button>*/}
+                    {/*</div>*/}
                 </div>
                 <div className="column-calendar">
                     <ScheduleControls searching={this.props.course_store.searching}

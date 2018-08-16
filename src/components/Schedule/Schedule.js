@@ -55,6 +55,12 @@ class Schedule extends Component {
         })
     }
 
+    onScheduleClick = (e) => {
+        // const x = e.clientX - e.currentTarget.getBoundingClientRect().left;
+        const y = e.clientY - e.currentTarget.getBoundingClientRect().top;
+        // console.log(y);
+    };
+
     render() {
         const timeSpan = timesArr.slice(timesMap[Math.floor(this.props.scheduleInfo.earliest / 100.0) * 100].index, timesMap[Math.ceil(this.props.scheduleInfo.latest / 100.0) * 100 + 100].index);
         return (
@@ -81,7 +87,7 @@ class Schedule extends Component {
                     </div>
                     {daysArr.map((day) => {
                         return (
-                            <div key={day} className="days-col">
+                            <div key={day} className="days-col" onClick={this.onScheduleClick}>
                                 {timeSpan.map((time, index) => <div key={time} className="day-col">
                                     {index === timeSpan.length - 1 ? <div className="end"/> :
                                         <div className="day-inside"/>}
