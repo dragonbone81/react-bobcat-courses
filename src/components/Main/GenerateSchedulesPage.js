@@ -50,6 +50,16 @@ class GenerateSchedulesPage extends Component {
                 pauseOnHover: true,
                 draggable: true
             });
+        if (response.type === 'already_exists') {
+            toast.warn(`Could not save Schedule (Schedule Already Exists) It is schedule number ${response.schedule_index + 1}`, {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true
+            });
+        }
         else if (response.error)
             toast.error('Could not save Schedule (Max Schedules reached)', {
                 position: "top-right",
