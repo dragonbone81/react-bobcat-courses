@@ -15,7 +15,8 @@
 
 .time-col {
     height: 45px;
-    padding-right: 5px;
+    padding-right: 10px;
+    text-align: right;
 }
 
 .day-inside {
@@ -44,17 +45,26 @@
     margin-right: 5px;
 }
 
-.time-name-col {
-    width: 8%;
-}
-
 .hour-slot {
     font-size: 14px;
+}
+.time-name-col {
+    width: 8%;
 }
 
 .times-col {
     width: 8%;
 }
-.schedule-inside-container{
+@media screen and (max-width: 505px) {
+    .time-name-col {
+        width: 13%;
+    }
+
+    .times-col {
+        width: 13%;
+    }
+}
+
+.schedule-inside-container {
     width: 100%;
 }
