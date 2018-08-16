@@ -51,7 +51,7 @@ class GenerateSchedulesPage extends Component {
                 draggable: true
             });
         if (response.type === 'already_exists') {
-            toast.warn(`Could not save Schedule (Schedule Already Exists) It is schedule number ${response.schedule_index + 1}`, {
+            toast.warn(`Could not save Schedule (Schedule Already Exists). It is schedule number ${response.schedule_index + 1}.`, {
                 position: "top-right",
                 autoClose: 3000,
                 hideProgressBar: false,
