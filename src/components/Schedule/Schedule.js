@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Section from './Section'
 import SectionPopup from './SectionPopup'
+import SectionsList from '../Courses/SectionsList'
 import './Schedule.css'
-import {List, Header} from 'semantic-ui-react'
 import {timesMap, timesArr, daysMap, daysArr, colors} from "../../data";
 
 class Schedule extends Component {
@@ -91,33 +91,7 @@ class Schedule extends Component {
                         )
                     })}
                 </div>
-                <div>
-                    <List celled relaxed>
-                        <Header size='large'>Sections</Header>
-                        {this.props.sections.map((section) => {
-                            //added section check for courses like BIO1L that don't have lecture
-                            return section ? <List.Item key={section.crn}>
-                                <List.Content>
-                                    <List.Header
-                                        target="_blank"
-                                        href={`https://mystudentrecord.ucmerced.edu/pls/PROD/xhwschedule.P_ViewCrnDetail?subjcode=${section.course_id.split('-')[0]}&validterm=${201830}&crn=${section.crn}&crsenumb=${section.course_id.split('-')[1]}`}
-                                        as='a'>{section.course_id}</List.Header>
-                                    <List.Description>
-                                        {section.available <= 0 ?
-                                            <del>{section.course_name + (section.course_id.endsWith('L') ? ' Lab' : section.course_id.endsWith('D') ? ' Discussion' : '')}</del>
-                                            :
-                                            section.course_name + (section.course_id.endsWith('L') ? ' Lab' : section.course_id.endsWith('D') ? ' Discussion' : '')}
-                                        {(section.available <= 0 ? ' (Full)' : '')}
-                                        {(section.days === ' ' || section.hours === 'TBD-TBD') ?
-                                            <div><i>(No time for section, probably online)</i>
-                                            </div> : null} ({section.crn})
-                                    </List.Description>
-                                </List.Content>
-                            </List.Item> : null
-                        })}
-                        <List.Item>CRN's: {this.props.sections.map((section, index) => (section.crn + (index === this.props.sections.length - 1 ? '' : ', ')))}</List.Item>
-                    </List>
-                </div>
+                <SectionsList sections={this.props.sections}/>
             </div>
         )
     }
