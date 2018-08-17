@@ -16,7 +16,7 @@ const Section = (props) => {
             color: '#5b5b5b'
         }}>
             <div className="title"
-                 style={{fontSize: 14}}>{props.section.course_id}</div>
+                 style={{fontSize: 14}}>{props.section.course_id ? props.section.course_id : props.section.event_name}</div>
         </div>
     )
 };

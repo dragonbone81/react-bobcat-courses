@@ -41,7 +41,7 @@ class Waitlists extends Component {
     handleSearch = async (e, {searchQuery}) => {
         if (searchQuery) {
             this.setState({searchValue: searchQuery, searching: true});
-            const response = await this.props.course_store.getOptions(searchQuery);
+            const response = await this.props.course_store.getOptionsWaitlist(searchQuery);
             this.setState({
                 searching: false, searchResults: response.slice(0, 10)
             });
@@ -56,7 +56,7 @@ class Waitlists extends Component {
     };
     getSections = async (courseID) => {
         this.setState({searchingSections: true, sections: []});
-        const response = await this.props.course_store.courseMatch(courseID);
+        const response = await this.props.course_store.courseMatchWaitlist(courseID);
         this.setState({sections: response, searchingSections: false});
     };
     onChangeTerm = (e, {value}) => {
@@ -142,7 +142,7 @@ class Waitlists extends Component {
 
     render() {
         return (
-            <div className="flex-container" style={{paddingBottom:30}}>
+            <div className="flex-container" style={{paddingBottom: 30}}>
                 {this.props.auth_store.isLoggedIn ?
                     <Container>
                         <Modal size='mini' open={this.state.modalOpen} onClose={this.changeModalState} closeIcon>

@@ -19,6 +19,8 @@ class GenerateSchedulesPage extends Component {
         sectionsModalOpen: false,
         customEventModalOpen: false,
         sectionSelectedForModal: '',
+        editEvent: false,
+        editEventName: '',
     };
     changeSectionsModalState = () => {
         if (this.state.sectionsModalOpen) {
@@ -83,8 +85,20 @@ class GenerateSchedulesPage extends Component {
             });
     };
     addCustomEvent = () => {
-        console.log('event');
         this.setState({customEventModalOpen: true})
+    };
+    submitCustomEvent = () => {
+        this.setState({customEventModalOpen: false, editEvent: false, editEventName: ''});
+    };
+    closeEventModal = () => {
+        this.setState({customEventModalOpen: false, editEvent: false, editEventName: ''});
+    };
+    editSection = (event_name) => {
+        this.setState({
+            editEvent: true,
+            editEventName: event_name,
+            customEventModalOpen: true,
+        })
     };
 
     render() {
@@ -94,8 +108,10 @@ class GenerateSchedulesPage extends Component {
                               changeModalState={this.changeModalState}/>
                 <SectionsModal section={this.state.sectionSelectedForModal} open={this.state.sectionsModalOpen}
                                changeModalState={this.changeSectionsModalState}/>
-                {/*<CustomEventModal open={this.state.customEventModalOpen}*/}
-                                  {/*changeModalState={() => this.setState({customEventModalOpen: !this.state.customEventModalOpen})}/>*/}
+                {this.state.customEventModalOpen &&
+                <CustomEventModal editEventName={this.state.editEventName} editEvent={this.state.editEvent}
+                                  submitCustomEvent={this.submitCustomEvent} open={this.state.customEventModalOpen}
+                                  changeModalState={this.closeEventModal}/>}
                 <div className="cog-setting-icon">
                     <Icon style={{cursor: 'pointer'}} onClick={this.changeModalState} name="edit"/>
                 </div>
@@ -103,11 +119,12 @@ class GenerateSchedulesPage extends Component {
                     <Header
                         size='medium'>{this.props.course_store.terms.find((term) => term.value === this.props.course_store.selectedTermGenerateSchedule).text}</Header>
                     <CourseSearch/>
-                    <CourseList openSectionsModal={this.openSectionsModal}/>
-                    <GenerateSchedules scheduleSearch={this.props.course_store.scheduleSearch}/>
-                    {/*<div className="course-item">*/}
-                    {/*<Button onClick={this.addCustomEvent}>Add custom event</Button>*/}
-                    {/*</div>*/}
+                    <CourseList openSectionsModal={this.openSectionsModal} editSection={this.editSection}/>
+                    <GenerateSchedules
+                        scheduleSearch={this.props.course_store.scheduleSearch}/>
+                    <div className="course-item">
+                        <Button onClick={this.addCustomEvent}>Add custom event</Button>
+                    </div>
                 </div>
                 <div className="column-calendar">
                     <ScheduleControls searching={this.props.course_store.searching}

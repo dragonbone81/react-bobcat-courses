@@ -55,11 +55,9 @@ class Schedule extends Component {
         })
     }
 
-    onScheduleClick = (e) => {
-        // const x = e.clientX - e.currentTarget.getBoundingClientRect().left;
-        const y = e.clientY - e.currentTarget.getBoundingClientRect().top;
-        // console.log(y);
-    };
+    // onScheduleClick = (e) => {
+    //     const y = e.clientY - e.currentTarget.getBoundingClientRect().top;
+    // };
 
     render() {
         const timeSpan = timesArr.slice(timesMap[Math.floor(this.props.scheduleInfo.earliest / 100.0) * 100].index, timesMap[Math.ceil(this.props.scheduleInfo.latest / 100.0) * 100 + 100].index);
@@ -87,7 +85,7 @@ class Schedule extends Component {
                     </div>
                     {daysArr.map((day) => {
                         return (
-                            <div key={day} className="days-col" onClick={this.onScheduleClick}>
+                            <div key={day} className="days-col">
                                 {timeSpan.map((time, index) => <div key={time} className="day-col">
                                     {index === timeSpan.length - 1 ? <div className="end"/> :
                                         <div className="day-inside"/>}
@@ -103,6 +101,8 @@ class Schedule extends Component {
     }
 
     splitSectionID = (sectionID) => {
+        if (!sectionID)
+            return '0';
         const sectionList = sectionID.split('-');
         return sectionList[0] + '-' + sectionList[1];
     };
@@ -116,21 +116,47 @@ class Schedule extends Component {
     getSectionsForDay = (sections, day) => {
         //added section check for classes like BIO1L that don't have a lecture
         return sections.filter((section) => section && section.days.includes(day) && section.hours !== 'TBD-TBD').map((section) => {
-            const hours = section.hours.split('-');
-            const hoursInt = hours.map((hour) => parseInt(hour.split(":").join(""), 10));
-            if (hours[1].includes("pm")) {
-                hoursInt[1] += 1200;
-                if (hoursInt[0] + 1200 < hoursInt[1]) {
-                    hoursInt[0] += 1200;
+            let hoursInt = [];
+            if (section.hours && !section.start_time && !section.end_time) {
+                const hours = section.hours.split('-');
+                hoursInt = hours.map((hour) => {
+                    hour = hour.split(":").join("");
+                    if (hour.includes('am') || hour.includes('pm')) {
+                        let minuteStr = Math.floor((parseInt(hour.substr(hour.length - 4).substr(0, 2), 10) / 60) * 100).toString();
+                        parseInt(minuteStr, 10) < 10 ? minuteStr += '0' : minuteStr += '';
+                        return parseInt(hour.substr(0, hour.length - 4) + minuteStr, 10);
+                    }
+                    else {
+                        let minuteStr = Math.floor((parseInt(hour.substr(hour.length - 2), 10) / 60) * 100).toString();
+                        parseInt(minuteStr, 10) < 10 ? minuteStr += '0' : minuteStr += '';
+                        return parseInt(hour.substr(0, hour.length - 2) + minuteStr, 10);
+
+                    }
+                });
+                if (hours[1].includes("pm")) {
+                    hoursInt[1] += 1200;
+                    if (hoursInt[0] + 1200 < hoursInt[1]) {
+                        hoursInt[0] += 1200;
+                    }
                 }
+            } else if (section.start_time && section.end_time) {
+                let startStr = section.start_time.toString();
+                let minuteStrStart = Math.floor((parseInt(startStr.substr(startStr.length - 2), 10) / 60) * 100).toString();
+                parseInt(minuteStrStart, 10) < 10 ? minuteStrStart += '0' : minuteStrStart += '';
+                hoursInt.push(parseInt(startStr.substr(0, startStr.length - 2) + minuteStrStart, 10));
+
+                let endStr = section.end_time.toString();
+                let minuteStrEnd = Math.floor((parseInt(endStr.substr(endStr.length - 2), 10) / 60) * 100).toString();
+                parseInt(minuteStrEnd, 10) < 10 ? minuteStrEnd += '0' : minuteStrEnd += '';
+                hoursInt.push(parseInt(endStr.substr(0, endStr.length - 2) + minuteStrEnd, 10));
             }
-            let offset = hoursInt[0] % 100 === 0 ? (45 / 2) : (10 + 45 / 2);
-            this.props.scheduleInfo.earliest % 100 === 0 ? offset -= 45 / 4 : offset += 0;
-            const top = ((hoursInt[0] - this.props.scheduleInfo.earliest) / 100) * 45 + offset;
-            const height = ((hoursInt[1] - this.props.scheduleInfo.earliest) / 100) * 45 - top + offset;
+            const earliest = this.props.scheduleInfo.earliest % 100 === 0 ? this.props.scheduleInfo.earliest : this.props.scheduleInfo.earliest - 30;
+            const top = 11.25 + (((hoursInt[0] - earliest) / 100) * 45);
+            const height = ((hoursInt[1] - hoursInt[0]) / 100) * 45;
             const color = this.state.colorMap[this.splitSectionID(section.course_id)];
             return (
-                <div key={section.crn} onClick={({target}) => this.handleSectionClick(target, section.crn)}>
+                <div key={section.crn ? section.crn : section.event_name}
+                     onClick={({target}) => this.handleSectionClick(target, section.crn)}>
                     <Section color={color} top={top}
                              height={height}
                              section={section}/>

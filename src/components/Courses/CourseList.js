@@ -24,6 +24,23 @@ class CourseSearch extends Component {
                         </div>
                     )
                 })}
+                {this.props.course_store.customEvents.map((event) => {
+                    return (
+                        <div key={event.event_name} className="course-item">
+                            {event.event_name} :
+                            <div className="course-list-options">
+                                <button onClick={() => this.props.editSection(event.event_name)}
+                                        className="ui button tiny grey"
+                                >Edit
+                                </button>
+                                <button onClick={() => this.props.course_store.removeEvent(event.event_name)}
+                                        className="ui icon button tiny pink">
+                                    <i className="fas fa-times"/>
+                                </button>
+                            </div>
+                        </div>
+                    )
+                })}
             </div>
         )
     }

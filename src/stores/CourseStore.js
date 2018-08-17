@@ -4,6 +4,7 @@ configure({enforceActions: true});
 
 class CourseStore {
     courses = [];
+    customEvents = [];
     schedules = [];
     savedSchedules = [];
     currentSavedIndex = 0;
@@ -61,8 +62,27 @@ class CourseStore {
         {text: '10:00pm', value: '2200'},
     ];
     addCourse = (course) => {
-        this.getSections(course).then();
-        this.courses.push(course);
+        if (!course.event_name) {
+            this.getSections(course).then();
+            this.courses.push(course);
+        } else {
+            if (this.customEvents.filter(event => (event.event_name === course.event_name)).length > 0) {
+                const index = this.customEvents.findIndex(event => event.event_name === course.event_name);
+                this.customEvents[index] = course;
+            }
+            else {
+                this.customEvents.push(course);
+            }
+        }
+    };
+    removeEvent = (eventName) => {
+        this.customEvents = this.customEvents.filter((event) => event.event_name !== eventName);
+        if (this.courses.length === 0) {
+            this.schedules = [];
+            this.noSchedulesFound = false;
+        } else {
+            this.scheduleSearch().then();
+        }
     };
     removeCourse = (courseToRemove) => {
         this.courses = this.courses.filter((course) => course !== courseToRemove);
@@ -182,6 +202,7 @@ class CourseStore {
                 body: JSON.stringify({
                     course_list: this.courses,
                     term: this.selectedTermGenerateSchedule,
+                    custom_events: this.customEvents,
                     search_full: this.full,
                     filters: true,
                     gaps: this.gaps,
@@ -194,7 +215,17 @@ class CourseStore {
                     "Content-Type": "application/json",
                 },
             });
-            response = await response.json();
+            if (response.status === 200) {
+                response = await response.json();
+            } else {
+                runInAction(() => {
+                    this.noSchedulesFound = true;
+                    this.schedules = [];
+                    this.searching = false;
+                    this.currentIndex = 0;
+                });
+                return;
+            }
             if (response.length === 0) {
                 runInAction(() => {
                     this.noSchedulesFound = true;
@@ -269,12 +300,12 @@ class CourseStore {
         }
     };
 
-    courseMatch = async sectionID => {
+    courseMatchWaitlist = async sectionID => {
         let response = await fetch('https://cse120-course-planner.herokuapp.com/api/courses/course-match/', {
             method: 'POST',
             body: JSON.stringify({
                 course_list: [sectionID],
-                term: this.selectedTermGenerateSchedule,
+                term: this.selectedTermWaitlists,
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -369,6 +400,13 @@ class CourseStore {
             return {key: course.name, text: course.name + ': ' + course.description, value: course.name}
         })
     };
+    getOptionsWaitlist = async searchQuery => {
+        let response = await fetch(`https://cse120-course-planner.herokuapp.com/api/courses/course-search/?course=${searchQuery}&term=${this.selectedTermWaitlists}`);
+        response = await response.json();
+        return response.map((course) => {
+            return {key: course.name, text: course.name + ': ' + course.description, value: course.name}
+        })
+    };
 
     scheduleObjectsToArray = (schedule) => {
         const scheduleArr = [];
@@ -413,6 +451,7 @@ class CourseStore {
 
 decorate(CourseStore, {
     courses: observable,
+    customEvents: observable,
     sections: observable,
     savingSchedule: observable,
     deletingSchedule: observable,
@@ -445,6 +484,7 @@ decorate(CourseStore, {
     scrollSchedules: action,
     getSavedSchedules: action,
     getSections: action,
+    removeEvent: action,
     scrollSavedSchedules: action,
     unmountSavedSchedules: action,
     changeSelectedEarliestTime: action,

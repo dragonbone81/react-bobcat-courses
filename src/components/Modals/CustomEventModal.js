@@ -3,13 +3,15 @@ import {Form, Checkbox, Message, Modal, Button} from 'semantic-ui-react'
 import {inject, observer} from "mobx-react";
 
 class CustomEventModal extends Component {
-
     state = {
         eventName: '',
         selectedFromTime: 700,
         selectedToTime: 730,
         selectedDays: '',
         error: false,
+        warning: false,
+        errorMessage: '',
+        warningMessage: '',
     };
     timeOptions = [
         {text: '7:00am', value: 700},
@@ -45,8 +47,21 @@ class CustomEventModal extends Component {
         {text: '10:00pm', value: 2200},
         {text: '10:30pm', value: 2230},
         {text: '11:00pm', value: 2300},
-        {text: '11:30pm', value: 2330},
     ];
+
+    componentDidMount() {
+        if (this.props.editEvent) {
+            const event = this.props.course_store.customEvents.find((event) => event.event_name === this.props.editEventName);
+            this.setState({
+                eventName: event.event_name,
+                selectedFromTime: event.start_time,
+                selectedToTime: event.end_time,
+                selectedDays: event.days,
+                error: false,
+            })
+        }
+    }
+
     selectDate = (value) => {
         if (this.state.selectedDays.split('').includes(value)) {
             this.setState({selectedDays: this.state.selectedDays.split('').filter((val) => val !== value).join('')})
@@ -65,9 +80,24 @@ class CustomEventModal extends Component {
     submitForm = () => {
         this.setState({error: false});
         if (this.state.selectedDays === '') {
-            this.setState({error: true});
+            this.setState({error: true, errorMessage: 'You must select at least one day.'});
             return;
         }
+        if (this.state.selectedToTime <= this.state.selectedFromTime) {
+            this.setState({error: true, errorMessage: 'The ending time must be after the starting time.'});
+            return;
+        }
+        if (!this.props.editEvent && this.props.course_store.customEvents.filter(event => event.event_name === this.state.eventName).length > 0) {
+            this.setState({warning: true, warningMessage: `You already have an event named ${this.state.eventName}.`});
+            return;
+        }
+        this.props.submitCustomEvent();
+        this.props.course_store.addCourse({
+            event_name: this.state.eventName,
+            start_time: this.state.selectedFromTime,
+            end_time: this.state.selectedToTime,
+            days: this.state.selectedDays,
+        });
 
     };
 
@@ -76,10 +106,14 @@ class CustomEventModal extends Component {
             <Modal size="tiny" open={this.props.open} onClose={this.props.changeModalState} closeIcon>
                 <Modal.Header>Options</Modal.Header>
                 <Modal.Content>
-                    <Form error={this.state.error} onSubmit={this.submitForm}>
+                    <Form warning={this.state.warning} error={this.state.error} onSubmit={this.submitForm}>
                         <Message
                             error
-                            header='You must select at least one day.'
+                            header={this.state.errorMessage}
+                        />
+                        <Message
+                            warning
+                            header={this.state.warningMessage}
                         />
                         <Form.Field inline>
                             <label>Event Name:</label>
@@ -121,7 +155,7 @@ class CustomEventModal extends Component {
                                           onClick={() => this.selectDate('F')} value='F' label='Fri'/>
                             </Form.Field>
                         </Form.Group>
-                        <Button type='submit'>Add</Button>
+                        <Button fluid type='submit'>{this.props.editEvent ? <div>Save</div> : <div>Add</div>}</Button>
                     </Form>
                 </Modal.Content>
             </Modal>
