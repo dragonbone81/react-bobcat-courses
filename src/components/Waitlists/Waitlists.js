@@ -158,8 +158,8 @@ class Waitlists extends Component {
                         <Grid stackable textAlign='center' columns={3} centered>
                             <Grid.Row centered textAlign='center'>
                                 <Grid.Column textAlign='center'>
-                                    <Header size='large'>Waitlists
-                                        - {this.props.course_store.terms.find((term) => term.value === this.props.course_store.selectedTermWaitlists).text}</Header>
+                                    <div style={{paddingBottom: 0}} className="waitlists-label">Waitlists
+                                        - {this.props.course_store.terms.find((term) => term.value === this.props.course_store.selectedTermWaitlists).text}</div>
                                 </Grid.Column>
                                 <div style={{marginTop: 5}} className="cog-setting-icon">
                                     <Icon style={{cursor: 'pointer'}} onClick={this.changeModalState} name="edit"/>
@@ -292,8 +292,8 @@ class Waitlists extends Component {
                     </Container>
                     :
                     <Container style={{textAlign: 'center'}}>
-                        <Header size='large'>Waitlists
-                            - {this.props.course_store.terms.find((term) => term.value === this.props.course_store.selectedTermWaitlists).text}</Header>
+                        <div className="waitlists-label">Waitlists
+                            - {this.props.course_store.terms.find((term) => term.value === this.props.course_store.selectedTermWaitlists).text}</div>
                         {this.props.auth_store.loggingIn ?
                             <div style={{maxWidth: '500px', margin: 'auto', marginBottom: 10, marginTop: 10}}
                                  className="ui warning message">
