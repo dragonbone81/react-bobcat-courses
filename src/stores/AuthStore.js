@@ -14,6 +14,21 @@ class AuthStore {
     user = {};
     isLoggedIn = false;
     loggingIn = false;
+    updateUserNotificationSettings = async (data) => {
+        let response = await fetch('https://cse120-course-planner.herokuapp.com/api/users/update-notification-settings/', {
+            method: 'POST',
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${this.auth.token}`,
+            },
+        });
+        response = await response.json();
+        if (response.success) {
+            await this.getUserInfo();
+        }
+        return response;
+    };
     uploadUserPhoto = async (data) => {
         let response = await fetch('https://cse120-course-planner.herokuapp.com/api/users/profile-upload/', {
             method: 'POST',
