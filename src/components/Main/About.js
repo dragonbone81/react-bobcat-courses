@@ -44,7 +44,7 @@ class About extends Component {
                                 <Accordion.Title style={{fontSize: 15}} active={this.state.accordionActive}
                                                  onClick={() => this.setState({accordionActive: !this.state.accordionActive})}>
                                     <Icon name='dropdown'/>
-                                    BobcatCourses allows users to easily get email notification when a
+                                    BobcatCourses allows users to easily get email notifications when a
                                     course opens
                                     up, create and view each possible variation of their schedule, and save
                                     preferred schedule options for easy access later.
