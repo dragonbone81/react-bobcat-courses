@@ -6,6 +6,8 @@ import Register from './components/UserActions/Register'
 import Waitlists from "./components/Waitlists/Waitlists";
 import SavedSchedules from './components/Main/SavedSchedules'
 import GenerateSchedulesPage from './components/Main/GenerateSchedulesPage'
+import About from './components/Main/About'
+import Footer from './components/Main/Footer'
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import './App.css'
@@ -36,32 +38,35 @@ const NotFound = () => {
 class App extends Component {
     render() {
         return (
-            <div className="main-container">
-                <NavBar/>
-                <ToastContainer
-                    position="top-right"
-                    autoClose={3000}
-                    hideProgressBar={false}
-                    newestOnTop
-                    closeOnClick
-                    rtl={false}
-                    pauseOnVisibilityChange
-                    draggable
-                    pauseOnHover
-                />
-                <Switch>
-                    <Route exact path='/schedules/search' component={GenerateSchedulesPage}/>
-                    <Route exact path='/' component={RedirectHome}/>
-                    <Route exact path='/schedules' component={RedirectHome}/>
-                    <Route exact path='/schedules/saved' component={SavedSchedules}/>
-                    <Route exact path='/login' component={Login}/>
-                    <Route exact path='/forgot-password' component={ForgotPassword}/>
-                    <Route exact path='/register' component={Register}/>
-                    <Route exact path='/waitlists' component={Waitlists}/>
-                    <Route component={NotFound}/>
-                </Switch>
-
-            </div>
+            <React.Fragment>
+                <div className="main-container">
+                    <NavBar/>
+                    <ToastContainer
+                        position="top-right"
+                        autoClose={3000}
+                        hideProgressBar={false}
+                        newestOnTop
+                        closeOnClick
+                        rtl={false}
+                        pauseOnVisibilityChange
+                        draggable
+                        pauseOnHover
+                    />
+                    <Switch>
+                        <Route exact path='/schedules/search' component={GenerateSchedulesPage}/>
+                        <Route exact path='/' component={RedirectHome}/>
+                        <Route exact path='/schedules' component={RedirectHome}/>
+                        <Route exact path='/schedules/saved' component={SavedSchedules}/>
+                        <Route exact path='/login' component={Login}/>
+                        <Route exact path='/forgot-password' component={ForgotPassword}/>
+                        <Route exact path='/register' component={Register}/>
+                        <Route exact path='/waitlists' component={Waitlists}/>
+                        <Route exact path='/about' component={About}/>
+                        <Route component={NotFound}/>
+                    </Switch>
+                </div>
+                <Footer/>
+            </React.Fragment>
         );
     }
 }

@@ -1,0 +1,108 @@
+import React, {Component} from 'react'
+import {Form, Container, Grid, Accordion, Icon} from 'semantic-ui-react'
+import {toast} from 'react-toastify';
+
+
+class About extends Component {
+    state = {
+        name: '',
+        email: '',
+        message: '',
+        accordionActive: false,
+    };
+    onSubmit = async () => {
+        fetch('https://cse120-course-planner.herokuapp.com/api/about-us/', {
+            method: 'POST',
+            body: JSON.stringify({name: this.state.name, email: this.state.email, message: this.state.message}),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        toast.success('Your input has been submitted', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true
+        });
+        this.setState({
+            name: '',
+            email: '',
+            message: '',
+        })
+    };
+
+    render() {
+        return (
+            <div style={{backgroundColor: 'rgba(250, 250, 250, 0.8)'}} className="flex-container">
+                <Container textAlign="center">
+                    <div className="saved-schedules-label">About</div>
+                    <Grid stackable columns={2}>
+                        <Grid.Column>
+                            <Accordion>
+                                <Accordion.Title style={{fontSize: 15}} active={this.state.accordionActive}
+                                                 onClick={() => this.setState({accordionActive: !this.state.accordionActive})}>
+                                    <Icon name='dropdown'/>
+                                    BobcatCourses allows users to easily get email notification when a
+                                    course opens
+                                    up, view each possible variation of their schedule, and save
+                                    preferred schedule options for easy access later.
+                                </Accordion.Title>
+                                <Accordion.Content active={this.state.accordionActive}>
+                                    <p style={{textAlign: 'left'}}>
+                                        <li>BobcatCourses is a schedule planning tool that helps
+                                            students at UC Merced quickly and effectively create their class schedules.
+                                        </li>
+                                        <br/>
+                                        <li>Students are able to view all their schedule options simply by adding the
+                                            specific classes that they need and clicking a button.
+                                        </li>
+                                        <br/>
+                                        <li>Students are also able
+                                            to restrict the class options that they see by applying filters to have
+                                            classes
+                                            only on
+                                            specific days or between a specific time frame.
+                                        </li>
+                                        <br/>
+                                        <li>BobcatCourses also allows
+                                            students
+                                            to personalize their schedules by adding their own custom events to block
+                                            off
+                                            time slots
+                                            that are already reserved for other activities such as work, sports
+                                            practices,
+                                            and club
+                                            meetings.
+                                        </li>
+                                    </p>
+                                    <b>Made by students for students :)</b>
+                                </Accordion.Content>
+                            </Accordion>
+                        </Grid.Column>
+                        <Grid.Column>
+                            <div style={{fontSize: 15, marginBottom: 5}}>Have anything to tell us?</div>
+                            <Form onSubmit={this.onSubmit}>
+                                <Form.Group widths='equal'>
+                                    <Form.Input onChange={({target}) => this.setState({name: target.value})}
+                                                value={this.state.name} fluid placeholder='Name (Optional)'/>
+                                    <Form.Input onChange={({target}) => this.setState({email: target.value})}
+                                                value={this.state.email} type="email" fluid
+                                                placeholder='Email Optional'/>
+                                </Form.Group>
+                                <Form.TextArea onChange={({target}) => this.setState({message: target.value})}
+                                               value={this.state.message} required
+                                               placeholder='Anything you want to tell us...'/>
+                                <Form.Button color="black">Submit</Form.Button>
+                            </Form>
+                        </Grid.Column>
+                    </Grid>
+                    <br/>
+                </Container>
+            </div>
+        )
+    }
+}
+
+export default About
