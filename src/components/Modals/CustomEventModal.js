@@ -117,7 +117,7 @@ class CustomEventModal extends Component {
                         />
                         <Form.Field inline>
                             <label>Event Name:</label>
-                            <input required type="text" onChange={({target}) => {
+                            <input readOnly={this.props.editEvent} required type="text" onChange={({target}) => {
                                 this.setState({eventName: target.value})
                             }} value={this.state.eventName}
                                    placeholder='Event name...'/>
