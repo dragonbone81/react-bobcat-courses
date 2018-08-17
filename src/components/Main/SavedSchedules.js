@@ -89,7 +89,7 @@ class SavedSchedules extends Component {
                                 <div style={{maxWidth: '500px', margin: 'auto', marginBottom: 10, marginTop: 10}}
                                      className="ui warning message">
                                     <div style={{textAlign: 'center'}} className="header">
-                                        Logging In <Icon loading name="spinner"/>
+                                        Logging In
                                     </div>
                                 </div>
                                 :
