@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Button} from 'semantic-ui-react'
+import {Button, Icon} from 'semantic-ui-react'
 
 class ScheduleControls extends Component {
     componentDidMount() {
@@ -33,22 +33,21 @@ class ScheduleControls extends Component {
                         </div>
                         : this.props.scheduleType === 'saved' ?
                         <div className="delete-option">
-                            <Button className="save-button-control" loading={this.props.buttonActionRunning} onClick={this.props.buttonAction}
+                            <Button className="save-button-control" loading={this.props.buttonActionRunning}
+                                    onClick={this.props.buttonAction}
                                     color="pink">Delete</Button>
                         </div>
                         : null
                     :
                     null}
                 <div className="ui buttons">
-                    <button className="ui button grey" onClick={() => this.props.clickButton(-1)}><i
-                        className="fas fa-arrow-left"/></button>
-                    <button
-                        className="ui button disabled black">
+                    <Button color="grey" icon onClick={() => this.props.clickButton(-1)}><Icon
+                        name="arrow left"/></Button>
+                    <Button color="black" disabled>
                         <div
                             style={{color: 'white'}}>{this.props.currentIndex + 1 + ' / ' + this.props.schedulesLength}</div>
-                    </button>
-                    <button className="ui button grey" onClick={() => this.props.clickButton(1)}><i
-                        className="fas fa-arrow-right"/></button>
+                    </Button>
+                    <Button color="grey" icon onClick={() => this.props.clickButton(1)}><Icon name="arrow right"/></Button>
                 </div>
             </div>
         )

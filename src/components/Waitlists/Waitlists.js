@@ -183,7 +183,7 @@ class Waitlists extends Component {
                                         selectOnNavigation={false}
                                     />
                                     {this.state.searchingSections &&
-                                    <div><i style={{marginTop: 10}} className="spinner fas fa-spinner fa-spin"/></div>}
+                                    <div><Icon size="huge" style={{marginTop: 10}} name="spinner" loading/></div>}
                                     {this.state.sections.length > 0 ?
                                         <Card fluid>
                                             <Card.Content header='Sections'/>
@@ -240,8 +240,7 @@ class Waitlists extends Component {
                                     <Card fluid>
                                         <Card.Content extra style={{maxHeight: 200, overflowY: 'scroll'}}>
                                             {this.state.searchingWaitlists ?
-                                                <div><i style={{marginTop: 10}}
-                                                        className="spinner fas fa-spinner fa-spin"/>
+                                                <div><Icon size="huge" style={{marginTop: 10}} name="spinner" loading/>
                                                 </div> :
                                                 this.state.waitlists.length > 0 ?
                                                     <List size='large' selection verticalAlign='middle'>

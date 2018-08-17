@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
+import 'semantic-ui-css/semantic.min.css';
 import {Provider} from 'mobx-react'
 import CourseStore from './stores/CourseStore'
 import AuthStore from './stores/AuthStore'

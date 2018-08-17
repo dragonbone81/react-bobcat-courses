@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Message, Button, Form} from 'semantic-ui-react'
+import {Message, Button, Form, Icon} from 'semantic-ui-react'
 import {inject, observer} from "mobx-react/index";
 import PropTypes from "prop-types";
 import {withRouter, Link} from "react-router-dom";
@@ -68,8 +68,8 @@ class Register extends Component {
                       onSubmit={this.handleSubmit}>
                     <Form.Field>
                         <div
-                            style={{paddingBottom: 10, fontSize: 100, textAlign: 'center', color: 'rgb(59, 157, 244)'}}>
-                            <i className="fas fa-user"/>
+                            style={{paddingTop: 20, fontSize: 100, textAlign: 'center', color: 'rgb(59, 157, 244)'}}>
+                            <Icon name="user"/>
                         </div>
                     </Form.Field>
                     <Message
@@ -84,7 +84,7 @@ class Register extends Component {
                                 header='Registering You...'
                                 content={null}
                             />
-                            <i className="spinner fas fa-spinner fa-spin"/>
+                            <Icon size="huge" loading name="spinner"/>
                         </div>
                         :
                         <div>

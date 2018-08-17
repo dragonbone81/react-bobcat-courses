@@ -5,6 +5,7 @@ import {observe} from 'mobx';
 import ScheduleControls from '../Schedule/ScheduleControls'
 import ScheduleDisplaySection from '../Schedule/ScheduleDisplaySection'
 import {toast} from "react-toastify";
+import {Icon} from 'semantic-ui-react'
 
 class SavedSchedules extends Component {
     state = {
@@ -88,7 +89,7 @@ class SavedSchedules extends Component {
                                 <div style={{maxWidth: '500px', margin: 'auto', marginBottom: 10, marginTop: 10}}
                                      className="ui warning message">
                                     <div style={{textAlign: 'center'}} className="header">
-                                        Logging In
+                                        Logging In <Icon loading name="spinner"/>
                                     </div>
                                 </div>
                                 :

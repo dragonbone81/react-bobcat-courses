@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Menu} from 'semantic-ui-react'
+import {Menu, Icon} from 'semantic-ui-react'
 import logo from '../../logo/logo.png'
 import SideBar from './SideBar'
 import {withRouter} from 'react-router-dom'
@@ -75,7 +75,8 @@ class NavBar extends Component {
                                 <Menu.Item
                                     name='hamburger'
                                     onClick={this.sideBarButton}
-                                ><i className="fas fa-bars"/></Menu.Item>
+                                ><Icon style={{margin: -10, marginLeft: 0, marginRight: 0, padding: 0, fontSize: 25}}
+                                       name="bars"/></Menu.Item>
                                 :
                                 <Menu.Item
                                     name='/login'
@@ -95,7 +96,8 @@ class NavBar extends Component {
                             <Menu.Item
                                 name='hamburger'
                                 onClick={this.sideBarButton}
-                            ><i className="fas fa-bars"/></Menu.Item>
+                            ><Icon style={{margin: -10, marginLeft: 0, marginRight: 0, padding: 0, fontSize: 25}}
+                                   name="bars"/></Menu.Item>
                         </Menu.Menu>
                     </Menu>
                 }

@@ -36,7 +36,7 @@ const SectionsList = ({sections}) => {
                     return -1;
                 }
                 return parseInt(a.course_id.split('-')[2], 10) - parseInt(b.course_id.split('-')[2], 10);
-            }).map((section, index) => section.course_id ? (section.crn + (index === sections.length - 1 ? '' : ', ')) : null)}</List.Item>
+            }).map((section, index) => section.course_id ? (section.crn + (index === sections.length - 1 || !sections[index + 1].crn ? '' : ', ')) : null)}</List.Item>
         </List>
     )
 };

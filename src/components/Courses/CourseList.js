@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import PropTypes from "prop-types";
+import {Button, Icon} from 'semantic-ui-react'
 import {inject, observer} from "mobx-react";
 import '../../App.css'
 
@@ -12,14 +13,14 @@ class CourseSearch extends Component {
                         <div key={course} className="course-item">
                             {course} :
                             <div className="course-list-options">
-                                <button onClick={() => this.props.openSectionsModal(course)}
-                                        className="ui button tiny grey"
+                                <Button onClick={() => this.props.openSectionsModal(course)}
+                                        color="grey" size="tiny"
                                 >Sections
-                                </button>
-                                <button onClick={() => this.props.course_store.removeCourse(course)}
-                                        className="ui icon button tiny pink">
-                                    <i className="fas fa-times"/>
-                                </button>
+                                </Button>
+                                <Button icon onClick={() => this.props.course_store.removeCourse(course)}
+                                        color="pink" size="tiny">
+                                    <Icon name="close"/>
+                                </Button>
                             </div>
                         </div>
                     )
@@ -29,14 +30,14 @@ class CourseSearch extends Component {
                         <div key={event.event_name} className="course-item">
                             {event.event_name} :
                             <div className="course-list-options">
-                                <button onClick={() => this.props.editSection(event.event_name)}
-                                        className="ui button tiny grey"
+                                <Button onClick={() => this.props.editSection(event.event_name)}
+                                        color="grey" size="tiny"
                                 >Edit
-                                </button>
-                                <button onClick={() => this.props.course_store.removeEvent(event.event_name)}
-                                        className="ui icon button tiny pink">
-                                    <i className="fas fa-times"/>
-                                </button>
+                                </Button>
+                                <Button icon onClick={() => this.props.course_store.removeEvent(event.event_name)}
+                                        color="pink" size="tiny">
+                                    <Icon name="close"/>
+                                </Button>
                             </div>
                         </div>
                     )

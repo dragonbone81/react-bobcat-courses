@@ -1,11 +1,12 @@
 import React from 'react'
+import {Icon} from 'semantic-ui-react'
 import Schedule from './Schedule'
 
 const ScheduleDisplaySection = (props) => {
     return (
         <div className="schedule-column">
             {props.searching ?
-                (<i className="spinner fas fa-spinner fa-spin"/>) :
+                (<Icon loading size="huge" name="spinner"/>) :
                 props.schedulesLength > 0 ?
                     <Schedule scheduleInfo={props.scheduleInfo}
                               sections={props.scheduleObjectsToArray(props.schedule)}/>

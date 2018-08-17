@@ -1,11 +1,12 @@
 import React from 'react'
+import {Button} from 'semantic-ui-react'
 
 const GenerateSchedules = (props) => {
     return (
-        <button style={{marginTop: 10}} className="ui button olive generate-button"
+        <Button style={{marginTop: 10}} color="olive"
                 onClick={props.scheduleSearch}>
             Generate
-        </button>
+        </Button>
     )
 };
 
