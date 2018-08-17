@@ -180,7 +180,7 @@ class CourseStore {
     };
 
     scheduleSearch = async () => {
-        if (this.courses.length > 0) {
+        if (this.courses.length > 0 || this.customEvents.length > 0) {
             /// this is for the backend returning the lecture even when the other courses are full but selected
             const badCRNS = this.sectionsObjToArrBadCRNS();
             if (!this.full) {
