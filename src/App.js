@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import NavBar from './components/Nav/NavBar'
 import Login from './components/UserActions/Login'
+import ForgotPassword from './components/UserActions/ForgotPassword'
 import Register from './components/UserActions/Register'
 import Waitlists from "./components/Waitlists/Waitlists";
 import SavedSchedules from './components/Main/SavedSchedules'
@@ -54,6 +55,7 @@ class App extends Component {
                     <Route exact path='/schedules' component={RedirectHome}/>
                     <Route exact path='/schedules/saved' component={SavedSchedules}/>
                     <Route exact path='/login' component={Login}/>
+                    <Route exact path='/forgot-password' component={ForgotPassword}/>
                     <Route exact path='/register' component={Register}/>
                     <Route exact path='/waitlists' component={Waitlists}/>
                     <Route component={NotFound}/>

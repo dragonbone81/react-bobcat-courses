@@ -2,29 +2,26 @@ import React, {Component} from 'react'
 import {Message, Button, Form, Icon} from 'semantic-ui-react'
 import {inject, observer} from "mobx-react/index";
 import PropTypes from "prop-types";
-import {withRouter, Link} from "react-router-dom";
+import {toast} from 'react-toastify';
 
 
 class Login extends Component {
     state = {
         username: '',
-        password: '',
         error: {
             header: '',
             message: '',
         },
+        status: 'not_ready',
+        isWorking: false,
         isError: false,
-        isLoggingIn: false,
     };
     handleUsernameChange = ({target}) => {
         this.setState({username: target.value});
     };
-    handlePasswordChange = ({target}) => {
-        this.setState({password: target.value});
-    };
     handleSubmit = () => {
         this.setState({isError: false});
-        if (!this.state.username || !this.state.password) {
+        if (!this.state.username) {
             this.setState({
                 error: {
                     header: 'Please fill out all fields.',
@@ -34,16 +31,13 @@ class Login extends Component {
             });
             return;
         }
-        this.login().then();
+        this.resetPassword().then();
     };
-    login = async () => {
-        this.setState({isLoggingIn: true});
-        const response = await this.props.auth_store.login({
-            username: this.state.username,
-            password: this.state.password
-        });
-        this.setState({isLoggingIn: false});
-        if ('error' in response) {
+    resetPassword = async () => {
+        this.setState({isWorking: true});
+        const response = await this.props.auth_store.resetPassword(this.state.username);
+        this.setState({isWorking: false});
+        if (!response.success) {
             this.setState({
                 isError: true,
                 error: {
@@ -51,25 +45,41 @@ class Login extends Component {
                     message: null,
                 }
             });
+            toast.error('Username not recognized or does not have email associated with it.', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true
+            });
             return;
         }
         if (response.success) {
             this.setState({
                 isError: false,
+                status: 'success',
             });
-            this.props.history.push('/schedules/search');
+            toast.success('Submitted. Please check your email.', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true
+            });
         }
     };
 
     render() {
         return (
             <div className="login-form">
-                <Form success={this.state.isLoggingIn} error={this.state.isError}
+                <Form success={this.state.isWorking} error={this.state.isError}
                       onSubmit={this.handleSubmit}>
                     <Form.Field>
                         <div
                             style={{paddingTop: 20, fontSize: 100, textAlign: 'center', color: 'rgb(59, 157, 244)'}}>
-                            <Icon name="book"/>
+                            <Icon name="key"/>
                         </div>
                     </Form.Field>
                     <Message
@@ -77,36 +87,34 @@ class Login extends Component {
                         header={this.state.error.header}
                         content={this.state.error.message}
                     />
-                    {this.state.isLoggingIn ?
+                    {this.state.isWorking ?
                         <div style={{textAlign: 'center'}}>
                             <Message
                                 success
-                                header='Logging In...'
+                                header='Submitting...'
                                 content={null}
                             />
                             <Icon size="huge" loading name="spinner"/>
                         </div>
                         :
                         <div>
+                            <p style={{fontSize: 15}}>
+                                Submit your username and we will send you a link to reset your password to the email you
+                                provided during registration.
+                                <br/>
+                                If you did not provide an email, please contact us in the About Us section.
+                            </p>
                             <Form.Field>
                                 <input autoComplete="on" type="text" autoCorrect="off" autoCapitalize="none"
                                        onChange={this.handleUsernameChange} value={this.state.username}
                                        placeholder='Username...'/>
                             </Form.Field>
                             <Form.Field>
-                                <input autoComplete="on" onChange={this.handlePasswordChange}
-                                       value={this.state.password}
-                                       placeholder='Password...' type="password"/>
-                            </Form.Field>
-                            <Form.Field>
-                                <Button color='yellow' fluid>Login</Button>
+                                <Button color='yellow' fluid>Send Email</Button>
                             </Form.Field>
                         </div>
                     }
                 </Form>
-                <br/>
-                <p><Link to="/register">Not Registered?</Link> | <Link to="/forgot-password">Forgot
-                    Password? </Link></p>
             </div>
         )
     }
@@ -115,4 +123,4 @@ class Login extends Component {
 Login.propTypes = {
     auth_store: PropTypes.object,
 };
-export default withRouter(inject("auth_store")(observer(Login)))
+export default inject("auth_store")(observer(Login))

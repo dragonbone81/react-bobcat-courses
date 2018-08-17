@@ -96,6 +96,18 @@ class AuthStore {
             return {success: true, ...response}
         }
     };
+    resetPassword = async (username) => {
+        let response = await fetch('https://cse120-course-planner.herokuapp.com/api/users/forgot-password/', {
+            method: 'POST',
+            body: JSON.stringify({username}),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        response = await response.json();
+        return response;
+
+    };
     login = async (auth) => {
         let response = await fetch('https://cse120-course-planner.herokuapp.com/api/auth/token/obtain', {
             method: 'POST',
