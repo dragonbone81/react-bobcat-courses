@@ -10,6 +10,9 @@ class About extends Component {
         message: '',
         accordionActive: false,
     };
+    componentDidMount() {
+        document.title = "BobcatCourses | About";
+    }
     onSubmit = async () => {
         fetch('https://cse120-course-planner.herokuapp.com/api/about-us/', {
             method: 'POST',

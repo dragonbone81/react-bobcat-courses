@@ -19,6 +19,11 @@ class Register extends Component {
         isError: false,
         isRegistering: false,
     };
+
+    componentDidMount() {
+        document.title = "BobcatCourses | Register";
+    }
+
     handleSubmit = () => {
         this.setState({isError: false});
         if (!this.state.username || !this.state.password) {

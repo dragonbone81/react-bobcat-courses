@@ -16,6 +16,9 @@ class Login extends Component {
         isWorking: false,
         isError: false,
     };
+    componentDidMount() {
+        document.title = "BobcatCourses | Forgot";
+    }
     handleUsernameChange = ({target}) => {
         this.setState({username: target.value});
     };
