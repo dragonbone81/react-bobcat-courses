@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {Image, Icon, Menu, Sidebar} from 'semantic-ui-react'
+import {Link} from 'react-router-dom'
 
 export default class SideNavBar extends Component {
 
@@ -20,8 +21,9 @@ export default class SideNavBar extends Component {
                     <div>
                         {this.props.isLoggedIn ?
                             <Menu.Item>
-                                {this.props.user.profile_image_url ? <Image src={this.props.user.profile_image_url}
-                                                                            avatar/> : null} {this.props.user.first_name || this.props.user.username}
+                                <Link to="/profile">{this.props.user.profile_image_url ?
+                                    <Image src={this.props.user.profile_image_url}
+                                           avatar/> : null} {this.props.user.first_name || this.props.user.username}</Link>
                             </Menu.Item>
                             :
                             null}
@@ -57,8 +59,9 @@ export default class SideNavBar extends Component {
                     <div>
                         {this.props.isLoggedIn ?
                             <Menu.Item>
-                                {this.props.user.profile_image_url ? <Image src={this.props.user.profile_image_url}
-                                                                            avatar/> : null} {this.props.user.first_name || this.props.user.username}
+                                <Link to="/profile">{this.props.user.profile_image_url ?
+                                    <Image src={this.props.user.profile_image_url}
+                                           avatar/> : null} {this.props.user.first_name || this.props.user.username}</Link>
                             </Menu.Item>
                             :
                             null}

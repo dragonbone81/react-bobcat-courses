@@ -7,6 +7,7 @@ import Waitlists from "./components/Waitlists/Waitlists";
 import SavedSchedules from './components/Main/SavedSchedules'
 import GenerateSchedulesPage from './components/Main/GenerateSchedulesPage'
 import About from './components/Main/About'
+import Profile from './components/Main/Profile'
 import Footer from './components/Main/Footer'
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -62,6 +63,7 @@ class App extends Component {
                         <Route exact path='/register' component={Register}/>
                         <Route exact path='/waitlists' component={Waitlists}/>
                         <Route exact path='/about' component={About}/>
+                        <Route exact path='/profile' component={Profile}/>
                         <Route component={NotFound}/>
                     </Switch>
                 </div>
