@@ -8,9 +8,7 @@ import GenerateSchedulesPage from './components/Main/GenerateSchedulesPage'
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 import './App.css'
-import {Icon} from 'semantic-ui-react'
 import {Switch, Route, withRouter, Redirect} from 'react-router-dom'
-import Loadable from 'react-loadable';
 
 
 const RedirectHome = () => {
@@ -33,29 +31,6 @@ const NotFound = () => {
         </div>
     )
 };
-
-// const Loading = () => <div></div>;
-//
-// const Login = Loadable({
-//     loader: () => import('./components/UserActions/Login'),
-//     loading: Loading,
-// });
-// const GenerateSchedulesPage = Loadable({
-//     loader: () => import('./components/Main/GenerateSchedulesPage'),
-//     loading: Loading,
-// });
-// const SavedSchedules = Loadable({
-//     loader: () => import('./components/Main/SavedSchedules'),
-//     loading: Loading,
-// });
-// const Register = Loadable({
-//     loader: () => import('./components/UserActions/Register'),
-//     loading: Loading,
-// });
-// const Waitlists = Loadable({
-//     loader: () => import('./components/Waitlists/Waitlists'),
-//     loading: Loading,
-// });
 
 class App extends Component {
     render() {
