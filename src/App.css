@@ -79,7 +79,7 @@
     flex-grow: 4;
 }
 
-.saved-schedules-label {
+.saved-schedules-label, .waitlists-label {
     display: flex;
     flex-direction: row;
     justify-content: center;
