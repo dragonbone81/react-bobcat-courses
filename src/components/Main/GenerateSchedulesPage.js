@@ -88,7 +88,27 @@ class GenerateSchedulesPage extends Component {
         this.setState({customEventModalOpen: true})
     };
     submitCustomEvent = () => {
+        if (this.state.editEvent) {
+            toast.success('Event Saved', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true
+            });
+        } else {
+            toast.success('Event Added', {
+                position: "top-right",
+                autoClose: 3000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true
+            });
+        }
         this.setState({customEventModalOpen: false, editEvent: false, editEventName: ''});
+        this.props.course_store.scheduleSearch().then();
     };
     closeEventModal = () => {
         this.setState({customEventModalOpen: false, editEvent: false, editEventName: ''});

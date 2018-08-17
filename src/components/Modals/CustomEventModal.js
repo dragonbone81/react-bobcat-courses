@@ -91,13 +91,13 @@ class CustomEventModal extends Component {
             this.setState({warning: true, warningMessage: `You already have an event named ${this.state.eventName}.`});
             return;
         }
-        this.props.submitCustomEvent();
         this.props.course_store.addCourse({
             event_name: this.state.eventName,
             start_time: this.state.selectedFromTime,
             end_time: this.state.selectedToTime,
             days: this.state.selectedDays,
         });
+        this.props.submitCustomEvent();
 
     };
 
