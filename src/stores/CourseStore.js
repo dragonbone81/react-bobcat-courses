@@ -350,7 +350,7 @@ class CourseStore {
             method: 'POST',
             body: JSON.stringify({
                 term: this.selectedTermGenerateSchedule,
-                crns: this.scheduleObjectsToArray(this.getSchedule).filter((section) => section).map((section) => section.crn),
+                crns: this.scheduleObjectsToArray(this.getSchedule).filter((section) => section && section.crn).map((section) => section.crn),
             }),
             headers: {
                 "Content-Type": "application/json",
