@@ -46,7 +46,7 @@ class About extends Component {
                                     <Icon name='dropdown'/>
                                     BobcatCourses allows users to easily get email notification when a
                                     course opens
-                                    up, view each possible variation of their schedule, and save
+                                    up, create and view each possible variation of their schedule, and save
                                     preferred schedule options for easy access later.
                                 </Accordion.Title>
                                 <Accordion.Content active={this.state.accordionActive}>
