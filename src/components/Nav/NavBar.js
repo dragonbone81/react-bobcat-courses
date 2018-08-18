@@ -36,7 +36,7 @@ class NavBar extends Component {
 
     render() {
         const {activeItem} = this.state;
-        const isMobile = this.state.windowWidth <= 590;
+        const isMobile = this.state.windowWidth <= 604;
         return (
             <div style={{marginBottom: 10}}>
                 <SideBar logout={() => {

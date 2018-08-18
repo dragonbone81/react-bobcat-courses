@@ -42,6 +42,11 @@ export default class SideNavBar extends Component {
                             <Icon name='phone'/>
                             Waitlists
                         </Menu.Item>
+                        <Menu.Item name="/profile" active={this.props.activeItem === '/profile'} as='a'
+                                   onClick={this.props.navigate}>
+                            <Icon name='user doctor'/>
+                            Profile
+                        </Menu.Item>
                         {this.props.isLoggedIn ?
                             <Menu.Item as='a' onClick={this.props.logout}>
                                 <Icon name='sign out alternate'/>
