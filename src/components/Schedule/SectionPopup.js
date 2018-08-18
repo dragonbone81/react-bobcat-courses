@@ -5,12 +5,9 @@ import {timesMapFull} from '../../data'
 const SectionPopup = (props) => {
     return (
         <Popup
-            context={props.clickedSection}
-            on='click'
-            open={props.popUpOpen}
-            onClose={props.handlePopupClose}
-            onOpen={props.handlePopupOpen}
+            trigger={props.trigger}
             position='top right'
+            on={['hover', 'click']}
         >
             {props.clickedSectionInfo.course_id ? <div>
                     <Popup.Header>{props.clickedSectionInfo.course_id} : {props.clickedSectionInfo.type}</Popup.Header>

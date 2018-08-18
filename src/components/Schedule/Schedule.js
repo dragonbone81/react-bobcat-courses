@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import Section from './Section'
 import SectionPopup from './SectionPopup'
 import SectionsList from '../Courses/SectionsList'
 import './Schedule.css'
@@ -63,15 +62,15 @@ class Schedule extends Component {
         const timeSpan = timesArr.slice(timesMap[Math.floor(this.props.scheduleInfo.earliest / 100.0) * 100].index, timesMap[Math.ceil(this.props.scheduleInfo.latest / 100.0) * 100 + 100].index);
         return (
             <div className="schedule-inside-container">
-                {this.state.popUpOpen ?
-                    <SectionPopup
-                        clickedSection={this.state.clickedSection}
-                        popUpOpen={this.state.popUpOpen}
-                        handlePopupClose={this.handlePopupClose}
-                        handlePopupOpen={this.handlePopupOpen}
-                        clickedSectionInfo={this.state.clickedSectionInfo}
-                    />
-                    : null}
+                {/*{this.state.popUpOpen ?*/}
+                {/*<SectionPopup*/}
+                {/*clickedSection={this.state.clickedSection}*/}
+                {/*popUpOpen={this.state.popUpOpen}*/}
+                {/*handlePopupClose={this.handlePopupClose}*/}
+                {/*handlePopupOpen={this.handlePopupOpen}*/}
+                {/*clickedSectionInfo={this.state.clickedSectionInfo}*/}
+                {/*/>*/}
+                {/*: null}*/}
                 <div className="days-div">
                     <div className="time-name-col"/>
                     {daysArr.map((day) => {
@@ -154,13 +153,27 @@ class Schedule extends Component {
             const top = 11.25 + (((hoursInt[0] - earliest) / 100) * 45);
             const height = ((hoursInt[1] - hoursInt[0]) / 100) * 45;
             const color = this.state.colorMap[this.splitSectionID(section.course_id)];
+            const sectionComponent =
+                <div key={section.crn} className="hour-slot" style={{
+                    width: '100%',
+                    position: 'absolute',
+                    zIndex: 1,
+                    top: top,
+                    borderLeft: `3px solid ${color ? color.slice(0, -6) + ')' : null}`,
+                    backgroundColor: color,
+                    height: height,
+                    display: 'block',
+                    borderRadius: 5,
+                    cursor: 'pointer',
+                    color: '#5b5b5b'
+                }}>
+                    <div className="title"
+                         style={{fontSize: 14}}>{section.course_id ? section.course_id : section.event_name}
+                    </div>
+                </div>;
             return (
-                <div key={section.crn ? section.crn : section.event_name}
-                     onClick={({target}) => this.handleSectionClick(target, section.crn)}>
-                    <Section color={color} top={top}
-                             height={height}
-                             section={section}/>
-                </div>
+                <SectionPopup key={section.crn} trigger={sectionComponent} clickedSectionInfo={section}
+                              position='top center'/>
             )
         });
     }
