@@ -68,18 +68,11 @@ export default class SideNavBar extends Component {
                     :
                     <div>
                         {this.props.isLoggedIn ?
-                            <React.Fragment>
-                                <Menu.Item>
-                                    <Link to="/profile">{this.props.user.profile_image_url ?
-                                        <Image src={this.props.user.profile_image_url}
-                                               avatar/> : null} {this.props.user.first_name || this.props.user.username}</Link>
-                                </Menu.Item>
-                                <Menu.Item name="/about" active={this.props.activeItem === '/about'} as='a'
-                                           onClick={this.props.navigate}>
-                                    <Icon name='question'/>
-                                    About
-                                </Menu.Item>
-                            </React.Fragment>
+                            <Menu.Item>
+                                <Link to="/profile">{this.props.user.profile_image_url ?
+                                    <Image src={this.props.user.profile_image_url}
+                                           avatar/> : null} {this.props.user.first_name || this.props.user.username}</Link>
+                            </Menu.Item>
                             :
                             null}
                         {this.props.isLoggedIn ?
