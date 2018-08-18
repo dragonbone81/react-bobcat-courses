@@ -3,7 +3,7 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    margin: auto;
+    margin: auto auto 20px auto;
     max-width: 1200px;
     padding: 10px;
     background-color: whitesmoke;
@@ -98,9 +98,24 @@
 }
 
 .main-container {
-    padding: 1px 10px 30px 10px;
-    min-height: 88.6vh;
+    padding: 0 10px 85px 10px;
+}
+
+#root {
     background: no-repeat center center url(https://s3-us-west-1.amazonaws.com/bobcat-courses-static/images/uc_merced_72_blurred.jpg);
+    position: relative;
+    min-height: 100%;
+    margin-top: -5px;
+    padding-top: 5px;
+}
+
+.footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin-bottom: -5px;
+    text-align: center;
 }
 
 .spinner {
@@ -118,7 +133,6 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    /*padding-right: 10px;*/
     padding-left: 5px;
 }
 
