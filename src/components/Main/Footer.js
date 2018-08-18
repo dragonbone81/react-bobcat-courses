@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom'
 const Footer = () => {
     return (
         <div className="footer">
-            <Segment inverted vertical style={{minHeight: '8vh'}}>
+            <Segment inverted vertical style={{borderRadius: 10}}>
                 <Container textAlign='center'>
                     <h4 className="ui inverted header">&copy; Copyright 2018 | BobcatCourses</h4>
                     Frontend: <a target="_blank" rel="noopener noreferrer"
