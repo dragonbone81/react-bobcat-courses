@@ -153,7 +153,7 @@ class Profile extends Component {
                     </Container>
                     :
                     <div>
-                        <div className="saved-schedules-label">Your saved schedules</div>
+                        <div className="saved-schedules-label">Your profile</div>
                         {this.props.auth_store.loggingIn ?
                             <div style={{maxWidth: '500px', margin: 'auto', marginBottom: 10, marginTop: 10}}
                                  className="ui warning message">
