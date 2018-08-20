@@ -186,11 +186,18 @@ class CourseStore {
             if (!this.full) {
                 for (let course of Object.keys(this.sections)) {
                     let totalSeatsNonLecture = 0;
+                    let type = 'otherType';
+                    let allSectionsSameType = true;
                     this.sections[course].forEach((section) => {
+                        if (type === 'otherType')
+                            type = section.type;
+                        else if (section.type !== type){
+                            allSectionsSameType = false;
+                        }
                         if (section.selected && section.type !== 'LECT')
                             totalSeatsNonLecture += section.available;
                     });
-                    if (totalSeatsNonLecture === 0) {
+                    if (totalSeatsNonLecture === 0 && !allSectionsSameType) {
                         this.sections[course].forEach((section) => badCRNS.push(section.crn));
                     }
 

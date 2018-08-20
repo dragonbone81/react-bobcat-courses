@@ -5,7 +5,7 @@ const SectionsList = ({sections}) => {
     return (
         <List celled relaxed>
             <Header size='large'>Sections</Header>
-            {sections.sort((a, b) => {
+            {sections.filter((section) => section).sort((a, b) => {
                 if (!a.course_id || !b.course_id) {
                     return -1;
                 }
@@ -31,12 +31,14 @@ const SectionsList = ({sections}) => {
                     </List.Content>
                 </List.Item> : null
             })}
-            <List.Item>CRN's: {sections.sort((a, b) => {
+            <List.Item>CRN's: {sections.filter((section) => section).sort((a, b) => {
                 if (!a.course_id || !b.course_id) {
                     return -1;
                 }
                 return parseInt(a.course_id.split('-')[2], 10) - parseInt(b.course_id.split('-')[2], 10);
-            }).map((section, index) => section.course_id ? (section.crn + (index === sections.length - 1 || !sections[index + 1].crn ? '' : ', ')) : null)}</List.Item>
+            }).map((section, index) => {
+                return section.course_id ? (section.crn + (index === sections.length - 1 || (sections[index + 1] !== null && !sections[index + 1].crn) ? '' : ', ')) : null
+            })}</List.Item>
         </List>
     )
 };

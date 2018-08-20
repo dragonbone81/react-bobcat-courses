@@ -90,7 +90,7 @@ class Schedule extends Component {
 
                     }
                 });
-                if (hours[1].includes("pm")) {
+                if (hours[1].includes("pm") && !hours[1].startsWith('12')) {
                     hoursInt[1] += 1200;
                     if (hoursInt[0] + 1200 < hoursInt[1]) {
                         hoursInt[0] += 1200;
