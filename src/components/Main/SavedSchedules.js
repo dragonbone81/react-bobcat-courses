@@ -8,7 +8,8 @@ import {toast} from "react-toastify";
 
 class SavedSchedules extends Component {
     state = {
-        observeAuth: null
+        observeAuth: null,
+        savingScheduleToGoogle: false,
     };
 
     componentDidMount() {
@@ -56,7 +57,26 @@ class SavedSchedules extends Component {
                 pauseOnHover: true,
                 draggable: true
             });
-
+    };
+    saveToGoogle = async () => {
+        this.setState({savingScheduleToGoogle: true});
+        //wait for authentication to happen
+        await this.props.auth_store.authenticateGoogle();
+        await this.props.course_store.saveToGoogle(
+            this.props.course_store.getSavedSchedule,
+            this.props.auth_store.createGoogleCalendar,
+            this.props.auth_store.googleAuth.token,
+            "BobcatCourses Schedule"
+        );
+        this.setState({savingScheduleToGoogle: false});
+        toast.success('Schedule saved to your calendar', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true
+        });
     };
 
     render() {
@@ -73,7 +93,10 @@ class SavedSchedules extends Component {
                                               scheduleType={'saved'}
                                               isLoggedIn={this.props.auth_store.isLoggedIn}
                                               buttonAction={this.deleteSchedule}
-                                              buttonActionRunning={this.props.course_store.deletingSchedule}/>
+                                              buttonActionRunning={this.props.course_store.deletingSchedule}
+                                              saveToGoogle={this.saveToGoogle}
+                                              savingScheduleToGoogle={this.state.savingScheduleToGoogle}
+                            />
                             <ScheduleDisplaySection searching={this.props.course_store.searchingSaved}
                                                     schedulesLength={this.props.course_store.savedSchedules.length}
                                                     scheduleInfo={this.props.course_store.getSavedSchedule.info}

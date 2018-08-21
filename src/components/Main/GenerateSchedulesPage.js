@@ -21,6 +21,7 @@ class GenerateSchedulesPage extends Component {
         sectionSelectedForModal: '',
         editEvent: false,
         editEventName: '',
+        savingScheduleToGoogle: false,
     };
     changeSectionsModalState = () => {
         if (this.state.sectionsModalOpen) {
@@ -120,6 +121,26 @@ class GenerateSchedulesPage extends Component {
             customEventModalOpen: true,
         })
     };
+    saveToGoogle = async () => {
+        this.setState({savingScheduleToGoogle: true});
+        //wait for authentication to happen
+        await this.props.auth_store.authenticateGoogle();
+        await this.props.course_store.saveToGoogle(
+            this.props.course_store.getSchedule,
+            this.props.auth_store.createGoogleCalendar,
+            this.props.auth_store.googleAuth.token,
+            "BobcatCourses Schedule"
+        );
+        this.setState({savingScheduleToGoogle: false});
+        toast.success('Schedule saved to your calendar', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true
+        });
+    };
 
     render() {
         return (
@@ -154,7 +175,9 @@ class GenerateSchedulesPage extends Component {
                                       scheduleType={'generate'}
                                       isLoggedIn={this.props.auth_store.isLoggedIn}
                                       buttonAction={this.saveSchedule}
-                                      buttonActionRunning={this.props.course_store.savingSchedule}/>
+                                      buttonActionRunning={this.props.course_store.savingSchedule}
+                                      saveToGoogle={this.saveToGoogle}
+                                      savingScheduleToGoogle={this.state.savingScheduleToGoogle}/>
                     <ScheduleDisplaySection searching={this.props.course_store.searching}
                                             schedulesLength={this.props.course_store.schedules.length}
                                             scheduleInfo={this.props.course_store.getSchedule.info}

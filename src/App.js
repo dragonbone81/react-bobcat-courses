@@ -4,6 +4,7 @@ import Login from './components/UserActions/Login'
 import ForgotPassword from './components/UserActions/ForgotPassword'
 import Register from './components/UserActions/Register'
 import Waitlists from "./components/Waitlists/Waitlists";
+import Auth from "./components/Auth/Auth";
 import SavedSchedules from './components/Main/SavedSchedules'
 import GenerateSchedulesPage from './components/Main/GenerateSchedulesPage'
 import About from './components/Main/About'
@@ -64,6 +65,7 @@ class App extends Component {
                         <Route exact path='/waitlists' component={Waitlists}/>
                         <Route exact path='/about' component={About}/>
                         <Route exact path='/profile' component={Profile}/>
+                        <Route exact path='/auth/google/callback' component={Auth}/>
                         <Route component={NotFound}/>
                     </Switch>
                 </div>

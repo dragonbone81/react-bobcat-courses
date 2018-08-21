@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
-import {Button, Icon} from 'semantic-ui-react'
+import {Button, Icon, Popup, List} from 'semantic-ui-react'
+import {inject, observer} from "mobx-react";
 
 class ScheduleControls extends Component {
     componentDidMount() {
@@ -47,11 +48,43 @@ class ScheduleControls extends Component {
                         <div
                             style={{color: 'white'}}>{this.props.currentIndex + 1 + ' / ' + this.props.schedulesLength}</div>
                     </Button>
-                    <Button color="grey" icon onClick={() => this.props.clickButton(1)}><Icon name="arrow right"/></Button>
+                    <Button color="grey" icon onClick={() => this.props.clickButton(1)}><Icon
+                        name="arrow right"/></Button>
+                </div>
+                <div className="calendar-option">
+                    <Popup position="right center" on='click' trigger={
+                        <Button loading={this.props.savingScheduleToGoogle} icon className="save-button-control"
+
+                                color="teal"><Icon name="calendar alternate outline"/></Button>
+                    }>
+                        <Popup.Header>Add to you calendar</Popup.Header>
+                        <Popup.Content>
+                            <List selection divided relaxed>
+                                <List.Item onClick={this.props.saveToGoogle}>
+                                    <List.Icon name='google' size='large' verticalAlign='middle'/>
+                                    <List.Content>
+                                        <List.Description>Add to Google Calendar</List.Description>
+                                    </List.Content>
+                                </List.Item>
+                                <List.Item>
+                                    <List.Icon name='apple' size='large' verticalAlign='middle'/>
+                                    <List.Content>
+                                        <List.Description>Add to Apple Calendar</List.Description>
+                                    </List.Content>
+                                </List.Item>
+                                <List.Item>
+                                    <List.Icon name='microsoft' size='large' verticalAlign='middle'/>
+                                    <List.Content>
+                                        <List.Description>Add to Outlook</List.Description>
+                                    </List.Content>
+                                </List.Item>
+                            </List>
+                        </Popup.Content>
+                    </Popup>
                 </div>
             </div>
         )
     }
 }
 
-export default ScheduleControls
+export default inject("auth_store", "course_store")(observer(ScheduleControls))

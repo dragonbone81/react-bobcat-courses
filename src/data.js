@@ -55,10 +55,36 @@ const timesMapFull = {
     '2330': {time: '11:30pm', index: 16},
     '2400': {time: '12:00am', index: 17},
 };
+const dayMapGoogleCodes = {
+    'M': 'MO',
+    'T': 'TU',
+    'W': 'WE',
+    'R': 'TH',
+    'F': 'FR',
+};
+const termsMap = {
+    '201910': '2019',
+    '201830': '2018',
+    '201810': '2018',
+};
+const monthsMap = {
+    JAN: '01',
+    FEB: '02',
+    MAR: '03',
+    APR: '04',
+    MAY: '05',
+    JUN: '06',
+    JUL: '07',
+    AUG: '08',
+    SEP: '09',
+    OCT: '10',
+    NOV: '11',
+    DEC: '12',
+};
 const timesArr = ['7am', '8am', '9am', '10am', '11am', '12pm', '1pm', '2pm',
     '3pm', '4pm', '5pm', '6pm', '7pm', '8pm', '9pm', '10pm', '11pm', '12am'];
 
 const daysArr = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
 const daysMap = {'Mon': 'M', 'Tue': 'T', 'Wed': 'W', 'Thu': 'R', 'Fri': 'F'};
 const colors = ['rgb(254,144,1, 0.5)', 'rgb(255,117,117, 0.5)', 'rgb(255,229,117, 0.5)', 'rgb(189,255,145, 0.5)', 'rgb(179,255,242, 0.5)', 'rgb(145,181,255, 0.5)', 'rgb(235,170,255, 0.5)', 'rgb(249,147,185, 0.5)', 'rgb(237,213,205, 0.5)'];
-export {timesMap, timesArr, daysMap, daysArr, colors, timesMapFull};
+export {timesMap, timesArr, daysMap, daysArr, colors, timesMapFull, dayMapGoogleCodes, monthsMap, termsMap};

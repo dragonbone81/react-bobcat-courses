@@ -244,6 +244,9 @@
     }
 }
 
+.calendar-option{
+    padding-left: 10px;
+}
 .save-button, .delete-option {
     /*font-size: 100px;*/
     padding-right: 10px;

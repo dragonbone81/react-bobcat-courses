@@ -130,7 +130,8 @@ class Schedule extends Component {
                     </div>
                 </div>;
             return (
-                <SectionPopup key={section.crn} trigger={sectionComponent} clickedSectionInfo={section}
+                <SectionPopup key={section.crn || section.event_name} trigger={sectionComponent}
+                              clickedSectionInfo={section}
                               position='top center'/>
             )
         });
