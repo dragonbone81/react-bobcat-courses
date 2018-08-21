@@ -34,7 +34,10 @@ class AuthStore {
     };
 
     authenticateGoogle = async () => {
-        const url = encodeURI(`https://accounts.google.com/o/oauth2/v2/auth?client_id=${this.googleAuth.googleClientID}&redirect_uri=http://localhost:3000/auth/google/callback&response_type=token&scope=https://www.googleapis.com/auth/calendar`);
+        const redirectURI = window.location.protocol + "//" +
+            window.location.hostname + (!!window.location.port ? (":" + window.location.port) : "") +
+            '/auth/google/callback';
+        const url = encodeURI(`https://accounts.google.com/o/oauth2/v2/auth?client_id=${this.googleAuth.googleClientID}&redirect_uri=${redirectURI}&response_type=token&scope=https://www.googleapis.com/auth/calendar`);
         const win = window.open(url, "Google Authentication", 'width=400, height=500');
         let token = '';
 
