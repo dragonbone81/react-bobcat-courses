@@ -53,7 +53,7 @@ class ScheduleControls extends Component {
                 </div>
                 <div className="calendar-option">
                     <Popup position="right center" on='click' trigger={
-                        <Button loading={this.props.savingScheduleToGoogle} icon className="save-button-control"
+                        <Button loading={this.props.savingSchedule} icon className="save-button-control"
 
                                 color="teal"><Icon name="calendar alternate outline"/></Button>
                     }>
@@ -66,13 +66,7 @@ class ScheduleControls extends Component {
                                         <List.Description>Add to Google Calendar</List.Description>
                                     </List.Content>
                                 </List.Item>
-                                <List.Item>
-                                    <List.Icon name='apple' size='large' verticalAlign='middle'/>
-                                    <List.Content>
-                                        <List.Description>Add to Apple Calendar</List.Description>
-                                    </List.Content>
-                                </List.Item>
-                                <List.Item>
+                                <List.Item onClick={this.props.saveToMicrosoft}>
                                     <List.Icon name='microsoft' size='large' verticalAlign='middle'/>
                                     <List.Content>
                                         <List.Description>Add to Outlook</List.Description>

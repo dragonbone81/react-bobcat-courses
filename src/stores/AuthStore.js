@@ -11,8 +11,13 @@ class AuthStore {
         token: '',
         refresh: '',
     };
+    microsoftAuth = {
+        microsoftClientID: process.env.REACT_APP_MICROSOFT_CLIENT_ID,
+        token: '',
+        expiresAt: '',
+    };
     googleAuth = {
-        googleClientID: process.env.REACT_APP_CLIENT_ID,
+        googleClientID: process.env.REACT_APP_GOOGLE_CLIENT_ID,
         token: '',
         expiresAt: '',
     };
@@ -32,7 +37,42 @@ class AuthStore {
         response = await response.json();
         return response;
     };
+    createMicrosoftCalendar = async (calendarName) => {
+        let response = await fetch('https://outlook.office.com/api/v2.0/me/calendars', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${this.microsoftAuth.token}`,
+            },
+            body: JSON.stringify({Name: calendarName})
+        });
+        response = await response.json();
+        return response;
+    };
+    authenticateMicrosoft = async () => {
+        const redirectURI = window.location.protocol + "//" +
+            window.location.hostname + (!!window.location.port ? (":" + window.location.port) : "") +
+            '/auth/microsoft/callback';
+        const url = encodeURI(`https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=${this.microsoftAuth.microsoftClientID}&redirect_uri=${redirectURI}&response_type=token&scope=https://outlook.office.com/calendars.readwrite`);
+        const win = window.open(url, "Microsoft Authentication", 'width=400, height=500');
+        let token = '';
 
+        return new Promise((resolve) => {
+            const pollTimer = window.setInterval(() => {
+                try {
+                    if (win.document.URL.indexOf('access_token') !== -1) {
+                        window.clearInterval(pollTimer);
+                        token = new URLSearchParams(win.document.URL.split("#").pop()).get("access_token");
+                        this.setMicrosoftToken(token);
+                        win.close();
+                        resolve();
+                    }
+                } catch (e) {
+                    console.log(e);
+                }
+            }, 100);
+        });
+    };
     authenticateGoogle = async () => {
         const redirectURI = window.location.protocol + "//" +
             window.location.hostname + (!!window.location.port ? (":" + window.location.port) : "") +
@@ -62,6 +102,11 @@ class AuthStore {
         this.googleAuth.token = token;
         const date = new Date();
         this.googleAuth.expiresAt = date.setSeconds(date.getSeconds() + 3600);
+    };
+    setMicrosoftToken = (token) => {
+        this.microsoftAuth.token = token;
+        const date = new Date();
+        this.microsoftAuth.expiresAt = date.setSeconds(date.getSeconds() + 3600);
     };
 
     updateUserNotificationSettings = async (data) => {
@@ -213,6 +258,7 @@ class AuthStore {
 
 decorate(AuthStore, {
     googleAuth: observable,
+    microsoftAuth: observable,
     isLoggedIn: observable,
     auth: observable,
     user: observable,
@@ -223,5 +269,6 @@ decorate(AuthStore, {
     hydrateStoreWithLocalStorage: action,
     getAuthWithRefresh: action,
     setGoogleToken: action,
+    setMicrosoftToken: action,
 });
 export default new AuthStore()

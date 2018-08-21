@@ -21,7 +21,7 @@ class GenerateSchedulesPage extends Component {
         sectionSelectedForModal: '',
         editEvent: false,
         editEventName: '',
-        savingScheduleToGoogle: false,
+        savingCalendarSchedules: false,
     };
     changeSectionsModalState = () => {
         if (this.state.sectionsModalOpen) {
@@ -122,7 +122,7 @@ class GenerateSchedulesPage extends Component {
         })
     };
     saveToGoogle = async () => {
-        this.setState({savingScheduleToGoogle: true});
+        this.setState({savingCalendarSchedules: true});
         //wait for authentication to happen
         await this.props.auth_store.authenticateGoogle();
         await this.props.course_store.saveToGoogle(
@@ -131,7 +131,27 @@ class GenerateSchedulesPage extends Component {
             this.props.auth_store.googleAuth.token,
             "BobcatCourses Schedule"
         );
-        this.setState({savingScheduleToGoogle: false});
+        this.setState({savingCalendarSchedules: false});
+        toast.success('Schedule saved to your calendar', {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true
+        });
+    };
+    saveToMicrosoft = async () => {
+        this.setState({savingCalendarSchedules: true});
+        //wait for authentication to happen
+        await this.props.auth_store.authenticateMicrosoft();
+        await this.props.course_store.saveToMicrosoft(
+            this.props.course_store.getSchedule,
+            this.props.auth_store.createMicrosoftCalendar,
+            this.props.auth_store.microsoftAuth.token,
+            "BobcatCourses Schedule"
+        );
+        this.setState({savingCalendarSchedules: false});
         toast.success('Schedule saved to your calendar', {
             position: "top-right",
             autoClose: 3000,
@@ -177,7 +197,8 @@ class GenerateSchedulesPage extends Component {
                                       buttonAction={this.saveSchedule}
                                       buttonActionRunning={this.props.course_store.savingSchedule}
                                       saveToGoogle={this.saveToGoogle}
-                                      savingScheduleToGoogle={this.state.savingScheduleToGoogle}/>
+                                      saveToMicrosoft={this.saveToMicrosoft}
+                                      savingSchedule={this.state.savingCalendarSchedules}/>
                     <ScheduleDisplaySection searching={this.props.course_store.searching}
                                             schedulesLength={this.props.course_store.schedules.length}
                                             scheduleInfo={this.props.course_store.getSchedule.info}
