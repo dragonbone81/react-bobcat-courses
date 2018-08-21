@@ -62,14 +62,20 @@ class ScheduleControls extends Component {
                             <List selection divided relaxed>
                                 <List.Item onClick={this.props.saveToGoogle}>
                                     <List.Icon name='google' size='large' verticalAlign='middle'/>
-                                    <List.Content>
+                                    <List.Content verticalAlign='middle'>
                                         <List.Description>Add to Google Calendar</List.Description>
                                     </List.Content>
                                 </List.Item>
                                 <List.Item onClick={this.props.saveToMicrosoft}>
                                     <List.Icon name='microsoft' size='large' verticalAlign='middle'/>
-                                    <List.Content>
+                                    <List.Content verticalAlign='middle'>
                                         <List.Description>Add to Outlook</List.Description>
+                                    </List.Content>
+                                </List.Item>
+                                <List.Item onClick={this.props.saveToApple}>
+                                    <List.Icon name='apple' size='large' verticalAlign='middle'/>
+                                    <List.Content verticalAlign='middle'>
+                                        <List.Description>Add to Apple/Others</List.Description>
                                     </List.Content>
                                 </List.Item>
                             </List>

@@ -98,6 +98,9 @@ class SavedSchedules extends Component {
             draggable: true
         });
     };
+    saveToApple = () => {
+        this.props.course_store.createICS(this.props.course_store.getSavedSchedule);
+    };
 
     render() {
         return (
@@ -116,6 +119,7 @@ class SavedSchedules extends Component {
                                               buttonActionRunning={this.props.course_store.deletingSchedule}
                                               saveToGoogle={this.saveToGoogle}
                                               saveToMicrosoft={this.saveToMicrosoft}
+                                              saveToApple={this.saveToApple}
                                               savingSchedule={this.state.savingSchedule}
                             />
                             <ScheduleDisplaySection searching={this.props.course_store.searchingSaved}

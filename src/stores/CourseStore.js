@@ -710,6 +710,105 @@ class CourseStore {
                 customEventsCompleted = true;
             }
         });
+    };
+    createICS = (scheduleObject) => {
+        const schedule = this.scheduleObjectsToArray(scheduleObject);
+        let customEventsCompleted = false;
+        let ics = `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:BobcatCourses
+CALSCALE:GREGORIAN
+METHOD:PUBLISH\r\n`;
+        schedule.filter((course) => course && course.days.length > 0 && course.hours !== 'TBD-TBD' && !course.event_name).forEach((course) => {
+            const year = termsMap[course.term];
+            const startMonth = monthsMap[course.dates.split(" ")[0].split("-")[1]];
+            const startDay = course.dates.split(" ")[0].split("-")[0];
+            let startHour = '';
+            let endHour = '';
+            let hours = course.hours.split("-");
+            if (hours[1].includes("am")) {
+                startHour = hours[0].length === 5 ? hours[0] : "0" + hours[0];
+                endHour = hours[1].substr(0, hours[1].length - 2).length === 5 ? hours[1].substr(0, hours[1].length - 2) : "0" + hours[1].substr(0, hours[1].length - 2);
+            } else {
+                const hoursInt = hours.map((hour) => {
+                    if (hour.includes("pm")) {
+                        return parseInt(hour.substr(0, hours[1].length - 2).split(":").join(""), 10)
+                    }
+                    return parseInt(hour.split(":").join(""), 10)
+                });
+                if (!hours[1].startsWith('12')) {
+                    hoursInt[1] += 1200;
+                    if (hoursInt[0] + 1200 < hoursInt[1]) {
+                        hoursInt[0] += 1200;
+                    }
+                }
+                hours = hoursInt.map((hour) => hour.toString());
+                if (hours[0].length === 4) {
+                    startHour = hours[0].substr(0, 2) + ':' + hours[0].substr(2, 4)
+                }
+                else if (hours[0].length === 3) {
+                    startHour = "0" + hours[0].substr(0, 1) + ':' + hours[0].substr(1, 3)
+                }
+                if (hours[1].length === 4) {
+                    endHour = hours[1].substr(0, 2) + ':' + hours[1].substr(2, 4)
+
+                }
+                else if (hours[1].length === 3) {
+                    endHour = "0" + hours[1].substr(0, 1) + ':' + hours[1].substr(1, 3)
+                }
+            }
+            const days = course.days.split('').map((day) => dayMapGoogleCodes[day]).join(',');
+            const startTime = new Date(year + '-' + startMonth + '-' + startDay + ' ' + startHour + ':00 PST');
+            const endTime = new Date(year + '-' + startMonth + '-' + startDay + ' ' + endHour + ':00 PST');
+            ics += `BEGIN:VEVENT
+UID:${course.crn}
+SUMMARY: ${course.course_id}
+RRULE:FREQ=WEEKLY;BYDAY=${days};COUNT=${course.days.length * 16}
+DTSTART:${startTime.getUTCFullYear()}${(startTime.getUTCMonth() + 1).toString().padStart(2, '0')}${startTime.getUTCDate().toString().padStart(2, '0')}T${startTime.getUTCHours().toString().padStart(2, '0')}${startTime.getUTCMinutes().toString().padStart(2, '0')}00Z
+DTEND:${endTime.getUTCFullYear()}${(endTime.getUTCMonth() + 1).toString().padStart(2, '0')}${endTime.getUTCDate().toString().padStart(2, '0')}T${endTime.getUTCHours().toString().padStart(2, '0')}${endTime.getUTCMinutes().toString().padStart(2, '0')}00Z
+DTSTAMP:${startTime.getUTCFullYear()}${(startTime.getUTCMonth() + 1).toString().padStart(2, '0')}${startTime.getUTCDate().toString().padStart(2, '0')}T${startTime.getUTCHours().toString().padStart(2, '0')}${startTime.getUTCMinutes().toString().padStart(2, '0')}00Z
+DESCRIPTION:${course.course_name}
+END:VEVENT\r\n`;
+            if (!customEventsCompleted) {
+                schedule.filter((course) => course && course.event_name).forEach(async (course) => {
+                    let startHour = course.start_time.toString();
+                    let endHour = course.end_time.toString();
+                    if (startHour.length === 4) {
+                        startHour = startHour.substr(0, 2) + ':' + startHour.substr(2, 4)
+                    }
+                    else if (startHour.length === 3) {
+                        startHour = "0" + startHour.substr(0, 1) + ':' + startHour.substr(1, 3)
+                    }
+                    if (endHour.length === 4) {
+                        endHour = endHour.substr(0, 2) + ':' + endHour.substr(2, 4)
+
+                    }
+                    else if (endHour.length === 3) {
+                        endHour = "0" + endHour.substr(0, 1) + ':' + endHour.substr(1, 3)
+                    }
+                    const days = course.days.split('').map((day) => dayMapGoogleCodes[day]).join(',');
+                    const startTime = new Date(year + '-' + startMonth + '-' + startDay + ' ' + startHour + ':00 PST');
+                    const endTime = new Date(year + '-' + startMonth + '-' + startDay + ' ' + endHour + ':00 PST');
+                    ics += `BEGIN:VEVENT
+UID:${course.event_name}
+SUMMARY: ${course.event_name}
+RRULE:FREQ=WEEKLY;BYDAY=${days};COUNT=${course.days.length * 16}
+DTSTART:${startTime.getUTCFullYear()}${(startTime.getUTCMonth() + 1).toString().padStart(2, '0')}${startTime.getUTCDate().toString().padStart(2, '0')}T${startTime.getUTCHours().toString().padStart(2, '0')}${startTime.getUTCMinutes().toString().padStart(2, '0')}00Z
+DTEND:${endTime.getUTCFullYear()}${(endTime.getUTCMonth() + 1).toString().padStart(2, '0')}${endTime.getUTCDate().toString().padStart(2, '0')}T${endTime.getUTCHours().toString().padStart(2, '0')}${endTime.getUTCMinutes().toString().padStart(2, '0')}00Z
+DTSTAMP:${startTime.getUTCFullYear()}${(startTime.getUTCMonth() + 1).toString().padStart(2, '0')}${startTime.getUTCDate().toString().padStart(2, '0')}T${startTime.getUTCHours().toString().padStart(2, '0')}${startTime.getUTCMinutes().toString().padStart(2, '0')}00Z
+END:VEVENT\r\n`;
+                });
+                customEventsCompleted = true;
+            }
+        });
+
+        ics += "END:VCALENDAR";
+        const data = new Blob([ics], {type: 'e'});
+        const url = window.URL.createObjectURL(data);
+        const tempLink = document.createElement('a');
+        tempLink.href = url;
+        tempLink.setAttribute('download', 'bobcatCoursesCalendar.ics');
+        tempLink.click();
     }
 }
 

@@ -12,12 +12,12 @@ class AuthStore {
         refresh: '',
     };
     microsoftAuth = {
-        microsoftClientID: process.env.REACT_APP_MICROSOFT_CLIENT_ID,
+        microsoftClientID: '9accc636-f9f0-4953-b36c-5ba1a1822a8c' || process.env.REACT_APP_MICROSOFT_CLIENT_ID,
         token: '',
         expiresAt: '',
     };
     googleAuth = {
-        googleClientID: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+        googleClientID: '172091300284-h1f8218gn516jlmlef7nj7nvshgc2m8l.apps.googleusercontent.com' || process.env.REACT_APP_GOOGLE_CLIENT_ID,
         token: '',
         expiresAt: '',
     };
