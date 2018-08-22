@@ -503,17 +503,21 @@ class CourseStore {
                 }
             }
             const days = course.days.split('').map((day) => dayMapGoogleCodes[day]).join(',');
-
+            const date = new Date(`${year}-${startMonth}-${startDay} ${startHour}:00 PST`);
+            let startDayOfWeek = dayMapMicrosoftCodes[course.days.split('').find((day) => dayMapMicrosoftCodes[day] >= date.getDay())];
+            if (startDayOfWeek === null || startDayOfWeek === undefined) {
+                startDayOfWeek = dayMapMicrosoftCodes[course.days.split('')[0]] + 7
+            }
             const event = {
                 summary: course.course_id,
                 location: course.room,
                 description: course.course_name,
                 start: {
-                    'dateTime': `${year}-${startMonth}-${startDay}T${startHour}:00.0`,
+                    'dateTime': `${year}-${startMonth}-${parseInt(startDay, 10) + startDayOfWeek - date.getDay()}T${startHour}:00`,
                     'timeZone': 'America/Los_Angeles'
                 },
                 end: {
-                    'dateTime': `${year}-${startMonth}-${startDay}T${endHour}:00.0`,
+                    'dateTime': `${year}-${startMonth}-${parseInt(startDay, 10) + startDayOfWeek - date.getDay()}T${endHour}:00`,
                     'timeZone': 'America/Los_Angeles'
                 },
                 recurrence: [`RRULE:FREQ=WEEKLY;BYDAY=${days};COUNT=${course.days.length * 16}`],
@@ -545,15 +549,19 @@ class CourseStore {
                         endHour = "0" + endHour.substr(0, 1) + ':' + endHour.substr(1, 3)
                     }
                     const days = course.days.split('').map((day) => dayMapGoogleCodes[day]).join(',');
-
+                    const date = new Date(`${year}-${startMonth}-${startDay} ${startHour}:00 PST`);
+                    let startDayOfWeek = dayMapMicrosoftCodes[course.days.split('').find((day) => dayMapMicrosoftCodes[day] >= date.getDay())];
+                    if (startDayOfWeek === null || startDayOfWeek === undefined) {
+                        startDayOfWeek = dayMapMicrosoftCodes[course.days.split('')[0]] + 7
+                    }
                     const event = {
                         summary: course.event_name,
                         start: {
-                            'dateTime': `${year}-${startMonth}-${startDay}T${startHour}:00.0`,
+                            'dateTime': `${year}-${startMonth}-${parseInt(startDay, 10) + startDayOfWeek - date.getDay()}T${startHour}:00`,
                             'timeZone': 'America/Los_Angeles'
                         },
                         end: {
-                            'dateTime': `${year}-${startMonth}-${startDay}T${endHour}:00.0`,
+                            'dateTime': `${year}-${startMonth}-${parseInt(startDay, 10) + startDayOfWeek - date.getDay()}T${endHour}:00`,
                             'timeZone': 'America/Los_Angeles'
                         },
                         recurrence: [`RRULE:FREQ=WEEKLY;BYDAY=${days};COUNT=${course.days.length * 16}`],
