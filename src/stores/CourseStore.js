@@ -714,11 +714,7 @@ class CourseStore {
     createICS = (scheduleObject) => {
         const schedule = this.scheduleObjectsToArray(scheduleObject);
         let customEventsCompleted = false;
-        let ics = `BEGIN:VCALENDAR
-VERSION:2.0
-PRODID:BobcatCourses
-CALSCALE:GREGORIAN
-METHOD:PUBLISH\r\n`;
+        let ics = `BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:BobcatCourses\r\nCALSCALE:GREGORIAN\r\nMETHOD:PUBLISH\r\n`;
         schedule.filter((course) => course && course.days.length > 0 && course.hours !== 'TBD-TBD' && !course.event_name).forEach((course) => {
             const year = termsMap[course.term];
             const startMonth = monthsMap[course.dates.split(" ")[0].split("-")[1]];
@@ -760,15 +756,7 @@ METHOD:PUBLISH\r\n`;
             const days = course.days.split('').map((day) => dayMapGoogleCodes[day]).join(',');
             const startTime = new Date(year + '-' + startMonth + '-' + startDay + ' ' + startHour + ':00 PST');
             const endTime = new Date(year + '-' + startMonth + '-' + startDay + ' ' + endHour + ':00 PST');
-            ics += `BEGIN:VEVENT
-UID:${course.crn}
-SUMMARY: ${course.course_id}
-RRULE:FREQ=WEEKLY;BYDAY=${days};COUNT=${course.days.length * 16}
-DTSTART:${startTime.getUTCFullYear()}${(startTime.getUTCMonth() + 1).toString().padStart(2, '0')}${startTime.getUTCDate().toString().padStart(2, '0')}T${startTime.getUTCHours().toString().padStart(2, '0')}${startTime.getUTCMinutes().toString().padStart(2, '0')}00Z
-DTEND:${endTime.getUTCFullYear()}${(endTime.getUTCMonth() + 1).toString().padStart(2, '0')}${endTime.getUTCDate().toString().padStart(2, '0')}T${endTime.getUTCHours().toString().padStart(2, '0')}${endTime.getUTCMinutes().toString().padStart(2, '0')}00Z
-DTSTAMP:${startTime.getUTCFullYear()}${(startTime.getUTCMonth() + 1).toString().padStart(2, '0')}${startTime.getUTCDate().toString().padStart(2, '0')}T${startTime.getUTCHours().toString().padStart(2, '0')}${startTime.getUTCMinutes().toString().padStart(2, '0')}00Z
-DESCRIPTION:${course.course_name}
-END:VEVENT\r\n`;
+            ics += `BEGIN:VEVENT\r\nUID:${course.crn}\r\nSUMMARY: ${course.course_id}\r\nRRULE:FREQ=WEEKLY;BYDAY=${days};COUNT=${course.days.length * 16}\r\nDTSTART:${startTime.getUTCFullYear()}${(startTime.getUTCMonth() + 1).toString().padStart(2, '0')}${startTime.getUTCDate().toString().padStart(2, '0')}T${startTime.getUTCHours().toString().padStart(2, '0')}${startTime.getUTCMinutes().toString().padStart(2, '0')}00Z\r\nDTEND:${endTime.getUTCFullYear()}${(endTime.getUTCMonth() + 1).toString().padStart(2, '0')}${endTime.getUTCDate().toString().padStart(2, '0')}T${endTime.getUTCHours().toString().padStart(2, '0')}${endTime.getUTCMinutes().toString().padStart(2, '0')}00Z\r\nDTSTAMP:${startTime.getUTCFullYear()}${(startTime.getUTCMonth() + 1).toString().padStart(2, '0')}${startTime.getUTCDate().toString().padStart(2, '0')}T${startTime.getUTCHours().toString().padStart(2, '0')}${startTime.getUTCMinutes().toString().padStart(2, '0')}00Z\r\nDESCRIPTION:${course.course_name}\r\nEND:VEVENT\r\n`;
             if (!customEventsCompleted) {
                 schedule.filter((course) => course && course.event_name).forEach(async (course) => {
                     let startHour = course.start_time.toString();
@@ -803,7 +791,7 @@ END:VEVENT\r\n`;
         });
 
         ics += "END:VCALENDAR";
-        const data = new Blob([ics], {type: 'e'});
+        const data = new Blob([ics], {type: 'text/calendar; charset=utf-8'});
         const url = window.URL.createObjectURL(data);
         const tempLink = document.createElement('a');
         tempLink.href = url;
