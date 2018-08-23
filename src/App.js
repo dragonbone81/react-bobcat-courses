@@ -11,6 +11,7 @@ import About from './components/Main/About'
 import Profile from './components/Main/Profile'
 import Footer from './components/Main/Footer'
 import {ToastContainer} from 'react-toastify';
+import withTracker from './components/GoogleAnalytics/withRouter';
 import 'react-toastify/dist/ReactToastify.min.css';
 import './App.css'
 import {Switch, Route, withRouter, Redirect} from 'react-router-dom'
@@ -55,16 +56,16 @@ class App extends Component {
                         pauseOnHover
                     />
                     <Switch>
-                        <Route exact path='/schedules/search' component={GenerateSchedulesPage}/>
+                        <Route exact path='/schedules/search' component={withTracker(GenerateSchedulesPage)}/>
                         <Route exact path='/' component={RedirectHome}/>
                         <Route exact path='/schedules' component={RedirectHome}/>
-                        <Route exact path='/schedules/saved' component={SavedSchedules}/>
-                        <Route exact path='/login' component={Login}/>
-                        <Route exact path='/forgot-password' component={ForgotPassword}/>
-                        <Route exact path='/register' component={Register}/>
-                        <Route exact path='/waitlists' component={Waitlists}/>
-                        <Route exact path='/about' component={About}/>
-                        <Route exact path='/profile' component={Profile}/>
+                        <Route exact path='/schedules/saved' component={withTracker(SavedSchedules)}/>
+                        <Route exact path='/login' component={withTracker(Login)}/>
+                        <Route exact path='/forgot-password' component={withTracker(ForgotPassword)}/>
+                        <Route exact path='/register' component={withTracker(Register)}/>
+                        <Route exact path='/waitlists' component={withTracker(Waitlists)}/>
+                        <Route exact path='/about' component={withTracker(About)}/>
+                        <Route exact path='/profile' component={withTracker(Profile)}/>
                         <Route exact path='/auth/google/callback' component={Auth}/>
                         <Route component={NotFound}/>
                     </Switch>
