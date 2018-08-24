@@ -358,6 +358,7 @@ class CourseStore {
             method: 'POST',
             body: JSON.stringify({
                 term: this.selectedTermGenerateSchedule,
+                custom_events: this.customEvents,
                 crns: this.scheduleObjectsToArray(this.getSchedule).filter((section) => section && section.crn).map((section) => section.crn),
             }),
             headers: {
