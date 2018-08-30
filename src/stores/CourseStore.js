@@ -418,11 +418,9 @@ class CourseStore {
     };
 
     scheduleObjectsToArray = (schedule) => {
-        const scheduleArr = [];
+        let scheduleArr = [];
         for (let course of Object.keys(schedule.schedule)) {
-            for (let section of Object.keys(schedule.schedule[course])) {
-                scheduleArr.push(schedule.schedule[course][section]);
-            }
+            scheduleArr = [...scheduleArr, ...schedule.schedule[course]]
         }
         return scheduleArr;
     };
