@@ -38,7 +38,7 @@ class NavBar extends Component {
         const {activeItem} = this.state;
         const isMobile = this.state.windowWidth <= 604;
         return (
-            <div style={{marginBottom: 10}}>
+            <div style={{margin: 'auto', marginBottom: 10, maxWidth: 1200}}>
                 <SideBar logout={() => {
                     this.props.auth_store.logout();
                     this.hideSideBar();
