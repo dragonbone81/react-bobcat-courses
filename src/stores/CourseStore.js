@@ -422,6 +422,7 @@ class CourseStore {
         for (let course of Object.keys(schedule.schedule)) {
             scheduleArr = [...scheduleArr, ...schedule.schedule[course]]
         }
+        scheduleArr = schedule.custom_events ? [...scheduleArr, ...schedule.custom_events] : scheduleArr;
         return scheduleArr;
     };
 
