@@ -114,7 +114,7 @@ class About extends Component {
                             <Grid.Column verticalAlign='middle' textAlign="center">
                                 <h2>ReactRouter</h2>
                                 <Image verticalAlign='middle' centered
-                                       src="https://cdn.freebiesupply.com/logos/large/2x/react-router-logo-png-transparent.png"
+                                       src="https://i.imgur.com/YQjWd5B.png"
                                        alt="" size="tiny"/>
                             </Grid.Column>
                             <Grid.Column textAlign="center">
