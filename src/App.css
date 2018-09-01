@@ -47,36 +47,36 @@
 }
 
 .column-search {
-    flex-grow: 1;
     display: flex;
     flex-direction: column;
     align-content: center;
 }
 
-@media screen and (max-width: 590px) {
+@media screen and (max-width: 724px) {
     .column-search {
-        width: 100%;
-        max-width: 300px;
+        width: 350px;
     }
 
     .column-calendar {
         padding-top: 20px;
         width: 100%;
     }
+}
 
+@media screen and (min-width: 724px) {
+    .column-search {
+        width: 250px;
+    }
+}
+
+@media screen and (max-width: 590px) {
     .flex-container {
         padding: 5px;
     }
 }
 
-@media screen and (max-width: 390px) {
-    .column-search {
-        max-width: 240px;
-    }
-}
-
 .column-calendar {
-    flex-grow: 4;
+    flex-grow: 1;
 }
 
 .saved-schedules-label, .waitlists-label {
@@ -102,7 +102,8 @@
 }
 
 #root {
-    background: no-repeat center center url(https://s3-us-west-1.amazonaws.com/bobcat-courses-static/images/uc_merced_72_blurred.jpg);
+    /*background: no-repeat center center url(https://s3-us-west-1.amazonaws.com/bobcat-courses-static/images/uc_merced_72_blurred.jpg);*/
+    background: linear-gradient(#0c3e5a, #a29061);
     position: relative;
     min-height: 100%;
     padding-top: 5px;
@@ -246,9 +247,10 @@
     }
 }
 
-.calendar-option{
+.calendar-option {
     padding-left: 10px;
 }
+
 .save-button, .delete-option {
     /*font-size: 100px;*/
     padding-right: 10px;

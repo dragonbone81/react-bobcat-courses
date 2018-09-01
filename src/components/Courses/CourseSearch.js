@@ -44,7 +44,7 @@ class CourseSearch extends Component {
         return (
             <div>
                 <Dropdown
-                    // fluid
+                    fluid
                     selection
                     multiple={false}
                     search={this.filterOutChosen}

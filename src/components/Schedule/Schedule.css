@@ -55,7 +55,7 @@
 .times-col {
     width: 8%;
 }
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 895px) {
     .time-name-col {
         width: 13%;
     }
