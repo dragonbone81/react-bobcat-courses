@@ -232,6 +232,19 @@ class AuthStore {
         return response;
 
     };
+    changePassword = async ({oldPassword, newPassword}) => {
+        let response = await fetch('https://cse120-course-planner.herokuapp.com/api/users/change-password/', {
+            method: 'POST',
+            body: JSON.stringify({old_password: oldPassword, new_password: newPassword}),
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${this.auth.token}`,
+            },
+        });
+        response = await response.json();
+        return response;
+
+    };
     login = async (auth) => {
         let response = await fetch('https://cse120-course-planner.herokuapp.com/api/auth/token/obtain', {
             method: 'POST',

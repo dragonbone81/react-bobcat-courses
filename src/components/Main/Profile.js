@@ -15,7 +15,11 @@ class Profile extends Component {
         image: null,
         imageValue: '',
         fileUploading: false,
+        changingEmail: false,
+        changingPassword: false,
         email: '',
+        newPassword: '',
+        oldPassword: '',
     };
     handleFileUpload = ({target}) => {
         this.setState({imageValue: target.value});
@@ -95,60 +99,129 @@ class Profile extends Component {
         }
         email ? this.setState({changingEmail: false, email: ''}) : this.setState({unsubscribing: false});
     };
+    changePassword = async () => {
+        this.setState({changingPassword: true});
+        const response = await this.props.auth_store.changePassword({
+            newPassword: this.state.newPassword,
+            oldPassword: this.state.oldPassword
+        });
+        if (response.fail && response.fail === "password_incorrect") {
+            toast.error('Current password incorrect', {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true
+            });
+        } else if (response.success) {
+            toast.success('Password changed!', {
+                position: "top-right",
+                autoClose: 2000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true
+            });
+        }
+        this.setState({
+            changingPassword: false,
+            newPassword: '',
+            oldPassword: ''
+        });
+
+    };
 
     render() {
         return (
-            <div className="flex-container" style={{maxWidth: 800}}>
+            <div className="flex-container" style={{maxWidth: 500}}>
                 {this.props.auth_store.isLoggedIn ?
                     <Container>
-                        <Grid divided textAlign="center" stackable centered columns={2}>
-                            <Grid.Column textAlign="center" tablet={6} computer={6}>
-                                <Image centered
-                                       src={this.state.image ? URL.createObjectURL(this.state.image) : this.props.auth_store.user.profile_image_url}
-                                       size="small"/>
-                                <p>Select your profile picture...</p>
-                                {this.state.uploadedFile ?
-                                    <React.Fragment><Button onClick={this.uploadFile} labelPosition='left' color="green"
-                                                            icon><Icon name="check"/>Click
-                                        to Upload</Button><Button onClick={this.reset} color="red"
-                                                                  icon>{this.state.fileUploading ?
-                                        <Icon name="spinner" loading/> : <Icon
-                                            name="close"/>}</Button></React.Fragment> :
-                                    <Label style={{cursor: 'pointer'}} width="4" as="label" htmlFor="file" size="big">
-                                        <Icon name="file"/>
-                                        Upload
-                                    </Label>}
-                                <input value={this.state.imageValue} accept=".png,.jpeg,.jpg"
-                                       onChange={this.handleFileUpload} id="file"
-                                       hidden type="file"/>
-                            </Grid.Column>
-                            <Grid.Column textAlign="center" tablet={6} computer={6}>
-                                <div
-                                    style={{
-                                        paddingTop: 40,
-                                        fontSize: 100,
-                                        textAlign: 'center',
-                                        color: 'rgb(59, 157, 244)'
-                                    }}>
-                                    <Icon name="mail"/>
-                                </div>
-                                <p style={{marginTop: -40}}>Update settings...</p>
-                                <Form onSubmit={() => this.submitUnsubscribeOrEmail(true)}>
-                                    <Form.Field>
-                                        <input value={this.state.email}
-                                               onChange={({target}) => this.setState({email: target.value})} required
-                                               type="email" placeholder={this.props.auth_store.user.email}/>
-                                    </Form.Field>
-                                    <Button.Group floated="left"><Button loading={this.state.changingEmail} basic
-                                                                         color="green">Update
-                                        Email</Button></Button.Group>
-                                    <Button.Group floated="right"><Button
-                                        onClick={() => this.submitUnsubscribeOrEmail(false)}
-                                        loading={this.state.unsubscribing} basic
-                                        type="button"
-                                        color={this.props.auth_store.user.email_alerts ? 'red' : 'green'}>{this.props.auth_store.user.email_alerts ? 'Unsubscribe' : 'Subscribe'}</Button></Button.Group>
-                                </Form>
-                            </Grid.Column>
+                        <Grid divided='vertically' textAlign="center" stackable centered>
+                            <Grid.Row>
+                                <Grid.Column textAlign="center">
+                                    <Image centered
+                                           src={this.state.image ? URL.createObjectURL(this.state.image) : this.props.auth_store.user.profile_image_url}
+                                           size="small"/>
+                                    <p>Select your profile picture...</p>
+                                    {this.state.uploadedFile ?
+                                        <React.Fragment><Button onClick={this.uploadFile} labelPosition='left'
+                                                                color="green"
+                                                                icon><Icon name="check"/>Click
+                                            to Upload</Button><Button onClick={this.reset} color="red"
+                                                                      icon>{this.state.fileUploading ?
+                                            <Icon name="spinner" loading/> : <Icon
+                                                name="close"/>}</Button></React.Fragment> :
+                                        <Label style={{cursor: 'pointer'}} width="4" as="label" htmlFor="file"
+                                               size="big">
+                                            <Icon name="file"/>
+                                            Upload
+                                        </Label>}
+                                    <input value={this.state.imageValue} accept=".png,.jpeg,.jpg"
+                                           onChange={this.handleFileUpload} id="file"
+                                           hidden type="file"/>
+                                </Grid.Column>
+                            </Grid.Row>
+                            <Grid.Row>
+                                <Grid.Column textAlign="center">
+                                    <div
+                                        style={{
+                                            paddingTop: 40,
+                                            fontSize: 100,
+                                            textAlign: 'center',
+                                            color: 'rgb(59, 157, 244)'
+                                        }}>
+                                        <Icon name="mail"/>
+                                    </div>
+                                    <p style={{marginTop: -40}}>Update settings...</p>
+                                    <Form onSubmit={() => this.submitUnsubscribeOrEmail(true)}>
+                                        <Form.Field>
+                                            <input value={this.state.email}
+                                                   onChange={({target}) => this.setState({email: target.value})}
+                                                   required
+                                                   type="email" placeholder={this.props.auth_store.user.email}/>
+                                        </Form.Field>
+                                        <Button.Group floated="left"><Button loading={this.state.changingEmail} basic
+                                                                             color="green">Update
+                                            Email</Button></Button.Group>
+                                        <Button.Group floated="right"><Button
+                                            onClick={() => this.submitUnsubscribeOrEmail(false)}
+                                            loading={this.state.unsubscribing} basic
+                                            type="button"
+                                            color={this.props.auth_store.user.email_alerts ? 'red' : 'green'}>{this.props.auth_store.user.email_alerts ? 'Unsubscribe' : 'Subscribe'}</Button></Button.Group>
+                                    </Form>
+                                </Grid.Column>
+                            </Grid.Row>
+                            <Grid.Row>
+                                <Grid.Column textAlign="center">
+                                    <div
+                                        style={{
+                                            paddingTop: 40,
+                                            fontSize: 100,
+                                            textAlign: 'center',
+                                            color: 'rgb(59, 157, 244)'
+                                        }}>
+                                        <Icon name="key"/>
+                                    </div>
+                                    <p style={{marginTop: -30}}>Change Password...</p>
+                                    <Form onSubmit={this.changePassword}>
+                                        <Form.Field>
+                                            <input value={this.state.oldPassword}
+                                                   onChange={({target}) => this.setState({oldPassword: target.value})}
+                                                   required
+                                                   type="password" placeholder='Current Password...'/>
+                                        </Form.Field>
+                                        <Form.Field>
+                                            <input value={this.state.newPassword}
+                                                   onChange={({target}) => this.setState({newPassword: target.value})}
+                                                   required
+                                                   type="password" placeholder='New Password...'/>
+                                        </Form.Field>
+                                        <Button loading={this.state.changingPassword} basic
+                                                color="green">Change Password</Button>
+                                    </Form>
+                                </Grid.Column>
+                            </Grid.Row>
                         </Grid>
                     </Container>
                     :
