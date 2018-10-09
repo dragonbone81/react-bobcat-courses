@@ -127,7 +127,8 @@ class SavedSchedules extends Component {
                                                     scheduleInfo={this.props.course_store.getSavedSchedule.info}
                                                     schedule={this.props.course_store.getSavedSchedule}
                                                     scheduleObjectsToArray={this.props.course_store.scheduleObjectsToArray}
-                                                    savedSchedulesRendering={true}/>
+                                                    savedSchedulesRendering={true}
+                                                    term={this.props.course_store.getSavedSchedule.info ? this.props.course_store.terms.find((el)=>el.value.toString() === this.props.course_store.getSavedSchedule.info.term).text : null}/>
                         </div>
                         :
                         <div>

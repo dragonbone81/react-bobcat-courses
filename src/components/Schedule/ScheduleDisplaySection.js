@@ -9,7 +9,7 @@ const ScheduleDisplaySection = (props) => {
                 (<Icon loading size="huge" name="spinner"/>) :
                 props.schedulesLength > 0 ?
                     <Schedule scheduleInfo={props.scheduleInfo}
-                              sections={props.scheduleObjectsToArray(props.schedule)}/>
+                              sections={props.scheduleObjectsToArray(props.schedule)} term={props.term}/>
                     :
                     props.noSchedulesFound ?
                         <div style={{maxWidth: '300px', marginBottom: 10}} className="ui warning message">

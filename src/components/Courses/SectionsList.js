@@ -1,10 +1,10 @@
 import React from 'react'
 import {List, Header} from 'semantic-ui-react'
 
-const SectionsList = ({sections}) => {
+const SectionsList = ({sections, term}) => {
     return (
         <List celled relaxed>
-            <Header size='large'>Sections</Header>
+            <Header size='large'>Sections: {term?term:''}</Header>
             {sections.filter((section) => section).sort((a, b) => {
                 if (!a.course_id || !b.course_id) {
                     return -1;

@@ -9,9 +9,6 @@ class Schedule extends Component {
     state = {
         colorMap: {},
     };
-    findSectionByCRN = (crn) => {
-        return this.props.sections.find((section) => section.crn === crn);
-    };
 
     componentDidMount() {
         this.setState({
@@ -52,7 +49,7 @@ class Schedule extends Component {
                         )
                     })}
                 </div>
-                <SectionsList sections={this.props.sections}/>
+                <SectionsList sections={this.props.sections} term={this.props.term}/>
             </div>
         )
     }
