@@ -439,6 +439,7 @@ class CourseStore {
         this.currentIndex = 0;
         this.sections = {};
         this.selectedTermGenerateSchedule = term;
+        this.customEvents = [];
     };
     changeSelectedTermWaitlists = (term) => {
         this.selectedTermWaitlists = term;
