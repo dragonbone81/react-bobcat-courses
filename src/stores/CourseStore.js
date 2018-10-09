@@ -383,7 +383,7 @@ class CourseStore {
             body: JSON.stringify({
                 term: sections[0].term,
                 crns: sections.map((section) => section.crn),
-                custom_events: this.scheduleObjectsToArray(this.getSavedSchedule).filter((section)=>section && section.event_name),
+                custom_events: this.scheduleObjectsToArray(this.getSavedSchedule).filter((section) => section && section.event_name),
             }),
             headers: {
                 "Content-Type": "application/json",
@@ -437,6 +437,7 @@ class CourseStore {
         this.courses = [];
         this.schedules = [];
         this.currentIndex = 0;
+        this.sections = {};
         this.selectedTermGenerateSchedule = term;
     };
     changeSelectedTermWaitlists = (term) => {
