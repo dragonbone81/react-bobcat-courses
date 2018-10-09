@@ -21,13 +21,14 @@ class CourseStore {
     days = null;
     full = false;
     filterOptionsChanged = false;
-    // selectedTermGenerateSchedule = 201910;
-    selectedTermWaitlists = 201830;
-    selectedTermGenerateSchedule = 201830;
+    // selectedTermWaitlists = 201830;
+    selectedTermWaitlists = 201910;
+    selectedTermGenerateSchedule = 201910;
+    // selectedTermGenerateSchedule = 201830;
     terms = [
-        // {text: 'Spring 2019', value: 201910},
+        {text: 'Spring 2019', value: 201910},
         {text: 'Fall 2018', value: 201830},
-        {text: 'Spring 2018', value: 201810},
+        // {text: 'Spring 2018', value: 201810},
     ];
     selectedEarliestTime = 'null';
     earliestTimes = [
