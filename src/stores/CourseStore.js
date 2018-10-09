@@ -381,7 +381,7 @@ class CourseStore {
         let response = await fetch('https://cse120-course-planner.herokuapp.com/api/users/delete-schedule/', {
             method: 'POST',
             body: JSON.stringify({
-                term: sections[0].term,
+                term: this.getSavedSchedule.info.term,
                 crns: sections.map((section) => section.crn),
                 custom_events: this.scheduleObjectsToArray(this.getSavedSchedule).filter((section) => section && section.event_name),
             }),
