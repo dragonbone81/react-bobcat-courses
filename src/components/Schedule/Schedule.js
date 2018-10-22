@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import SectionPopup from './SectionPopup'
 import SectionsList from '../Courses/SectionsList'
 import './Schedule.css'
+import {Segment} from 'semantic-ui-react';
 import {timesMap, timesArr, daysMap, daysArr, colors} from "../../data";
 
 class Schedule extends Component {
@@ -26,6 +27,8 @@ class Schedule extends Component {
         const timeSpan = timesArr.slice(timesMap[Math.floor(this.props.scheduleInfo.earliest / 100.0) * 100].index, timesMap[Math.ceil(this.props.scheduleInfo.latest / 100.0) * 100 + 100].index);
         return (
             <div className="schedule-inside-container">
+                {this.props.scheduleInfo.hasConflictingFinals &&
+                <Segment size='big' inverted color='red' secondary>This schedule has conflicting final times</Segment>}
                 <div className="days-div">
                     <div className="time-name-col"/>
                     {daysArr.map((day) => {
