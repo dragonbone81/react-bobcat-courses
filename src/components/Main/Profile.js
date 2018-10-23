@@ -105,7 +105,7 @@ class Profile extends Component {
             newPassword: this.state.newPassword,
             oldPassword: this.state.oldPassword
         });
-        if (response.fail && response.fail === "password_incorrect") {
+        if (response.error_code === 107) {
             toast.error('Current password incorrect', {
                 position: "top-right",
                 autoClose: 2000,

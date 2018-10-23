@@ -39,7 +39,7 @@ class SavedSchedules extends Component {
                 pauseOnHover: true,
                 draggable: true
             });
-        else if (response.error)
+        else if (response.error_code === 105)
             toast.error('Could not delete Schedule (Might have already been deleted)', {
                 position: "top-right",
                 autoClose: 3000,
