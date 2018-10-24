@@ -358,6 +358,7 @@ class CourseStore {
         let response = await fetch('https://cse120-course-planner.herokuapp.com/api/users/save-schedule/', {
             method: 'POST',
             body: JSON.stringify({
+                hasConflictingFinals: this.getSchedule.info.hasConflictingFinals,
                 term: this.selectedTermGenerateSchedule,
                 custom_events: this.customEvents,
                 crns: this.scheduleObjectsToArray(this.getSchedule).filter((section) => section && section.crn).map((section) => section.crn),

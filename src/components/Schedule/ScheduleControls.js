@@ -25,12 +25,21 @@ class ScheduleControls extends Component {
         } : {};
         return (
             <div className="schedule-button-controls" style={display}>
-                {this.props.isLoggedIn ?
+                {this.props.isLoggedIn || this.props.scheduleType === 'generate' ?
                     this.props.scheduleType === 'generate' ?
                         <div className="delete-option">
-                            <Button className="save-button-control" loading={this.props.buttonActionRunning}
-                                    onClick={this.props.buttonAction}
-                                    color="teal">Save</Button>
+                            {this.props.isLoggedIn ?
+                                <Button className="save-button-control"
+                                        loading={this.props.buttonActionRunning}
+                                        onClick={this.props.buttonAction}
+                                        color="teal">Save</Button>
+                                :
+                                <Popup trigger={<div><Button disabled className="save-button-control"
+                                                              loading={this.props.buttonActionRunning}
+                                                              onClick={this.props.buttonAction}
+                                                              color="teal">Save</Button></div>}
+                                       content='Login to save schedules.'/>
+                            }
                         </div>
                         : this.props.scheduleType === 'saved' ?
                         <div className="delete-option">
