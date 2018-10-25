@@ -163,4 +163,4 @@ SavedSchedules.propTypes = {
     course_store: PropTypes.object,
     auth_store: PropTypes.object,
 };
-export default inject("course_store", "auth_store")(observer(withRouter(SavedSchedules)));
+export default withRouter(inject("course_store", "auth_store")(observer(SavedSchedules)));

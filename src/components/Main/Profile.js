@@ -252,4 +252,4 @@ class Profile extends Component {
     }
 }
 
-export default inject("auth_store")(observer(withRouter(Profile)))
+export default withRouter(inject("auth_store")(observer(Profile)))

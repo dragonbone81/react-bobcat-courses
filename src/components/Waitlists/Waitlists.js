@@ -319,4 +319,4 @@ class Waitlists extends Component {
     }
 }
 
-export default inject("course_store", "auth_store")(observer(withRouter(Waitlists)))
+export default withRouter(inject("course_store", "auth_store")(observer(Waitlists)))
