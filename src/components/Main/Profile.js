@@ -2,6 +2,7 @@ import React, {Component} from 'react'
 import {Container, Image, Form, Button, Grid, Icon, Label} from 'semantic-ui-react'
 import {inject, observer} from "mobx-react";
 import {toast} from 'react-toastify';
+import {withRouter} from "react-router-dom";
 
 
 class Profile extends Component {
@@ -237,7 +238,9 @@ class Profile extends Component {
                             :
                             <div style={{maxWidth: '500px', margin: 'auto', marginBottom: 10, marginTop: 10}}
                                  className="ui warning message">
-                                <div style={{textAlign: 'center'}} className="header">
+                                <div onClick={() => this.props.history.push('/login')}
+                                     style={{textAlign: 'center', cursor: 'pointer'}}
+                                     className="header">
                                     Please Login
                                 </div>
                             </div>
@@ -249,4 +252,4 @@ class Profile extends Component {
     }
 }
 
-export default inject("auth_store")(observer(Profile))
+export default inject("auth_store")(observer(withRouter(Profile)))

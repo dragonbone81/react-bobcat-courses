@@ -5,6 +5,7 @@ import {observe} from 'mobx';
 import ScheduleControls from '../Schedule/ScheduleControls'
 import ScheduleDisplaySection from '../Schedule/ScheduleDisplaySection'
 import {toast} from "react-toastify";
+import {withRouter} from "react-router-dom";
 
 class SavedSchedules extends Component {
     state = {
@@ -128,7 +129,7 @@ class SavedSchedules extends Component {
                                                     schedule={this.props.course_store.getSavedSchedule}
                                                     scheduleObjectsToArray={this.props.course_store.scheduleObjectsToArray}
                                                     savedSchedulesRendering={true}
-                                                    term={this.props.course_store.getSavedSchedule.info ? this.props.course_store.terms.find((el)=>el.value.toString() === this.props.course_store.getSavedSchedule.info.term).text : null}/>
+                                                    term={this.props.course_store.getSavedSchedule.info ? this.props.course_store.terms.find((el) => el.value.toString() === this.props.course_store.getSavedSchedule.info.term).text : null}/>
                         </div>
                         :
                         <div>
@@ -143,7 +144,9 @@ class SavedSchedules extends Component {
                                 :
                                 <div style={{maxWidth: '500px', margin: 'auto', marginBottom: 10, marginTop: 10}}
                                      className="ui warning message">
-                                    <div style={{textAlign: 'center'}} className="header">
+                                    <div onClick={() => this.props.history.push('/login')}
+                                         style={{textAlign: 'center', cursor: 'pointer'}}
+                                         className="header">
                                         Please Login
                                     </div>
                                 </div>
@@ -160,4 +163,4 @@ SavedSchedules.propTypes = {
     course_store: PropTypes.object,
     auth_store: PropTypes.object,
 };
-export default inject("course_store", "auth_store")(observer(SavedSchedules));
+export default inject("course_store", "auth_store")(observer(withRouter(SavedSchedules)));

@@ -3,6 +3,7 @@ import {Container, Modal, Form, List, Icon, Header, Card, Grid, Dropdown} from '
 import {inject, observer} from "mobx-react";
 import {observe} from 'mobx'
 import {toast} from 'react-toastify'
+import {withRouter} from "react-router-dom";
 
 class Waitlists extends Component {
     state = {
@@ -304,7 +305,9 @@ class Waitlists extends Component {
                             :
                             <div style={{maxWidth: '500px', margin: 'auto', marginBottom: 10, marginTop: 10}}
                                  className="ui warning message">
-                                <div style={{textAlign: 'center'}} className="header">
+                                <div onClick={() => this.props.history.push('/login')}
+                                     style={{textAlign: 'center', cursor: 'pointer'}}
+                                     className="header">
                                     Please Login
                                 </div>
                             </div>
@@ -316,4 +319,4 @@ class Waitlists extends Component {
     }
 }
 
-export default inject("course_store", "auth_store")(observer(Waitlists))
+export default inject("course_store", "auth_store")(observer(withRouter(Waitlists)))
