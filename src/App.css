@@ -255,3 +255,27 @@
     /*font-size: 100px;*/
     padding-right: 10px;
 }
+
+.ui.form ::-webkit-input-placeholder {
+    color: rgba(110, 110, 110, 0.87) !important;
+}
+
+.ui.form :-ms-input-placeholder {
+    color: rgba(110, 110, 110, 0.87) !important;
+}
+
+.ui.form ::-moz-placeholder {
+    color: rgba(110, 110, 110, 0.87) !important;
+}
+
+.ui.form :focus::-webkit-input-placeholder {
+    color: rgba(191, 191, 191, .87) !important;
+}
+
+.ui.form :focus:-ms-input-placeholder {
+    color: rgba(191, 191, 191, .87) !important;
+}
+
+.ui.form :focus::-moz-placeholder {
+    color: rgba(191, 191, 191, .87) !important;
+}
