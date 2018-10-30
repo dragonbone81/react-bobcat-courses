@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import {Form, Header, Container, Image, Grid, Accordion, Icon} from 'semantic-ui-react'
+import {Form, Header, Container, Image, Grid, Accordion, Icon, Statistic} from 'semantic-ui-react'
 import {toast} from 'react-toastify';
 
 
@@ -9,10 +9,47 @@ class About extends Component {
         email: '',
         message: '',
         accordionActive: false,
+        totalGeneratedSchedules: '...',
+        totalSavedSchedules: '...',
+        totalRegisteredUsers: '...',
+        totalSavedWaitlists: '...',
+    };
+    hydrateStoreWithLocalStorage = () => {
+        let stats = localStorage.getItem('stats');
+        if (stats !== null) {
+            stats = JSON.parse(stats);
+            this.setState({
+                ...stats,
+            });
+        }
+        this.getStats();
+    };
+    numberWithCommas = (number) => {
+        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    };
+    getStats = () => {
+        fetch('https://cse120-course-planner.herokuapp.com/api/statistics/', {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then((response) => response.json()).then((stats) => {
+            const statsObj = {
+                totalGeneratedSchedules: this.numberWithCommas(stats.total_schedules_generated),
+                totalSavedSchedules: this.numberWithCommas(stats.total_saved_schedules),
+                totalRegisteredUsers: this.numberWithCommas(stats.total_users),
+                totalSavedWaitlists: this.numberWithCommas(stats.total_waitlists),
+            };
+            this.setState({
+                ...statsObj,
+            });
+            localStorage.setItem('stats', JSON.stringify(statsObj));
+        });
     };
 
     componentDidMount() {
         document.title = "BobcatCourses | About";
+        this.hydrateStoreWithLocalStorage();
     }
 
     onSubmit = async () => {
@@ -105,6 +142,35 @@ class About extends Component {
                                                    placeholder='Anything you want to tell us...'/>
                                     <Form.Button color="black">Submit</Form.Button>
                                 </Form>
+                            </Grid.Column>
+                        </Grid.Row>
+                        <Grid.Row centered textAlign="center">
+                            <Header size="huge" textAlign='center'> Statistics:</Header>
+                        </Grid.Row>
+                        <Grid.Row centered textAlign="center">
+                            <Grid.Column verticalAlign='middle' textAlign="center">
+                                <Statistic size='large'>
+                                    <Statistic.Value>{this.state.totalGeneratedSchedules}</Statistic.Value>
+                                    <Statistic.Label>Total Generated Schedules</Statistic.Label>
+                                </Statistic>
+                            </Grid.Column>
+                            <Grid.Column verticalAlign='middle' textAlign="center">
+                                <Statistic size='large'>
+                                    <Statistic.Value>{this.state.totalSavedSchedules}</Statistic.Value>
+                                    <Statistic.Label>Total Saved Schedules</Statistic.Label>
+                                </Statistic>
+                            </Grid.Column>
+                            <Grid.Column verticalAlign='middle' textAlign="center">
+                                <Statistic size='large'>
+                                    <Statistic.Value>{this.state.totalRegisteredUsers}</Statistic.Value>
+                                    <Statistic.Label>Total Registered Users</Statistic.Label>
+                                </Statistic>
+                            </Grid.Column>
+                            <Grid.Column verticalAlign='middle' textAlign="center">
+                                <Statistic size='large'>
+                                    <Statistic.Value>{this.state.totalSavedWaitlists}</Statistic.Value>
+                                    <Statistic.Label>Total Saved Waitlists</Statistic.Label>
+                                </Statistic>
                             </Grid.Column>
                         </Grid.Row>
                         <Grid.Row centered textAlign="center">

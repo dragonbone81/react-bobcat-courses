@@ -36,7 +36,7 @@ class NavBar extends Component {
 
     render() {
         const {activeItem} = this.state;
-        const isMobile = this.state.windowWidth <= 604;
+        const isMobile = this.props.auth_store.isLoggedIn ? this.state.windowWidth <= 604 : this.state.windowWidth <= 680;
         return (
             <div style={{margin: 'auto', marginTop: -10, marginBottom: 10, maxWidth: 1200}}>
                 <SideBar logout={() => {
@@ -70,6 +70,14 @@ class NavBar extends Component {
                             active={activeItem === '/waitlists'}
                             onClick={this.handleItemClick}
                         >Waitlists</Menu.Item>
+                        {!this.props.auth_store.isLoggedIn ?
+                            <Menu.Item
+                                name='/about'
+                                active={activeItem === '/about'}
+                                onClick={this.handleItemClick}
+                            >About</Menu.Item>
+                            : null
+                        }
                         <Menu.Menu position='right'>
                             {this.props.auth_store.isLoggedIn ?
                                 <Menu.Item
