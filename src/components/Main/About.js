@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Form, Header, Container, Image, Grid, Accordion, Icon, Statistic} from 'semantic-ui-react'
 import {toast} from 'react-toastify';
+import CountUp from 'react-countup';
 
 
 class About extends Component {
@@ -9,23 +10,10 @@ class About extends Component {
         email: '',
         message: '',
         accordionActive: false,
-        totalGeneratedSchedules: '...',
-        totalSavedSchedules: '...',
-        totalRegisteredUsers: '...',
-        totalSavedWaitlists: '...',
-    };
-    hydrateStoreWithLocalStorage = () => {
-        let stats = localStorage.getItem('stats');
-        if (stats !== null) {
-            stats = JSON.parse(stats);
-            this.setState({
-                ...stats,
-            });
-        }
-        this.getStats();
-    };
-    numberWithCommas = (number) => {
-        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        totalGeneratedSchedules: undefined,
+        totalSavedSchedules: undefined,
+        totalRegisteredUsers: undefined,
+        totalSavedWaitlists: undefined,
     };
     getStats = () => {
         fetch('https://cse120-course-planner.herokuapp.com/api/statistics/', {
@@ -35,21 +23,20 @@ class About extends Component {
             },
         }).then((response) => response.json()).then((stats) => {
             const statsObj = {
-                totalGeneratedSchedules: this.numberWithCommas(stats.total_schedules_generated),
-                totalSavedSchedules: this.numberWithCommas(stats.total_saved_schedules),
-                totalRegisteredUsers: this.numberWithCommas(stats.total_users),
-                totalSavedWaitlists: this.numberWithCommas(stats.total_waitlists),
+                totalGeneratedSchedules: stats.total_schedules_generated,
+                totalSavedSchedules: stats.total_saved_schedules,
+                totalRegisteredUsers: stats.total_users,
+                totalSavedWaitlists: stats.total_waitlists,
             };
             this.setState({
                 ...statsObj,
             });
-            localStorage.setItem('stats', JSON.stringify(statsObj));
         });
     };
 
     componentDidMount() {
         document.title = "BobcatCourses | About";
-        this.hydrateStoreWithLocalStorage();
+        this.getStats();
     }
 
     onSubmit = async () => {
@@ -150,25 +137,37 @@ class About extends Component {
                         <Grid.Row centered textAlign="center">
                             <Grid.Column verticalAlign='middle' textAlign="center">
                                 <Statistic size='large'>
-                                    <Statistic.Value>{this.state.totalGeneratedSchedules}</Statistic.Value>
+                                    <Statistic.Value>{this.state.totalGeneratedSchedules === undefined ? '...' :
+                                        <CountUp separator=',' end={this.state.totalGeneratedSchedules}/>
+                                    }
+                                    </Statistic.Value>
                                     <Statistic.Label>Total Generated Schedules</Statistic.Label>
                                 </Statistic>
                             </Grid.Column>
                             <Grid.Column verticalAlign='middle' textAlign="center">
                                 <Statistic size='large'>
-                                    <Statistic.Value>{this.state.totalSavedSchedules}</Statistic.Value>
+                                    <Statistic.Value>{this.state.totalSavedSchedules === undefined ? '...' :
+                                        <CountUp separator=',' end={this.state.totalSavedSchedules}/>
+                                    }
+                                    </Statistic.Value>
                                     <Statistic.Label>Total Saved Schedules</Statistic.Label>
                                 </Statistic>
                             </Grid.Column>
                             <Grid.Column verticalAlign='middle' textAlign="center">
                                 <Statistic size='large'>
-                                    <Statistic.Value>{this.state.totalRegisteredUsers}</Statistic.Value>
+                                    <Statistic.Value>{this.state.totalRegisteredUsers === undefined ? '...' :
+                                        <CountUp separator=',' end={this.state.totalRegisteredUsers}/>
+                                    }
+                                    </Statistic.Value>
                                     <Statistic.Label>Total Registered Users</Statistic.Label>
                                 </Statistic>
                             </Grid.Column>
                             <Grid.Column verticalAlign='middle' textAlign="center">
                                 <Statistic size='large'>
-                                    <Statistic.Value>{this.state.totalSavedWaitlists}</Statistic.Value>
+                                    <Statistic.Value>{this.state.totalSavedWaitlists === undefined ? '...' :
+                                        <CountUp separator=',' end={this.state.totalSavedWaitlists}/>
+                                    }
+                                    </Statistic.Value>
                                     <Statistic.Label>Total Saved Waitlists</Statistic.Label>
                                 </Statistic>
                             </Grid.Column>
