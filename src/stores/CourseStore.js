@@ -224,7 +224,7 @@ class CourseStore {
                     "Content-Type": "application/json",
                 },
             });
-            if (response.status === 200) {
+            if (response.status === 200 && response.ok) {
                 response = await response.json();
             } else {
                 runInAction(() => {
