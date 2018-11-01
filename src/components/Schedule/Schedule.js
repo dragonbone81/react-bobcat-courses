@@ -27,6 +27,8 @@ class Schedule extends Component {
         const timeSpan = timesArr.slice(timesMap[Math.floor(this.props.scheduleInfo.earliest / 100.0) * 100].index, timesMap[Math.ceil(this.props.scheduleInfo.latest / 100.0) * 100 + 100].index);
         return (
             <div className="schedule-inside-container">
+                {this.props.sections.some((section) => section.available === 0) &&
+                <Segment size='big' inverted color='red' secondary>This schedule has a full section</Segment>}
                 {this.props.scheduleInfo.hasConflictingFinals &&
                 <Segment size='big' inverted color='red' secondary>This schedule has conflicting final times</Segment>}
                 <div className="days-div">

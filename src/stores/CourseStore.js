@@ -17,8 +17,8 @@ class CourseStore {
     deletingSchedule = false;
     gettingSections = false;
     sections = {};
-    gaps = null;
-    days = null;
+    gaps = 'asc';
+    days = 'asc';
     full = false;
     filterOptionsChanged = false;
     // selectedTermWaitlists = 201830;
@@ -452,10 +452,16 @@ class CourseStore {
         this.selectedLatestTime = time;
     };
     changeSelectedDaysFilter = (filter) => {
-        this.days === filter ? this.days = null : this.days = filter;
+        if (this.days !== filter) {
+            this.filterOptionsChanged = true;
+            this.days = filter
+        }
     };
     changeSelectedGapsFilter = (filter) => {
-        this.gaps === filter ? this.gaps = null : this.gaps = filter;
+        if (this.gaps !== filter) {
+            this.filterOptionsChanged = true;
+            this.gaps = filter
+        }
     };
     changeSelectedFullFilter = () => {
         this.full = !this.full;

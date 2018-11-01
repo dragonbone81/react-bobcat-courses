@@ -7,11 +7,9 @@ class OptionsModal extends Component {
         this.props.course_store.changeSelectedTermGenerateSchedule(value);
     };
     onChangeDays = (e, {value}) => {
-        this.props.course_store.changeFilterOptionsChanged();
         this.props.course_store.changeSelectedDaysFilter(value);
     };
     onChangeGaps = (e, {value}) => {
-        this.props.course_store.changeFilterOptionsChanged();
         this.props.course_store.changeSelectedGapsFilter(value);
     };
     onChangeEarliestTime = (e, {value}) => {
