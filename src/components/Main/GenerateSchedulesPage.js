@@ -8,10 +8,9 @@ import CustomEventModal from '../Modals/CustomEventModal'
 import CourseSearch from '../Courses/CourseSearch'
 import CourseList from '../Courses/CourseList'
 import ScheduleControls from '../Schedule/ScheduleControls'
-import {Icon, Header} from 'semantic-ui-react'
+import {Icon, Header, Accordion, Button} from 'semantic-ui-react'
 import {inject, observer} from "mobx-react";
 import {toast} from 'react-toastify';
-import {Button} from 'semantic-ui-react'
 
 class GenerateSchedulesPage extends Component {
     state = {
@@ -22,6 +21,7 @@ class GenerateSchedulesPage extends Component {
         editEvent: false,
         editEventName: '',
         savingCalendarSchedules: false,
+        activeIndexAccordion: -1,
     };
     changeSectionsModalState = () => {
         if (this.state.sectionsModalOpen) {
@@ -176,9 +176,6 @@ class GenerateSchedulesPage extends Component {
                 <CustomEventModal editEventName={this.state.editEventName} editEvent={this.state.editEvent}
                                   submitCustomEvent={this.submitCustomEvent} open={this.state.customEventModalOpen}
                                   changeModalState={this.closeEventModal}/>}
-                <div className="cog-setting-icon">
-                    <Icon style={{cursor: 'pointer'}} onClick={this.changeModalState} name="edit"/>
-                </div>
                 <div style={{textAlign: 'center', marginTop: 5}} className="column-search">
                     <Header
                         size='medium'>{this.props.course_store.terms.find((term) => term.value === this.props.course_store.selectedTermGenerateSchedule).text}</Header>
@@ -186,9 +183,18 @@ class GenerateSchedulesPage extends Component {
                     <CourseList openSectionsModal={this.openSectionsModal} editSection={this.editSection}/>
                     <GenerateSchedules
                         scheduleSearch={this.props.course_store.scheduleSearch}/>
-                    <div className="course-item">
-                        <Button onClick={this.addCustomEvent}>Add custom event</Button>
-                    </div>
+                    <Accordion style={{marginTop: 20}}>
+                        <Accordion.Title active={this.state.activeIndexAccordion === 0}
+                                         onClick={() => this.state.activeIndexAccordion === -1 ? this.setState({activeIndexAccordion: 0}) : this.setState({activeIndexAccordion: -1})}>
+                            <Icon name='dropdown'/>
+                            Advanced Options...
+                        </Accordion.Title>
+                        <Accordion.Content active={this.state.activeIndexAccordion === 0}>
+                            <Button color="grey" onClick={this.changeModalState}>Preferences</Button>
+                            <Button color="grey" onClick={this.addCustomEvent}>Add
+                                Event</Button>
+                        </Accordion.Content>
+                    </Accordion>
                 </div>
                 <div className="column-calendar">
                     <ScheduleControls searching={this.props.course_store.searching}
