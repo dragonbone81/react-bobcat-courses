@@ -29,6 +29,8 @@ class Schedule extends Component {
             <div className="schedule-inside-container">
                 {this.props.sections.some((section) => section.available === 0) &&
                 <Segment size='big' inverted color='red' secondary>This schedule has a full section</Segment>}
+                {this.props.sections.some((section) => section.simple_name === 'CHEM-8L' || section.simple_name === 'CHEM-8' || section.simple_name === 'CHEM-8H') &&
+                <Segment size='big' inverted color='red' secondary>Sorry, we are having difficulties with CHEM-8L, CHEM-8, and CHEM-8H. <br/> We apologize, and we will fix it soon! Please use the schools tools for these classes.</Segment>}
                 {this.props.scheduleInfo.hasConflictingFinals &&
                 <Segment size='big' inverted color='red' secondary>This schedule has conflicting final times</Segment>}
                 <div className="days-div">
