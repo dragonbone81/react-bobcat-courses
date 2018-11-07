@@ -208,7 +208,7 @@ class AuthStore {
         });
         response = await response.json();
         if (!(response.user && response.api_keys)) {
-            return {error: 'Error Registering.'}
+            return {error: response.description}
         } else {
             runInAction(() => {
                 this.auth.token = response.api_keys.access;

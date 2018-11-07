@@ -3,9 +3,34 @@
   "name": "UC Merced BobcatCourses Schedule Builder",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16 192x192, 512x512",
+      "src": "bobcat-courses16x16-compressor.ico",
+      "sizes": "16x16",
       "type": "image/x-icon"
+    },
+    {
+      "src": "bobcat-courses32x32-compressor.ico",
+      "sizes": "32x32",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "bobcat-courses64x64-compressor.ico",
+      "sizes": "64x64",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "bobcat-courses128x128-compressor.ico",
+      "sizes": "128x128",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "bobcat-courses144x144-compressor.ico",
+      "sizes": "144x144",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "bobcat-courses144x144-compressor.png",
+      "sizes": "144x144",
+      "type": "image/png"
     }
   ],
   "start_url": "./index.html",
