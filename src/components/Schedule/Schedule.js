@@ -5,6 +5,7 @@ import SectionsList from '../Courses/SectionsList'
 import './Schedule.css'
 import {Segment} from 'semantic-ui-react';
 import {timesMap, timesArr, daysMap, daysArr, colors} from "../../data";
+import {inject, observer} from "mobx-react";
 
 class Schedule extends Component {
     state = {
@@ -28,9 +29,17 @@ class Schedule extends Component {
         return (
             <div className="schedule-inside-container">
                 {this.props.sections.some((section) => section.available <= 0) &&
-                <Segment size='big' inverted color='red' secondary>This schedule has a full section</Segment>}
+                <Segment size='big' inverted color='red' secondary>This schedule has a full section - <span
+                    style={{cursor: 'pointer'}} className='filter-out-text'
+                    onClick={() => {
+                        this.props.course_store.changeSelectedFullFilter();
+                        this.props.course_store.changeFilterOptionsChanged();
+                        this.props.course_store.filterOptionsChangedRegenerate();
+                    }}><u>(Filter It Out?)</u></span></Segment>}
                 {this.props.sections.some((section) => section.simple_name === 'CHEM-8L' || section.simple_name === 'CHEM-8' || section.simple_name === 'CHEM-8H') &&
-                <Segment size='big' inverted color='red' secondary>Sorry, we are having difficulties with CHEM-8L, CHEM-8, and CHEM-8H. <br/> We apologize, and we will fix it soon! Please use the schools tools for these classes.</Segment>}
+                <Segment size='big' inverted color='red' secondary>Sorry, we are having difficulties with CHEM-8L,
+                    CHEM-8, and CHEM-8H. <br/> We apologize, and we will fix it soon! Please use the schools tools for
+                    these classes.</Segment>}
                 {this.props.scheduleInfo.hasConflictingFinals &&
                 <Segment size='big' inverted color='red' secondary>This schedule has conflicting final times</Segment>}
                 <div className="days-div">
@@ -148,4 +157,4 @@ Schedule.propTypes = {
     scheduleInfo: PropTypes.object,
 };
 
-export default Schedule
+export default inject("course_store")(observer(Schedule));

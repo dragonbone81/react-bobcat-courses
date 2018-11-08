@@ -256,6 +256,13 @@
     padding-right: 10px;
 }
 
+.filter-out-text:hover{
+    color: #f2f2f2;
+}
+.filter-in-text:hover{
+    color: #c87305;
+}
+
 .ui.form ::-webkit-input-placeholder {
     color: rgba(110, 110, 110, 0.87) !important;
 }

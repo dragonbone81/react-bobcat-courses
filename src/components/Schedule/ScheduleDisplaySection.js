@@ -1,6 +1,7 @@
 import React from 'react'
 import {Icon} from 'semantic-ui-react'
 import Schedule from './Schedule'
+import {inject, observer} from "mobx-react";
 
 const ScheduleDisplaySection = (props) => {
     return (
@@ -12,10 +13,17 @@ const ScheduleDisplaySection = (props) => {
                               sections={props.scheduleObjectsToArray(props.schedule)} term={props.term}/>
                     :
                     props.noSchedulesFound ?
-                        <div style={{maxWidth: '300px', marginBottom: 10}} className="ui warning message">
+                        <div style={{maxWidth: '400px', marginBottom: 10}} className="ui warning message">
                             <div style={{textAlign: 'center'}} className="header">
                                 No Schedules found. Classes either conflict, filters are restricting schedules, or a
                                 class is full.
+                                <br/><span
+                                style={{cursor: 'pointer'}} className='filter-in-text'
+                                onClick={() => {
+                                    props.course_store.changeSelectedFullFilter();
+                                    props.course_store.changeFilterOptionsChanged();
+                                    props.course_store.filterOptionsChangedRegenerate();
+                                }}><u>(Include Full Sections?)</u></span>
                             </div>
                         </div>
                         :
@@ -36,4 +44,4 @@ const ScheduleDisplaySection = (props) => {
     )
 };
 
-export default ScheduleDisplaySection
+export default inject("course_store")(observer(ScheduleDisplaySection));
