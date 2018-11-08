@@ -27,7 +27,7 @@ class Schedule extends Component {
         const timeSpan = timesArr.slice(timesMap[Math.floor(this.props.scheduleInfo.earliest / 100.0) * 100].index, timesMap[Math.ceil(this.props.scheduleInfo.latest / 100.0) * 100 + 100].index);
         return (
             <div className="schedule-inside-container">
-                {this.props.sections.some((section) => section.available === 0) &&
+                {this.props.sections.some((section) => section.available <== 0) &&
                 <Segment size='big' inverted color='red' secondary>This schedule has a full section</Segment>}
                 {this.props.sections.some((section) => section.simple_name === 'CHEM-8L' || section.simple_name === 'CHEM-8' || section.simple_name === 'CHEM-8H') &&
                 <Segment size='big' inverted color='red' secondary>Sorry, we are having difficulties with CHEM-8L, CHEM-8, and CHEM-8H. <br/> We apologize, and we will fix it soon! Please use the schools tools for these classes.</Segment>}
