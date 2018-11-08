@@ -187,7 +187,7 @@ class GenerateSchedulesPage extends Component {
                         <Accordion.Title active={this.state.activeIndexAccordion === 0}
                                          onClick={() => this.state.activeIndexAccordion === -1 ? this.setState({activeIndexAccordion: 0}) : this.setState({activeIndexAccordion: -1})}>
                             <Icon name='dropdown'/>
-                            Options...
+                            Advanced Options...
                         </Accordion.Title>
                         <Accordion.Content active={this.state.activeIndexAccordion === 0}>
                             <Button color="grey" onClick={this.changeModalState}>Preferences</Button>
