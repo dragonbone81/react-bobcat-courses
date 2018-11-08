@@ -19,7 +19,7 @@ class CourseStore {
     sections = {};
     gaps = 'asc';
     days = 'asc';
-    full = false;
+    full = true;
     filterOptionsChanged = false;
     // selectedTermWaitlists = 201830;
     selectedTermWaitlists = 201910;
