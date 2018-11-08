@@ -17,13 +17,13 @@ const ScheduleDisplaySection = (props) => {
                             <div style={{textAlign: 'center'}} className="header">
                                 No Schedules found. Classes either conflict, filters are restricting schedules, or a
                                 class is full.
-                                <br/><span
+                                <br/>{!props.course_store.full ? <span
                                 style={{cursor: 'pointer'}} className='filter-in-text'
                                 onClick={() => {
                                     props.course_store.changeSelectedFullFilter();
                                     props.course_store.changeFilterOptionsChanged();
                                     props.course_store.filterOptionsChangedRegenerate();
-                                }}><u>(Include Full Sections?)</u></span>
+                                }}><u>(Include Full Sections?)</u></span> : null}
                             </div>
                         </div>
                         :
