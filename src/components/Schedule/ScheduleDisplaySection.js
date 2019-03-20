@@ -9,7 +9,7 @@ const ScheduleDisplaySection = (props) => {
             {props.searching ?
                 (<Icon loading size="huge" name="spinner"/>) :
                 props.schedulesLength > 0 ?
-                    <Schedule scheduleInfo={props.scheduleInfo}
+                    <Schedule savedSchedulesRendering={props.savedSchedulesRendering} scheduleInfo={props.scheduleInfo}
                               sections={props.scheduleObjectsToArray(props.schedule)} term={props.term}/>
                     :
                     props.noSchedulesFound ?
@@ -23,7 +23,7 @@ const ScheduleDisplaySection = (props) => {
                                     props.course_store.changeSelectedFullFilter();
                                     props.course_store.changeFilterOptionsChanged();
                                     props.course_store.filterOptionsChangedRegenerate();
-                                }}><u>(Include Full Sections?)</u></span> : null}
+                                }}><u>(Include Full/Closed Sections?)</u></span> : null}
                             </div>
                         </div>
                         :

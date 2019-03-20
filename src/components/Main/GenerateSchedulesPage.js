@@ -183,16 +183,21 @@ class GenerateSchedulesPage extends Component {
                     <CourseList openSectionsModal={this.openSectionsModal} editSection={this.editSection}/>
                     <GenerateSchedules
                         scheduleSearch={this.props.course_store.scheduleSearch}/>
+                    <Button icon labelPosition='left' fluid style={{marginTop: 10, textAlign: 'center'}}
+                            onClick={this.changeModalState}>Preferences<Icon name='edit'/></Button>
                     <Accordion style={{marginTop: 20}}>
                         <Accordion.Title active={this.state.activeIndexAccordion === 0}
                                          onClick={() => this.state.activeIndexAccordion === -1 ? this.setState({activeIndexAccordion: 0}) : this.setState({activeIndexAccordion: -1})}>
                             <Icon name='dropdown'/>
-                            Advanced Options...
+                            Custom Events...
                         </Accordion.Title>
                         <Accordion.Content active={this.state.activeIndexAccordion === 0}>
-                            <Button color="grey" onClick={this.changeModalState}>Preferences</Button>
-                            <Button color="grey" onClick={this.addCustomEvent}>Add
-                                Event</Button>
+
+                            <Button color="grey" icon labelPosition='left' fluid
+                                    style={{marginTop: 10, textAlign: 'center'}} onClick={this.addCustomEvent}>
+                                Custom Event
+                                <Icon name='plus'/>
+                            </Button>
                         </Accordion.Content>
                     </Accordion>
                 </div>

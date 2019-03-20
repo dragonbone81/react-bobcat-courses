@@ -29,13 +29,15 @@ class Schedule extends Component {
         return (
             <div className="schedule-inside-container">
                 {this.props.sections.some((section) => section.available <= 0) &&
-                <Segment size='big' inverted color='red' secondary>This schedule has a full section - <span
-                    style={{cursor: 'pointer'}} className='filter-out-text'
-                    onClick={() => {
-                        this.props.course_store.changeSelectedFullFilter();
-                        this.props.course_store.changeFilterOptionsChanged();
-                        this.props.course_store.filterOptionsChangedRegenerate();
-                    }}><u>(Filter It Out?)</u></span></Segment>}
+                <Segment size='big' inverted color='red' secondary>This schedule has a full
+                    section{!this.props.savedSchedulesRendering && <span
+                        style={{cursor: 'pointer'}} className='filter-out-text'
+                        onClick={() => {
+                            this.props.course_store.changeSelectedFullFilter();
+                            this.props.course_store.changeFilterOptionsChanged();
+                            this.props.course_store.filterOptionsChangedRegenerate();
+                        }}> - <u>Filter</u>
+                        </span>}</Segment>}
                 {this.props.sections.some((section) => section.simple_name === 'CHEM-8L' || section.simple_name === 'CHEM-8' || section.simple_name === 'CHEM-8H') &&
                 <Segment size='big' inverted color='red' secondary>Sorry, we are having difficulties with CHEM-8L,
                     CHEM-8, and CHEM-8H. <br/> We apologize, and we will fix it soon! Please use the schools tools for
