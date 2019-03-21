@@ -162,15 +162,15 @@ class About extends Component {
                                     <Statistic.Label>Total Registered Users</Statistic.Label>
                                 </Statistic>
                             </Grid.Column>
-                            <Grid.Column verticalAlign='middle' textAlign="center">
-                                <Statistic size='large'>
-                                    <Statistic.Value>{this.state.totalSavedWaitlists === undefined ? '...' :
-                                        <CountUp separator=',' end={this.state.totalSavedWaitlists}/>
-                                    }
-                                    </Statistic.Value>
-                                    <Statistic.Label>Total Saved Waitlists</Statistic.Label>
-                                </Statistic>
-                            </Grid.Column>
+                            {/*<Grid.Column verticalAlign='middle' textAlign="center">*/}
+                                {/*<Statistic size='large'>*/}
+                                    {/*<Statistic.Value>{this.state.totalSavedWaitlists === undefined ? '...' :*/}
+                                        {/*<CountUp separator=',' end={this.state.totalSavedWaitlists}/>*/}
+                                    {/*}*/}
+                                    {/*</Statistic.Value>*/}
+                                    {/*<Statistic.Label>Total Saved Waitlists</Statistic.Label>*/}
+                                {/*</Statistic>*/}
+                            {/*</Grid.Column>*/}
                         </Grid.Row>
                         <Grid.Row centered textAlign="center">
                             <Header size="huge" textAlign='center'> Made with:</Header>
