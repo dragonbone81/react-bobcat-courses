@@ -65,11 +65,11 @@ class NavBar extends Component {
                             active={activeItem === '/schedules/saved'}
                             onClick={this.handleItemClick}
                         >Saved Schedules</Menu.Item>
-                        <Menu.Item
-                            name='/waitlists'
-                            active={activeItem === '/waitlists'}
-                            onClick={this.handleItemClick}
-                        >Waitlists</Menu.Item>
+                        {/*<Menu.Item*/}
+                            {/*name='/waitlists'*/}
+                            {/*active={activeItem === '/waitlists'}*/}
+                            {/*onClick={this.handleItemClick}*/}
+                        {/*>Waitlists</Menu.Item>*/}
                         <Menu.Item
                             name='/about'
                             active={activeItem === '/about'}
