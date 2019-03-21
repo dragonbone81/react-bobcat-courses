@@ -63,7 +63,7 @@ class App extends Component {
                         <Route exact path='/login' component={withTracker(Login)}/>
                         <Route exact path='/forgot-password' component={withTracker(ForgotPassword)}/>
                         <Route exact path='/register' component={withTracker(Register)}/>
-                        <Route exact path='/waitlists' component={withTracker(Waitlists)}/>
+                        {/*<Route exact path='/waitlists' component={withTracker(Waitlists)}/>*/}
                         <Route exact path='/about' component={withTracker(About)}/>
                         <Route exact path='/profile' component={withTracker(Profile)}/>
                         <Route exact path='/auth/google/callback' component={Auth}/>
