@@ -26,7 +26,7 @@ class CourseStore {
     selectedTermGenerateSchedule = 201930;
     // selectedTermGenerateSchedule = 201830;
     terms = [
-        {text: 'Summer 2019', value: 201920},
+        {text: 'Spring 2019', value: 201910},
         {text: 'Fall 2019', value: 201930},
     ];
     selectedEarliestTime = 'null';
