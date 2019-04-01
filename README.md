@@ -9,3 +9,5 @@ You can:
 Uses the BobcatCourses BackendAPI for authentication and saving/ loading schedules.
 ###### Frontend: [BobcatCourses Frontend](https://bobcatcourses.tk)
 ###### Backend: [BobcatCourses Backend](https://cse120-course-planner.herokuapp.com/api)
+
+![Frontend Website](https://i.imgur.com/pO2EiHf.png)
