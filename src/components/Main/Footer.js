@@ -7,7 +7,7 @@ const Footer = (props) => {
         <div className="footer">
             <Segment inverted vertical style={{borderRadius: 10}}>
                 <Container textAlign='center'>
-                    <h4 className="ui inverted header">&copy; Copyright 2018 | BobcatCourses</h4>
+                    <h4 className="ui inverted header">&copy; Copyright {(new Date().getFullYear())} | BobcatCourses</h4>
                     Front: <a target="_blank" rel="noopener noreferrer"
                               href="https://github.com/dragonbone81/react-bobcat-courses"><Icon
                     size="big" name="github square" link/></a>
