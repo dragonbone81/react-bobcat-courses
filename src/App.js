@@ -3,7 +3,7 @@ import NavBar from './components/Nav/NavBar'
 import Login from './components/UserActions/Login'
 import ForgotPassword from './components/UserActions/ForgotPassword'
 import Register from './components/UserActions/Register'
-import Waitlists from "./components/Waitlists/Waitlists";
+// import Waitlists from "./components/Waitlists/Waitlists";
 import Auth from "./components/Auth/Auth";
 import SavedSchedules from './components/Main/SavedSchedules'
 import GenerateSchedulesPage from './components/Main/GenerateSchedulesPage'

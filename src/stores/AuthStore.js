@@ -1,6 +1,6 @@
-import {observable, action, decorate, configure, runInAction} from 'mobx'
+import {observable, action, decorate, runInAction} from 'mobx'
 
-configure({enforceActions: true});
+// configure({enforceActions: "always"});
 
 class AuthStore {
     constructor() {

@@ -1,13 +1,15 @@
-import {observable, action, computed, decorate, configure, runInAction} from 'mobx'
+import {observable, action, computed, decorate, runInAction} from 'mobx'
 import {termsMap, monthsMap, dayMapGoogleCodes, dayMapMicrosoftCodes} from '../data'
 
-configure({enforceActions: true});
-
+// configure({enforceActions: "always"});
+npm update
 class CourseStore {
     constructor() {
         this.getTerms().then(terms => {
-            this.changeSelectedTermGenerateSchedule(parseInt(terms[terms.length - 1]));
-            this.changeAvailableTerms(terms);
+            runInAction(() => {
+                this.changeSelectedTermGenerateSchedule(parseInt(terms[terms.length - 1], 10));
+                this.changeAvailableTerms(terms);
+            });
         });
     }
 
