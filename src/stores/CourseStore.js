@@ -4,6 +4,13 @@ import {termsMap, monthsMap, dayMapGoogleCodes, dayMapMicrosoftCodes} from '../d
 configure({enforceActions: true});
 
 class CourseStore {
+    constructor() {
+        this.getTerms().then(terms => {
+            this.changeSelectedTermGenerateSchedule(parseInt(terms[terms.length - 1]));
+            this.changeAvailableTerms(terms);
+        });
+    }
+
     courses = [];
     customEvents = [];
     schedules = [];
@@ -28,6 +35,12 @@ class CourseStore {
     terms = [
         {text: 'Spring 2019', value: 201910},
         {text: 'Fall 2019', value: 201930},
+        {text: 'Spring 2020', value: 202010},
+        {text: 'Fall 2020', value: 202030},
+        {text: 'Spring 2021', value: 202110},
+        {text: 'Fall 2021', value: 202130},
+        {text: 'Spring 2022', value: 202210},
+        {text: 'Fall 2022', value: 202230},
     ];
     selectedEarliestTime = 'null';
     earliestTimes = [
@@ -62,6 +75,9 @@ class CourseStore {
         {text: '9:30pm', value: '2130'},
         {text: '10:00pm', value: '2200'},
     ];
+    changeAvailableTerms = (input_filter) => {
+        this.terms = this.terms.filter((term) => input_filter.includes(term.value.toString()));
+    };
     addCourse = (course) => {
         if (!course.event_name) {
             this.getSections(course).then();
@@ -70,8 +86,7 @@ class CourseStore {
             if (this.customEvents.filter(event => (event.event_name === course.event_name)).length > 0) {
                 const index = this.customEvents.findIndex(event => event.event_name === course.event_name);
                 this.customEvents[index] = course;
-            }
-            else {
+            } else {
                 this.customEvents.push(course);
             }
         }
@@ -95,7 +110,15 @@ class CourseStore {
             this.scheduleSearch().then();
         }
     };
-
+    getTerms = async () => {
+        let response = await fetch('https://cse120-course-planner.herokuapp.com/api/courses/get-terms/', {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        return response.json();
+    };
     getUsersWaitlists = async (token) => {
         let response = await fetch('https://cse120-course-planner.herokuapp.com/api/users/waitlist/', {
             method: 'GET',
@@ -248,8 +271,7 @@ class CourseStore {
                     this.currentIndex = 0;
                 });
             }
-        }
-        else {
+        } else {
             runInAction(() => this.schedules = []);
         }
     };
@@ -286,8 +308,7 @@ class CourseStore {
         if (this.sections[courseID][index].attached_crn) {
             const foundIndex = this.sections[courseID].findIndex((section) => section.crn === this.sections[courseID][index].attached_crn);
             this.sections[courseID][foundIndex].selected = value;
-        }
-        else if (this.sections[courseID][index].linked_courses) {
+        } else if (this.sections[courseID][index].linked_courses) {
             this.sections[courseID][index].linked_courses.forEach((crn) => {
                 const foundIndex = this.sections[courseID].findIndex((section) => section.crn === crn);
                 this.sections[courseID][foundIndex].selected = value;
@@ -500,15 +521,13 @@ class CourseStore {
                 hours = hoursInt.map((hour) => hour.toString());
                 if (hours[0].length === 4) {
                     startHour = hours[0].substr(0, 2) + ':' + hours[0].substr(2, 4)
-                }
-                else if (hours[0].length === 3) {
+                } else if (hours[0].length === 3) {
                     startHour = "0" + hours[0].substr(0, 1) + ':' + hours[0].substr(1, 3)
                 }
                 if (hours[1].length === 4) {
                     endHour = hours[1].substr(0, 2) + ':' + hours[1].substr(2, 4)
 
-                }
-                else if (hours[1].length === 3) {
+                } else if (hours[1].length === 3) {
                     endHour = "0" + hours[1].substr(0, 1) + ':' + hours[1].substr(1, 3)
                 }
             }
@@ -547,15 +566,13 @@ class CourseStore {
                     let endHour = course.end_time.toString();
                     if (startHour.length === 4) {
                         startHour = startHour.substr(0, 2) + ':' + startHour.substr(2, 4)
-                    }
-                    else if (startHour.length === 3) {
+                    } else if (startHour.length === 3) {
                         startHour = "0" + startHour.substr(0, 1) + ':' + startHour.substr(1, 3)
                     }
                     if (endHour.length === 4) {
                         endHour = endHour.substr(0, 2) + ':' + endHour.substr(2, 4)
 
-                    }
-                    else if (endHour.length === 3) {
+                    } else if (endHour.length === 3) {
                         endHour = "0" + endHour.substr(0, 1) + ':' + endHour.substr(1, 3)
                     }
                     const days = course.days.split('').map((day) => dayMapGoogleCodes[day]).join(',');
@@ -625,15 +642,13 @@ class CourseStore {
                 hours = hoursInt.map((hour) => hour.toString());
                 if (hours[0].length === 4) {
                     startHour = hours[0].substr(0, 2) + ':' + hours[0].substr(2, 4)
-                }
-                else if (hours[0].length === 3) {
+                } else if (hours[0].length === 3) {
                     startHour = "0" + hours[0].substr(0, 1) + ':' + hours[0].substr(1, 3)
                 }
                 if (hours[1].length === 4) {
                     endHour = hours[1].substr(0, 2) + ':' + hours[1].substr(2, 4)
 
-                }
-                else if (hours[1].length === 3) {
+                } else if (hours[1].length === 3) {
                     endHour = "0" + hours[1].substr(0, 1) + ':' + hours[1].substr(1, 3)
                 }
             }
@@ -681,15 +696,13 @@ class CourseStore {
                     let endHour = course.end_time.toString();
                     if (startHour.length === 4) {
                         startHour = startHour.substr(0, 2) + ':' + startHour.substr(2, 4)
-                    }
-                    else if (startHour.length === 3) {
+                    } else if (startHour.length === 3) {
                         startHour = "0" + startHour.substr(0, 1) + ':' + startHour.substr(1, 3)
                     }
                     if (endHour.length === 4) {
                         endHour = endHour.substr(0, 2) + ':' + endHour.substr(2, 4)
 
-                    }
-                    else if (endHour.length === 3) {
+                    } else if (endHour.length === 3) {
                         endHour = "0" + endHour.substr(0, 1) + ':' + endHour.substr(1, 3)
                     }
                     const days = course.days.split('').map((day) => dayMapMicrosoftCodes[day].toString());
@@ -759,15 +772,13 @@ class CourseStore {
                 hours = hoursInt.map((hour) => hour.toString());
                 if (hours[0].length === 4) {
                     startHour = hours[0].substr(0, 2) + ':' + hours[0].substr(2, 4)
-                }
-                else if (hours[0].length === 3) {
+                } else if (hours[0].length === 3) {
                     startHour = "0" + hours[0].substr(0, 1) + ':' + hours[0].substr(1, 3)
                 }
                 if (hours[1].length === 4) {
                     endHour = hours[1].substr(0, 2) + ':' + hours[1].substr(2, 4)
 
-                }
-                else if (hours[1].length === 3) {
+                } else if (hours[1].length === 3) {
                     endHour = "0" + hours[1].substr(0, 1) + ':' + hours[1].substr(1, 3)
                 }
             }
@@ -781,15 +792,13 @@ class CourseStore {
                     let endHour = course.end_time.toString();
                     if (startHour.length === 4) {
                         startHour = startHour.substr(0, 2) + ':' + startHour.substr(2, 4)
-                    }
-                    else if (startHour.length === 3) {
+                    } else if (startHour.length === 3) {
                         startHour = "0" + startHour.substr(0, 1) + ':' + startHour.substr(1, 3)
                     }
                     if (endHour.length === 4) {
                         endHour = endHour.substr(0, 2) + ':' + endHour.substr(2, 4)
 
-                    }
-                    else if (endHour.length === 3) {
+                    } else if (endHour.length === 3) {
                         endHour = "0" + endHour.substr(0, 1) + ':' + endHour.substr(1, 3)
                     }
                     const days = course.days.split('').map((day) => dayMapGoogleCodes[day]).join(',');
@@ -862,6 +871,7 @@ decorate(CourseStore, {
     changeSectionSelection: action,
     saveSchedule: action,
     deleteSchedule: action,
+    changeAvailableTerms: action,
     getSchedule: computed,
     getSavedSchedule: computed,
 });
