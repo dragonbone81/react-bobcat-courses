@@ -2,7 +2,6 @@ import {observable, action, computed, decorate, runInAction} from 'mobx'
 import {termsMap, monthsMap, dayMapGoogleCodes, dayMapMicrosoftCodes} from '../data'
 
 // configure({enforceActions: "always"});
-npm update
 class CourseStore {
     constructor() {
         this.getTerms().then(terms => {
