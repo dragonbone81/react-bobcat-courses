@@ -197,7 +197,7 @@ class About extends Component {
                             <Grid.Column textAlign="center">
                                 <h2>MobX</h2>
                                 <Image verticalAlign='middle' centered
-                                       src="https://mobx.js.org/docs/mobx.png"
+                                       src="https://i.imgur.com/DyzpijE.jpg"
                                        alt="" size="tiny"/>
                             </Grid.Column>
                         </Grid.Row>
