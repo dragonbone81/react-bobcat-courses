@@ -30,8 +30,8 @@ class CourseStore {
     full = true;
     filterOptionsChanged = false;
     // selectedTermWaitlists = 201830;
-    selectedTermWaitlists = 202010;
-    selectedTermGenerateSchedule = 202010;
+    selectedTermWaitlists = 202030;
+    selectedTermGenerateSchedule = 202030;
     // selectedTermGenerateSchedule = 201830;
     terms = [
         {text: 'Spring 2019', value: 201910},
