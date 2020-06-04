@@ -533,7 +533,7 @@ class CourseStore {
                 }
             }
             const days = course.days.split('').map((day) => dayMapGoogleCodes[day]).join(',');
-            const date = new Date(`${year}-${startMonth}-${startDay} ${startHour}:00 PST`);
+            const date = new Date(`${year}-${startMonth}-${startDay}T${startHour}:00-08:00`);
             let startDayOfWeek = dayMapMicrosoftCodes[course.days.split('').find((day) => dayMapMicrosoftCodes[day] >= date.getDay())];
             if (startDayOfWeek === null || startDayOfWeek === undefined) {
                 startDayOfWeek = dayMapMicrosoftCodes[course.days.split('')[0]] + 7
