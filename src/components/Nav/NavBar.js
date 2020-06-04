@@ -51,9 +51,10 @@ class NavBar extends Component {
                          user={this.props.auth_store.user}/>
                 {!isMobile ?
                     <Menu>
-                        <Menu.Item name='/schedules/search'
+                        <Menu.Item style={{fontWeight: "bolder"}} name='/schedules/search'
                                    onClick={this.handleItemClick}>
-                            <img style={{margin:-20, marginRight:8, marginLeft:-12, width:36}} alt="logo" src={logo}/> BobcatCourses
+                            <img style={{margin: -20, marginRight: 8, marginLeft: -12, width: 36}} alt="logo"
+                                 src={logo}/> BobcatCourses
                         </Menu.Item>
                         <Menu.Item
                             name='/schedules/search'
@@ -66,9 +67,9 @@ class NavBar extends Component {
                             onClick={this.handleItemClick}
                         >Saved Schedules</Menu.Item>
                         {/*<Menu.Item*/}
-                            {/*name='/waitlists'*/}
-                            {/*active={activeItem === '/waitlists'}*/}
-                            {/*onClick={this.handleItemClick}*/}
+                        {/*name='/waitlists'*/}
+                        {/*active={activeItem === '/waitlists'}*/}
+                        {/*onClick={this.handleItemClick}*/}
                         {/*>Waitlists</Menu.Item>*/}
                         <Menu.Item
                             name='/about'
@@ -93,9 +94,11 @@ class NavBar extends Component {
                     </Menu>
                     :
                     <Menu>
-                        <Menu.Item active={activeItem === '/schedules/search'} name='/schedules/search'
+                        <Menu.Item style={{fontWeight: "bolder"}} active={activeItem === '/schedules/search'}
+                                   name='/schedules/search'
                                    onClick={this.handleItemClick}>
-                            <img style={{margin:-20, marginRight:8, marginLeft:-12, width:36}} width="500" alt="logo" src={logo}/> BobcatCourses
+                            <img style={{margin: -20, marginRight: 8, marginLeft: -12, width: 36}} width="500"
+                                 alt="logo" src={logo}/> BobcatCourses
                         </Menu.Item>
                         <Menu.Menu position='right'>
                             <Menu.Item

@@ -286,3 +286,8 @@
 .ui.form :focus::-moz-placeholder {
     color: rgba(191, 191, 191, .87) !important;
 }
+.logo-nav-bar{
+    /*font-size: 200px;*/
+    /*font-size: 30px;*/
+    font-weight: 900;
+}
