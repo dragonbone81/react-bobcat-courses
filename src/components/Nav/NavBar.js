@@ -51,7 +51,7 @@ class NavBar extends Component {
                          user={this.props.auth_store.user}/>
                 {!isMobile ?
                     <Menu>
-                        <Menu.Item style={{fontWeight: "bolder"}} name='/schedules/search'
+                        <Menu.Item style={{fontWeight: "bolder", fontSize: 18, margin: -6}} name='/schedules/search'
                                    onClick={this.handleItemClick}>
                             <img style={{margin: -20, marginRight: 8, marginLeft: -12, width: 36}} alt="logo"
                                  src={logo}/> BobcatCourses
@@ -94,7 +94,8 @@ class NavBar extends Component {
                     </Menu>
                     :
                     <Menu>
-                        <Menu.Item style={{fontWeight: "bolder"}} active={activeItem === '/schedules/search'}
+                        <Menu.Item style={{fontWeight: "bolder", fontSize: 18, margin: -6}}
+                                   active={activeItem === '/schedules/search'}
                                    name='/schedules/search'
                                    onClick={this.handleItemClick}>
                             <img style={{margin: -20, marginRight: 8, marginLeft: -12, width: 36}} width="500"
