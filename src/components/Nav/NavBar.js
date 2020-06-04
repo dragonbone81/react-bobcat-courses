@@ -53,7 +53,7 @@ class NavBar extends Component {
                     <Menu>
                         <Menu.Item name='/schedules/search'
                                    onClick={this.handleItemClick}>
-                            <img style={{paddingRight: 10}} width="500" alt="logo" src={logo}/> BobcatCourses
+                            <img style={{margin:-20, marginRight:8, marginLeft:-12, width:36}} alt="logo" src={logo}/> BobcatCourses
                         </Menu.Item>
                         <Menu.Item
                             name='/schedules/search'
@@ -95,7 +95,7 @@ class NavBar extends Component {
                     <Menu>
                         <Menu.Item active={activeItem === '/schedules/search'} name='/schedules/search'
                                    onClick={this.handleItemClick}>
-                            <img style={{paddingRight: 10}} width="500" alt="logo" src={logo}/> BobcatCourses
+                            <img style={{margin:-20, marginRight:8, marginLeft:-12, width:36}} width="500" alt="logo" src={logo}/> BobcatCourses
                         </Menu.Item>
                         <Menu.Menu position='right'>
                             <Menu.Item
