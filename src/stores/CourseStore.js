@@ -577,7 +577,7 @@ class CourseStore {
                         endHour = "0" + endHour.substr(0, 1) + ':' + endHour.substr(1, 3)
                     }
                     const days = course.days.split('').map((day) => dayMapGoogleCodes[day]).join(',');
-                    const date = new Date(`${year}-${startMonth}-${startDay} ${startHour}:00 PST`);
+                    const date = new Date(`${year}-${startMonth}-${startDay}T${startHour}:00-08:00`);
                     let startDayOfWeek = dayMapMicrosoftCodes[course.days.split('').find((day) => dayMapMicrosoftCodes[day] >= date.getDay())];
                     if (startDayOfWeek === null || startDayOfWeek === undefined) {
                         startDayOfWeek = dayMapMicrosoftCodes[course.days.split('')[0]] + 7
@@ -784,8 +784,8 @@ class CourseStore {
                 }
             }
             const days = course.days.split('').map((day) => dayMapGoogleCodes[day]).join(',');
-            const startTime = new Date(year + '-' + startMonth + '-' + startDay + ' ' + startHour + ':00 PST');
-            const endTime = new Date(year + '-' + startMonth + '-' + startDay + ' ' + endHour + ':00 PST');
+            const startTime = new Date(year + '-' + startMonth + '-' + startDay + 'T' + startHour + ':00-08:00');
+            const endTime = new Date(year + '-' + startMonth + '-' + startDay + 'T' + endHour + ':00-08:00');
             ics += `BEGIN:VEVENT\r\nUID:${course.crn}\r\nSUMMARY: ${course.course_id}\r\nRRULE:FREQ=WEEKLY;BYDAY=${days};COUNT=${course.days.length * 16}\r\nDTSTART:${startTime.getUTCFullYear()}${(startTime.getUTCMonth() + 1).toString().padStart(2, '0')}${startTime.getUTCDate().toString().padStart(2, '0')}T${startTime.getUTCHours().toString().padStart(2, '0')}${startTime.getUTCMinutes().toString().padStart(2, '0')}00Z\r\nDTEND:${endTime.getUTCFullYear()}${(endTime.getUTCMonth() + 1).toString().padStart(2, '0')}${endTime.getUTCDate().toString().padStart(2, '0')}T${endTime.getUTCHours().toString().padStart(2, '0')}${endTime.getUTCMinutes().toString().padStart(2, '0')}00Z\r\nDTSTAMP:${startTime.getUTCFullYear()}${(startTime.getUTCMonth() + 1).toString().padStart(2, '0')}${startTime.getUTCDate().toString().padStart(2, '0')}T${startTime.getUTCHours().toString().padStart(2, '0')}${startTime.getUTCMinutes().toString().padStart(2, '0')}00Z\r\nDESCRIPTION:${course.course_name}\r\nEND:VEVENT\r\n`;
             if (!customEventsCompleted) {
                 schedule.filter((course) => course && course.event_name).forEach(async (course) => {
@@ -803,8 +803,8 @@ class CourseStore {
                         endHour = "0" + endHour.substr(0, 1) + ':' + endHour.substr(1, 3)
                     }
                     const days = course.days.split('').map((day) => dayMapGoogleCodes[day]).join(',');
-                    const startTime = new Date(year + '-' + startMonth + '-' + startDay + ' ' + startHour + ':00 PST');
-                    const endTime = new Date(year + '-' + startMonth + '-' + startDay + ' ' + endHour + ':00 PST');
+                    const startTime = new Date(year + '-' + startMonth + '-' + startDay + 'T' + startHour + ':00-08:00');
+                    const endTime = new Date(year + '-' + startMonth + '-' + startDay + 'T' + endHour + ':00-08:00');
                     ics += `BEGIN:VEVENT
 UID:${course.event_name}
 SUMMARY: ${course.event_name}
