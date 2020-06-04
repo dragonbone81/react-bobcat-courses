@@ -57,6 +57,7 @@ class NavBar extends Component {
                                  src={logo}/> BobcatCourses
                         </Menu.Item>
                         <Menu.Item
+                            style={{marginLeft: 6}}
                             name='/schedules/search'
                             active={activeItem === '/schedules/search'}
                             onClick={this.handleItemClick}
