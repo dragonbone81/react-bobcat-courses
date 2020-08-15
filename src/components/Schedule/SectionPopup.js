@@ -30,6 +30,11 @@ const SectionPopup = (props) => {
                             </List.Item>
                             <List.Item>
                                 <List.Description>
+                                    Room: {props.clickedSectionInfo.room}
+                                </List.Description>
+                            </List.Item>
+                            <List.Item>
+                                <List.Description>
                                     Prof: {props.clickedSectionInfo.instructor}
                                 </List.Description>
                             </List.Item>
