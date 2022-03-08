@@ -31,7 +31,7 @@ class CourseStore {
     filterOptionsChanged = false;
     // selectedTermWaitlists = 201830;
     selectedTermWaitlists = 202110;
-    selectedTermGenerateSchedule = 202110;
+    selectedTermGenerateSchedule = 202230;
     // selectedTermGenerateSchedule = 201830;
     terms = [
         {text: 'Spring 2019', value: 201910},
@@ -42,6 +42,9 @@ class CourseStore {
         {text: 'Fall 2021', value: 202130},
         {text: 'Spring 2022', value: 202210},
         {text: 'Fall 2022', value: 202230},
+        {text: 'Spring 2023', value: 202310},
+        {text: 'Fall 2023', value: 202330},
+        {text: 'Spring 2024', value: 202410},
     ];
     selectedEarliestTime = 'null';
     earliestTimes = [
